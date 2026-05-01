@@ -34,50 +34,26 @@ if url:
     try:
         df = pd.read_csv(url)
 
-# 🔥 Fix column names (important)
-df.columns = df.columns.str.strip().str.lower()
+        # ✅ FIX COLUMN NAMES
+        df.columns = df.columns.str.strip().str.lower()
 
         st.success("✅ Data Loaded Successfully")
 
-        # 📊 KPI CARDS
+        # 🔍 DEBUG (optional)
+        st.write("Columns:", df.columns)
+
+        # ✅ CHECK REQUIRED COLUMN
+        if "status" not in df.columns:
+            st.error("❌ Missing 'status' column in sheet")
+            st.stop()
+
+        # 📊 KPI
         total = len(df)
         confirmed = len(df[df['status'] == 'Auto-Confirmed'])
         risk = len(df[df['status'] == 'Risk Flagged'])
         rejected = len(df[df['status'] == 'Rejected'])
 
-        col1, col2, col3, col4 = st.columns(4)
-
-        col1.markdown(f'<div class="card green">Total Orders<br><h2>{total}</h2></div>', unsafe_allow_html=True)
-        col2.markdown(f'<div class="card green">Confirmed<br><h2>{confirmed}</h2></div>', unsafe_allow_html=True)
-        col3.markdown(f'<div class="card orange">Risk<br><h2>{risk}</h2></div>', unsafe_allow_html=True)
-        col4.markdown(f'<div class="card red">Rejected<br><h2>{rejected}</h2></div>', unsafe_allow_html=True)
-
-        st.markdown("---")
-
-        # 🔍 FILTER
-        st.subheader("🔍 Filter Orders")
-        status_filter = st.selectbox("Select Status", ["All"] + list(df['status'].unique()))
-
-        if status_filter != "All":
-            df = df[df['status'] == status_filter]
-
-        # 🎨 TABLE COLOR FUNCTION
-        def highlight_rows(row):
-            if row['status'] == 'Rejected':
-                return ['background-color: #ff4d4d'] * len(row)
-            elif row['status'] == 'Risk Flagged':
-                return ['background-color: #ffa64d'] * len(row)
-            elif row['status'] == 'Auto-Confirmed':
-                return ['background-color: #66cc99'] * len(row)
-            else:
-                return [''] * len(row)
-
-        st.subheader("📋 Orders Table")
-
-        st.dataframe(
-            df.style.apply(highlight_rows, axis=1),
-            use_container_width=True
-        )
+        st.write("Total:", total)
 
     except Exception as e:
         st.error("❌ Failed to load data")
