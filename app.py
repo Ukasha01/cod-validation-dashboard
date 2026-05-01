@@ -34,6 +34,9 @@ if url:
     try:
         df = pd.read_csv(url)
 
+# 🔥 Fix column names (important)
+df.columns = df.columns.str.strip().str.lower()
+
         st.success("✅ Data Loaded Successfully")
 
         # 📊 KPI CARDS
