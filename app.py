@@ -43,7 +43,7 @@ if url:
         st.text(str(e))
 
 else:
-    st.warning("⚠️ Please paste your CSV URL above to load dashboard")")
+    st.warning("⚠️ Please paste your CSV URL above to load dashboard")
 
 if url:
     try:
