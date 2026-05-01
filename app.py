@@ -1,42 +1,32 @@
-import pandas as pd
 import streamlit as st
+import pandas as pd
 
-# 🔗 Your Google Sheet CSV link
-CSV_URL = "https://docs.google.com/spreadsheets/d/1QXHOICBrv0zMk5nFFqTWxg43p4_mA5ENxk6rBoXEXyI/export?format=csv"
-
-st.set_page_config(page_title="COD Validation Dashboard", layout="wide")
+st.set_page_config(page_title="COD Dashboard", layout="wide")
 
 st.title("📦 COD Order Validation Dashboard")
 
-# Load data
-@st.cache_data
-def load_data():
-    return pd.read_csv(CSV_URL)
+# Load CSV from Google Sheet (you will replace link)
+url = st.text_input("https://docs.google.com/spreadsheets/d/1QXHOICBrv0zMk5nFFqTWxg43p4_mA5ENxk6rBoXEXyI/export?format=csv")
 
-df = load_data()
+if url:
+    df = pd.read_csv(url)
 
-# Show raw data
-st.subheader("📋 Orders Data")
-st.dataframe(df)
+    st.subheader("📊 Data Preview")
+    st.dataframe(df)
 
-# KPIs
-st.subheader("📊 Overview")
+    # Metrics
+    st.subheader("📈 Insights")
 
-col1, col2, col3 = st.columns(3)
+    col1, col2, col3 = st.columns(3)
 
-col1.metric("Total Orders", len(df))
-col2.metric("Auto Confirmed", (df["status"] == "Auto-Confirmed").sum())
-col3.metric("Rejected", (df["status"] == "Rejected").sum())
+    col1.metric("Total Orders", len(df))
+    col2.metric("Rejected", len(df[df['status'] == 'Rejected']))
+    col3.metric("Risk Orders", len(df[df['status'] == 'Risk Flagged']))
 
-# Risk distribution
-st.subheader("⚠️ Risk Distribution")
-st.bar_chart(df["status"].value_counts())
+    # Filter
+    st.subheader("🔍 Filter by Status")
+    status_filter = st.selectbox("Select Status", df['status'].unique())
 
-# Filter
-st.subheader("🔍 Filter Orders")
+    filtered_df = df[df['status'] == status_filter]
 
-status_filter = st.selectbox("Select Status", df["status"].unique())
-
-filtered = df[df["status"] == status_filter]
-
-st.dataframe(filtered)
+    st.dataframe(filtered_df)
