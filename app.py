@@ -5,7 +5,7 @@ st.set_page_config(page_title="COD Dashboard", layout="wide")
 
 st.title("📦 COD Order Validation Dashboard")
 
-url = st.text_input("import streamlit as st
+url = st.text_input("import streamlit as st")
 import pandas as pd
 
 st.set_page_config(page_title="COD Dashboard", layout="wide")
