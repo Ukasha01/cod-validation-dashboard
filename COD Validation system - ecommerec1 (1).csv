@@ -1,0 +1,177 @@
+order_id ,name ,phone ,city,address ,product ,price ,status ,risk_score ,risk_level,risk_reason ,map_status,created_at
+2026-04-27T17:16:08.308-04:00,,,,,,,,,,,,
+2026-04-27T17:16:08.308-04:00,Ali Khan,3001234567,,"House 12, Block A, Gulshan Karachi",Shoes,4500,,"""Not Checked""",,"""address wrong""",null,2026-04-27T17:16:08.315-04:00
+2026-04-28T03:06:48.217-04:00,Ali Khan,3001234567,,"House 12, Block A, Gulshan Karachi",Shoes,4500,,"""Not Checked""",,"""address wrong""",null,2026-04-28T03:06:48.246-04:00
+2026-04-28T13:31:35.112-04:00,Ali Khan,3001234567,,paradise bakery  Karachi,Shoes,4500,,"""Not Checked""",,"""address wrong""",null,2026-04-28T13:31:35.114-04:00
+2026-04-28T13:37:30.004-04:00,mana Khan,3001234567,,"A, 495 Allama Shabbir Ahmed Usmani Rd, Block 3 Gulshan-e-Iqbal, Karachi, Pakistan",Shoes,4500,,MEDIUM,,Generic address,OK,2026-04-28T13:37:30.005-04:00
+ORD-1777403194528-952,mana Khan,3001234567,,"A, 495 Allama Shabbir Ahmed Usmani Rd, Block 3 Gulshan-e-Iqbal, Karachi, Pakistan",Shoes,4500,,MEDIUM,,Generic address,OK,2026-04-28T15:06:34.533-04:00
+ORD-1777404693371-484,mana Khan,3001234567,,"Karachi, Pakistan",Shoes,4500,,0,,System Verified: Address & City Match,OK,29-04-2026
+ORD-1777404796530-915,mana Khan,3001234567,,"Hijri Gulzar, 33, Gulzar-e-Hijri Post Office Society Gulzar E Hijri Scheme 33, Karachi, 75330, Pakistan",Shoes,4500,,0,,System Verified: Address & City Match,OK,29-04-2026
+ORD-1777408569143-888,Ali Khan,3001234567,,"House 12, 12, Block A Block 11 Gulshan-e-Iqbal, Karachi, Pakistan",Shoes,4500,Risk Flagged,,,,OK,29-04-2026
+ORD-1777408677634-230,Zaid Khan,3001234567,,"1909 Cahaba Rd, Birmingham, AL 35223, USA",Shoes,4500,Risk Flagged,,,,OK,29-04-2026
+ORD-1777409097108-930,Zaid Khan,3001234567,,"W4F8+6V7, Block 15 Gulistan-e-Johar, Karachi, 75290, Pakistan",Shoes,4500,Risk Flagged,,,,OK,29-04-2026
+,,,,Pakistan,,,Risk Flagged,,,,OK,
+,,,,,,,"""Pending""","""Not Checked""",,"""address wrong""",null,
+,,,,,,,"""Pending""","""Not Checked""",,"""address wrong""",null,
+ORD-1777446125196-880,Muhammad Ukasha,3001234567,,"House 3, Pakistan",,,Risk Flagged,,,,OK,29-04-2026
+ORD-1777446424758-667,Muhammad Ukasha,3001234567,,"Khanna Pul, Khanna, Pakistan",,,Auto-Confirmed,0,,System Verified: Address & City Match,OK,29-04-2026
+ORD-1777446484847-173,Muhammad Ukasha,3001234567,,"Karachi, Pakistan",,,Rejected,20,,"Address is somewhat incomplete, but can be used for delivery purposes",OK,29-04-2026
+ORD-1777446484847-173,Muhammad Ukasha,3001234567,,khanna pull,,,"""Pending""","""Not Checked""",,"""address wrong""",null,29-04-2026
+ORD-1777453167578-268,Muhammad ,3001234567,,"Karachi, Pakistan",,,Rejected,40,,"Incomplete address, but usable for delivery",OK,29-04-2026
+ORD-1777453200776-875,Muhammad Ukasha,3001234567,,"Karachi, Pakistan",,,Rejected,20,,,OK,29-04-2026
+ORD-1777453223071-143,Saeed Khan,3337654321,,"Sarwar Shaheed Rd, Karachi, Pakistan",,,Rejected,20,,"Incomplete address, but usable landmarks found",OK,29-04-2026
+ORD-1777453268222-212,Ahmed Ali,3121112233,,"Plot 3b Abdul Sattar Edhi Ave, Phase 6 Defence Housing Authority, Karachi, 75500, Pakistan",,,Rejected,20,,,OK,29-04-2026
+ORD-1777453325731-989,Fatima Zahra,3215554433,,near dolmen mall clifton,,,"""Pending""","""Not Checked""",,"""address wrong""",null,29-04-2026
+ORD-1777454181877-187,Fatima Zahra,3215554433,lahore,near dolmen mall clifton,,,"""Pending""","""Not Checked""",,"""address wrong""",null,29-04-2026
+ORD-1777454249069-749,Fatima Zahra,3215554433,Karachi,"Dolmen City, HC-3, sea view road، Marine Promenade, Block 4 Clifton, Karachi, Pakistan",,,Rejected,20,,"Incomplete address, but landmark (Dolmen Mall) is present.",OK,29-04-2026
+ORD-1777454291674-347,Ghulam Nabi,3450009988,,"House , Pakistan",,,Rejected,60,,"Incomplete address, but landmark (Government School) is used.",OK,29-04-2026
+ORD-1777454314427-880,Fatima Zahra,3215554433,Karachi,"Dolmen City, HC-3, sea view road، Marine Promenade, Block 4 Clifton, Karachi, Pakistan",,,Rejected,20,,,OK,29-04-2026
+ORD-1777454364032-411,Fatima Zahra,3215554433,lahore,near dolmen mall clifton,,,"""Pending""","""Not Checked""",,"""address wrong""",null,29-04-2026
+ORD-1777454380144-135,Fatima Zahra,3215554433,Karachi,"Dolmen Mall, Clifton, Karachi, Pakistan",,,Rejected,30,,"Address is usable but lacks specific house/building number or street details, making it slightly ambiguous for precise delivery. Dolmen Mall Clifton is a well-known landmark in Karachi.",OK,29-04-2026
+ORD-1777455030211-631,Fatima Zahra,3215554433,,Pakistan,,,Rejected,70,,Address is usable but landmarks are generic and could lead to confusion. 'Pishin stop' might refer to multiple locations.,OK,29-04-2026
+ORD-1777455290044-548,Fatima Zahra,3215554433,Peshawar,"Usman Plaza, near FC Check Post, Pishin Stop Peshawar",,,Rejected,75,,Address is usable but lacks specific details. 'Pishin stop' might be ambiguous within KPK. FC Check Post is a good landmark. Assuming the user meant Peshawar as the primary city in KPK for such an address.,OK,29-04-2026
+ORD-1777457211586-857,Fatima Zahra,3215554433,Karachi,"Baloch Pull, Karachi Baloch Colony Road",,,Rejected,60,,Address is a landmark but lacks specific details for precise delivery.,OK,29-04-2026
+ORD-1777457361580-971,Ahmed Ali,3121112233,Sukkur,"Main Shahi Bazar, Near Clock Tower, Sukkur Sukkur",,,Rejected,60,,"Address is usable but lacks specific details like house number or shop name. The landmark is clear, but proximity to the clock tower might still require rider confirmation with locals.",OK,29-04-2026
+ORD-1777457489675-570,Fatima Zahra,3215554433,,Near Dolmen Mall Clifton ,,,,,,,,29-04-2026
+ORD-1777457819263-426,Ghulam Nabi,3450009988,Larkana,"House Near Government School, Main Road, Larkana Larkana",,,Rejected,70,,Address is usable but landmarks are common and may lead to confusion. Rider needs to confirm exact location upon arrival.,OK,29-04-2026
+ORD-1777458525799-449,Fatima Zahra,3215554433,lahore,"Dolmen Mall Clifton, Karachi ",,,Risk Flagged,100,HIGH,"Address 'Dolmen Mall Clifton' is in Karachi, not Lahore. Delivery to Lahore is not possible with this address.",,29-04-2026
+ORD-1777459557646-641,Zaid Mansoor,3331234567,lahore,"House 5, Block B, Model Town, Lahore ",,,Risk Flagged,40,MEDIUM,Address is usable but lacks specific landmarks for precise delivery. Rider may need to call for clarification.,,29-04-2026
+ORD-1777459745906-891,Ghulam Rasool,3451112222,matiari,"Ward 5, Near Purana Bus Stop, Goth Mirpur, Matiari ",,,Risk Flagged,75,HIGH,Address is usable but requires confirmation for precise landmark.,,29-04-2026
+ORD-1777459828562-556,Ali Haider,3009998877,quetta,"Jinnah Road, Near Taj Mahal Hotel, Quetta ",,,Risk Flagged,60,MEDIUM,Address is understandable with a landmark but could be more specific. Rider might need to ask for further directions upon arrival.,,29-04-2026
+ORD-1777459906965-225,Usman Sheikh,3114445556,Peshawar,"Main Bazar, Peshawar ",,,Risk Flagged,70,HIGH,"Address is too generic, rider may need to call customer for specific location within Main Bazar.",,29-04-2026
+ORD-1777463518713-686,Ali Haider,3009998877,lahore,"Imtiaz Market, DHA, Lahore ",,,Risk Flagged,30,LOW,Address is clear and likely correct.,,29-04-2026
+ORD-1777464105412-220,Ali Haider,3009998877,ISLAMABAD,"KAMRAN HAIR SALON, GROUND FLOOR SHOP, ALANAYAT PLAZA, G-11 MARKAZ, NEAR LUMBER BAR12, ISLAMABAD ",,,Risk Flagged,20,LOW,Address is clear and belongs to the specified city.,,29-04-2026
+ORD-1777464295114-988,Ali Haider,3009998877,Lahore ,"Street 7, House 33, Mali Pura, Band Road, Baba Jhandy Shah, Lahore ",,,Risk Flagged,50,MEDIUM,Address seems generally usable but could benefit from more specific landmark details if available.,,29-04-2026
+ORD-1777464377684-629,Ali Haider,3009998877,Quetta,"GE (Army) Quetta-I, Stadium Road, Near FG Jinnah Middle School, Quetta Cantt, Mess No. 13 ",,,Risk Flagged,60,MEDIUM,Address is usable but could be more specific with building/flat number. Cantt areas can sometimes be confusing for riders.,,29-04-2026
+ORD-1777464473044-52,Ali Haider,3009998877,Okara,"Al-Fatah Bakery Store, Chuchak, Okara ",,,Risk Flagged,10,LOW,Address appears to be valid and usable for delivery within Okara.,,29-04-2026
+ORD-1777464719012-324,Ali Haider,3009998877,GUJARPUR, ,,,Risk Flagged,100,HIGH,"Provided address belongs to Gujranwala, not Gujarpur.",,29-04-2026
+ORD-1777464903933-885,Ali Haider,3009998877,KARACHI,"Porana Sabzi Mandi, Askari Park, Dhakhana Wala Road, Karachi ",,,Risk Flagged,75,HIGH,"Address is usable but lacks specific house number or plot details, increasing delivery risk.",,29-04-2026
+ORD-1777465516092-964,Ali Haider,3009998877,pindi,"UDC AUDIT CELL, The Postmaster General Northern Punjab Circle, Opposite FWO, RA Bazar, Rawalpindi ",,,Risk Flagged,20,LOW,Address clearly states Rawalpindi and provides sufficient details for delivery.,,29-04-2026
+ORD-1777468027804-558,Usman,3211234567,Karachi,"Paradise Bakery | Abul Hasan Isphahani Road Karachi Block 4A Gulzar E Hijri Scheme 33, Plot A 1970, Gulzar-e-Hijri Block 1/1 Metrovil Colony, Karachi",,,Risk Flagged,10,LOW,Address confirmed within the specified city. Basic landmark information available.,,29-04-2026
+ORD-1777468571394-413,Hina,3331234567,Karachi,Chase Up near NIPA | ,,,Risk Flagged,95,HIGH,Multiple locations found for Chase Up. Specify area/branch near NIPA.,,29-04-2026
+ORD-1777469436959-389,Hina,3331234567,Karachi,Chase Up near NIPA,,,Risk Flagged,95,HIGH,Multiple locations found. Specify area/branch,,29-04-2026
+ORD-1777470427567-191,Zaid,3098765432,Karachi,Imtiaz Super Market Karachi,,,Risk Flagged,95,HIGH,Multiple locations found. Specify area/branch,,29-04-2026
+ORD-1777470596014-949,Bilal,3000000001,Lahore,Imtiaz DHA Lahore,,,Risk Flagged,95,HIGH,Multiple locations found. Specify area/branch,,29-04-2026
+ORD-1777470650346-672,Hamza,3012344321,Islamabad,Bahria Town Islamabad,,,Risk Flagged,95,HIGH,Missing Phase/Block/Sector. Address too broad for delivery,,29-04-2026
+ORD-1777470693549-985,Noman,3219876543,Rawalpindi,Bahria Town Phase 7 Rawalpindi House 45,,,"""Pending""","""Not Checked""","""Not Checked""","""address wrong""",null,29-04-2026
+ORD-1777471828938-971,Noman,3219876543,Rawalpindi,"Bahria Town Phase 7 | Phase 7 Bahria Town, Islamabad",,,Risk Flagged,0,LOW,,,29-04-2026
+ORD-1777471998053-59,Ahmed,3011112222,Rawalpindi,"Khanna Pull | Khanna Pul, Khanna",,,Risk Flagged,70,MEDIUM,"Landmark is known, but missing street/house number for precise delivery.",,29-04-2026
+ORD-1777472831998-814,Sana,3335557777,Lahore,"Main Road | Main Rd, Johar Town, Lahore",,,Risk Flagged,50,MEDIUM,Usable address but lacks specific building or street number.,,29-04-2026
+ORD-1777472938969-978,Test User,3000000000,Block A,"House 10, Block A, Faisalabad | Plot 10, Haseeb Shaheed Colony Block A Peoples Colony 2, Faisalabad",,,Risk Flagged,10,LOW,Suspicious phone number,,29-04-2026
+ORD-1777473134607-489,Imran,3022223333,Gulberg Town,"گھر نمبر 12 | Block-12 Block 12 Gulberg Town, Karachi",,,Risk Flagged,30,MEDIUM,Address is usable but may benefit from more specific landmark or cross-street for rider.,,29-04-2026
+ORD-1777473284162-840,Farhan,3044445555,,DHA RAYA,,,Risk Flagged,95,HIGH,"DHA Raya is located in Lahore, not Karachi. Address too broad for delivery. Missing Phase/Block/Sector. Address too broad for delivery. Suspicious phone number.",,29-04-2026
+ORD-1777473376551-149,Saad,3121212121,Islamabad Capital Territory,Gulshan Block 5 | IslamabadGulshan Block 5 | Islamabad,,,Risk Flagged,0,LOW,,,29-04-2026
+ORD-1777473666978-60,Arif,3066667777,Rajanpur District,"Khalil Park | Rajanpur District, 33500",,,Risk Flagged,50,MEDIUM,"Landmark is clear, but missing specific house/shop details.",,29-04-2026
+ORD-1777473715621-904,Customer,3077778888,Block 5,"House 5, Near Masjid, Gulshan | 5th St, Block 5 Gulshan-e-Iqbal, Karachi",,,Risk Flagged,70,HIGH,"Incomplete address: Missing street name. Potentially ambiguous landmark 'Masjid' due to multiple mosques in Gulshan. Phone number format is valid, but further checks may be needed.",,29-04-2026
+ORD-1777473845867-866,Confused User,3088889999,,Gulshan Karachi near Johar Lahore,,,Risk Flagged,95,HIGH,"Address clearly indicates presence in Lahore, conflicting with the provided city 'Karachi'. Phone number format is valid.",,29-04-2026
+ORD-1777474177579-10,Confused User,3088889999,Karachi,Gulshan Karachi near Johar Lahore,,,"""Pending""","""Not Checked""","""Not Checked""","""address wrong""",null,29-04-2026
+ORD-1777474222440-307,Customer,3077778888,,House 5 | Near Masjid | Gulshan | Karachi,,,Risk Flagged,80,HIGH,Missing critical sub-locality (Block/Sector) for Gulshan. Phone number has a suspicious sequence.,,29-04-2026
+ORD-1777528461901-200,Farhan,3044445555,,Ary Laguna | Karachi,,,Risk Flagged,80,HIGH,Missing critical sub-locality (Block/Sector). Ary Laguna is a large area and requires specific block/sector for accurate delivery.,,30-04-2026
+ORD-1777528905205-798,Saad,3121212121,Islamabad Capital Territory,Gulshan Block 5 | Islamabad,,,Risk Flagged,10,LOW,Address validated and formatted. Added a minor risk score for a potentially generic area name.,,30-04-2026
+ORD-1777532212445-548,Saad,3121212121,Islamabad,Gulshan Block 5 | Islamabad,,,Auto-Confirmed,10,"LOW
+",Address seems valid and within Islamabad. Phone number format is standard.,OK,30-04-2026
+ORD-1777532492569-945,Saad,3121212121,karachi,metro gulshan,,,"""Pending""","""Not Checked""","""Not Checked""","""address wrong""",null,30-04-2026
+ORD-1777532813279-659,Saad,3121212121,Karachi,"Metro | Gulshan | Karachi
+",,,Risk Flagged,90,"HIGH
+","Ambiguous branch. Metro has multiple locations in Karachi. Please specify which Metro (e.g., Metro Cash & Carry Shahrah-e-Faisal, Metro Cash & Carry SITE).",SKIPPED,30-04-2026
+ORD-1777533306743-725,Confused User,3088889999,Karachi,"
+",,,Risk Flagged,95,"HIGH
+","Cross-city mismatch. 'Johar Lahore' is in Lahore, not Karachi. Also, 'Gulshan' in Karachi requires a Block/Phase for accurate delivery.",SKIPPED,30-04-2026
+ORD-1777533538504-812,Test User,3000000000,Faisalabad,"House 10 | Plot 10, Haseeb Shaheed Colony Block A Peoples Colony 2, Faisalabad",,,Auto-Confirmed,0,"LOW
+",Address is clear and validated.,OK,30-04-2026
+ORD-1777535530028-291,Test User,3000000000,Faisalabad,House 10 Block A Faisalabad,,,new,50,Not Checked,"""Validating""",Not Checked,30-04-2026
+ORD-1777537359340-609,Test User,3000000000,Faisalabad,"House 10 | Block A | Faisalabad, Pakistan
+",,,Risk Flagged,70,"HIGH
+",Missing street information. Phone number appears sequential.,SKIPPED,30-04-2026
+ORD-1777538312747-513,Saad,3121212121,Islamabad,"Gulshan Block 5, Islamabad, Pakistan
+",,,Risk Flagged,95,"CRITICAL
+",Missing critical sub-locality (Phase/Block/Sector). This society is too large for delivery without it.,SKIPPED,30-04-2026
+ORD-1777538431206-988,Customer,3077778888,Karachi,"House 5 | Near Masjid | Gulshan-e-Iqbal, Karachi, Pakistan
+",,,Risk Flagged,65,"HIGH
+",Ambiguous landmark — multiple masjids exist in Gulshan-e-Iqbal. Please specify the landmark or provide a more specific address.,SKIPPED,30-04-2026
+ORD-1777538464970-28,Farhan,3044445555,Karachi,"DHA RAYA | Karachi, Pakistan
+",,,Risk Flagged,85,"HIGH
+",Missing critical sub-locality (Phase/Block/Sector). This society is too large for delivery without it.,SKIPPED,30-04-2026
+ORD-1777538687211-2,Test User,3000000000,Karachi,"Khanna Pull, Karachi, Pakistan
+",,,Risk Flagged,70,"HIGH
+","Khanna Pul is a known locality in Islamabad, not Karachi. City mismatch: address appears to be in Islamabad but customer declared Karachi. Phone number pattern is suspicious.",SKIPPED,30-04-2026
+ORD-1777538818533-353,Test User,3358385920,Sargodha,Chak No 45 JB | Sargodha,,,Risk Flagged,10,"LOW
+",Address validated and formatted.,OK,30-04-2026
+ORD-1777538888494-935,Test User,3358385920,Lahore,"Near McDonald's | DHA | Lahore, Pakistan
+",,,Risk Flagged,90,"CRITICAL
+","Ambiguous landmark — multiple branches exist. Please specify the area (e.g., DHA Phase 1 branch or DHA Phase 6 branch).",SKIPPED,30-04-2026
+ORD-1777538943852-970,Test User,3358385920,Lahore,"Village Haji Achar, Union Council Mirpur Bathoro, Taluka Mirpur Bathoro, District Sujawal, Sindh, Pakistan
+",,,Risk Flagged,90,"CRITICAL
+",City mismatch: address appears to be in Sujawal but customer declared Lahore.,SKIPPED,30-04-2026
+ORD-1777539022141-341,Test User,3358385920,Karachi,"Taxilla, Taluka Mirpur Bathoro, Karachi, Pakistan
+",,,Risk Flagged,88,"CRITICAL
+",City mismatch: address appears to be in Taxila (Punjab) but customer declared Karachi.,SKIPPED,30-04-2026
+ORD-1777539135487-221,Farhan,3044445555,Karachi,"Paradise Bakery | Abul Hasan Isphahani Road Karachi Block 4A Gulzar E Hijri Scheme 33, Plot A 1970, Gulzar-e-Hijri Block 1/1 Metrovil Colony, Karachi",,,Risk Flagged,20,"LOW
+","Address is clear, however the exact branch of Paradise Bakery is not specified, assuming the main branch near Karachi University.",OK,30-04-2026
+ORD-1777539296754-383,Farhan,3084743565,Karachi,"Bahria Town Phase 4 Block AA, Karachi, Pakistan | Karachi",,,Risk Flagged,10,"LOW
+",Address is clear and specific.,OK,30-04-2026
+ORD-1777539423804-679,Farhan,3084743565,Faislabad,"Chak 112 RB Nialy Wala Pull, Dostana Wali Gali, Faisalabad, Pakistan | Chak No. 112 J.B. Ramdewali",,,Risk Flagged,10,LOW,Address is clear and specific.,OK,30-04-2026
+ORD-1777539657860-780,Farhan,3084743565,Karachi,"House 5, Street 3, Block B, DHA Phase 6, Karachi
+",,,Risk Flagged,70,HIGH,Address contains conflicting locality information: 'Gulshan-e-Iqbal' is a separate area in Karachi and not part of DHA Phase 6. Please clarify the correct location.,SKIPPED,30-04-2026
+ORD-1777539985211-10,Farhan,3084743565,karachi,Szabist karachi,,,Risk Flagged,"""Not Checked""","""Not Checked""","""address wrong""",null,30-04-2026
+ORD-1777540019599-903,Farhan,3084743565,Karachi,"SZABIST | 99 3rd Ave, Block 5 Clifton, Karachi, 75600",,,Auto-Confirmed,30,"LOW
+","Address is understandable but lacks specificity for rider delivery. Please provide house number, street, and specific area within SZABIST.",OK,30-04-2026
+ORD-1777540205694-43,Farhan,3084743565,Texas,"Szabist | Karachi, Pakistan
+",,,Risk Flagged,100,"CRITICAL
+",Address is not in Pakistan.,SKIPPED,30-04-2026
+ORD-1777561573720-808,Farhan,3084743565,Mithyari,"Goth Mirpur, Ward 5 | Mithyari, Pakistan
+",,,Risk Flagged,65,"HIGH
+","The declared city is Mithyari, but ""Goth Mirpur"" is a very general area. Please confirm the specific location and any nearby landmarks for better rider navigation.",SKIPPED,30-04-2026
+ORD-1777561691794-239,Farhan,3084743565,Islamabad,"House 44 | Bahria Town | Islamabad, Pakistan
+",,,Risk Flagged,95,"CRITICAL
+",Missing critical sub-locality (Phase/Block/Sector). This society is too large for delivery without it.,SKIPPED,30-04-2026
+ORD-1777561826737-470,Farhan,3084743565,Karachi,"Near Dolmen Mall | D.H.A. Phase 4 Phase 4 Defence Housing Authority, Karachi",,,Auto-Confirmed,10,"LOW
+",Address validated and formatted. Dolmen Mall is a well-known landmark in Karachi and Defence Phase 4 is a standard area within Karachi. Phone number is valid.,OK,30-04-2026
+ORD-1777562501378-268,Farhan,3084743565,Karachi,Dolmen Mall | Karachi,,,Auto-Confirmed,10,"LOW
+",Address is clear and specific.,OK,30-04-2026
+ORD-1777613484522-503,Farhan,3084743565,Karachi,"Near Dolmen Mall | Dolmen Mall, Karachi",,,Auto Confirmed,10,"LOW
+",Address is clear and specific.,OK,01-05-2026
+ORD-1777614551143-450,Farhan,3084743565,Karachi,"House 5, Street 3, Block B, DHA Phase 6, Karachi | block b, 5 St 3, DHA Phase 5 Saba Commercial Area Defence V Defence Housing Authority, Karachi, 75500",,,Auto Confirmed,85,"HIGH
+",Address contains a conflicting area name 'Gulshan-e-Iqbal' which is a different locality within Karachi and not typically part of DHA Phase 6. Please confirm the correct address.,OK,01-05-2026
+ORD-1777618519073-654,Bilal,3051234567,Hyderabad,"House 12 | 4 St !, Bismillah City Bismillah City Phase 1, Hyderabad",,,Auto Confirmed,10,"LOW
+",Address is clear and specific.,OK,01-05-2026
+ORD-1777618769223-254,Usman,3061234567,Lahore,"Bahria Town, Lahore | Bahria Town, Lahore",,,Auto Confirmed,95,"CRITICAL
+","Missing critical sub-locality (Phase/Block/Sector). This society is too large for delivery without it. Landmark 'Eiffel Tower' is not in Lahore, Pakistan.",OK,01-05-2026
+ORD-1777618903971-888,Rehan,3121234567,Lahore,University Road | Peshawar,,,Auto Confirmed,90,"CRITICAL
+",City mismatch: address appears to be in Peshawar but customer declared Lahore.,OK,01-05-2026
+ORD-1777618965387-33,Sajid,3071234567,Peshawar,"Near Saddar Bazaar | Saddar Bazar, Peshawar Cantonment, Peshawar",,,Auto Confirmed,35,"MEDIUM
+","Address is vague. 'Near Saddar Bazaar' needs more specificity (e.g., street name, shop number).",OK,01-05-2026
+ORD-1777619041651-513,Naveed,3000000000,Larkana,"Ali Town, Larkana, Pakistan | H627+JJ7, Nasirabad Rd, Larkana",,,Auto Confirmed,65,"HIGH
+","Address is too vague. Please confirm the full address with the customer. The phone number is a sequential pattern, indicating potential risk.",OK,01-05-2026
+ORD-1777619507772-693,Farhan,3084743565,Texas,"Texas, Karachi, Pakistan | Karachi",,,Auto Confirmed,100,"CRITICAL
+",Address is not in Pakistan.,OK,01-05-2026
+ORD-1777619777096-359,Farhan,3084743565,Karachi,Karachi,,,Auto Confirmed,70,"HIGH
+",Please confirm the full address with the customer. Szabist is a university and could have multiple campuses or locations. Need more specific location details.,OK,01-05-2026
+ORD-1777619954240-463,Farhan,3084743565,Karachi,"PIDC House, Aiwan-e-Tijarat Road, Civil Lines, Karachi, Pakistan | Aiwan-e-Tijarat Rd, Karachi",,,Auto Confirmed,70,"HIGH
+","Address is too vague. 'PIDC Karachi' is not specific enough. Please provide a complete address including building name, street, area, and house/office number. ",OK,01-05-2026
+ORD-1777619997486-592,Farhan,3084743565,Karachi,Karachi,,,Auto Confirmed,70,"HIGH
+","Address is too vague. Please specify the street, block, or sector. 'PIB' is an area, but not specific enough for delivery.",OK,01-05-2026
+ORD-1777620432569-131,Farhan,3084743565,Karachi,"DHA Karachi, Karachi, Pakistan | Defence Housing Authority, Karachi, 75500",,,Auto Confirmed,95,"CRITICAL
+",Missing critical sub-locality (Phase/Block/Sector). This society is too large for delivery without it.,OK,01-05-2026
+ORD-1777620473011-944,Farhan,3084743565,Karachi,,,,#NAME?,95,"CRITICAL
+",,OK,01-05-2026
+ORD-1777622132163-54,Farhan,3084743565,Karachi,Karachi,,,Rejected,95,"CRITICAL
+",City mismatch: address appears to be in Karachi but customer declared Islamabad.,OK,01-05-2026
+ORD-1777622379151-145,Farhan,3084743565,Karachi,"Szabist | 99 3rd Ave, Block 5 Clifton, Karachi, 75600",,,Risk Flagged,20,"LOW
+",Address is understandable but could be more specific. Provided phone number is valid.,OK,01-05-2026
+ORD-1777622567344-520,Farhan,3084743565,Karachi,"Bakrey Paradise | Abul Hasan Isphahani Road Karachi Block 4A Gulzar E Hijri Scheme 33, Plot A 1970, Gulzar-e-Hijri Block 1/1 Metrovil Colony, Karachi",,,Auto-Confirmed,10,"LOW
+",Address is clear and specific.,OK,01-05-2026
+ORD-1777622683638-188,Farhan,3084743565,Karachi,"KE Office | V38M+CVC, Falcon Complex Faisal Falcon Complex, Karachi",,,Risk Flagged,15,"LOW
+",Address validated and formatted.,OK,01-05-2026
+ORD-1777622765880-836,Farhan,3084743565,Karachi,"Near KE Office | All Noor Society Karachi, راشد منہاس روڈ، Federal B Area Al Noor Society Block 19 Gulberg Town, Karachi",,,Risk Flagged,30,"LOW
+",Address is specific and verifiable. Phone number is valid.,OK,01-05-2026
+ORD-1777622898381-912,Farhan,3084743565,Karachi,"Teachers Society, Karachi, Pakistan | Teachers Society Gulistan Housing Society Sector 19 A Gulzar E Hijri Scheme 33, Karachi",,,Risk Flagged,70,"HIGH
+","Vague address - 'Teachers Society' is too broad. Please confirm the full address with the customer, including specific streets or block numbers.",OK,01-05-2026
+ORD-1777632661354-707,Farhan,3084743565,Karachi,"House 5, Street 3, Block B, DHA Phase 6, Gulshan-e-Iqbal, Karachi, Pakistan | block b, 5 Street No. 3, Haji Lemo Goth Gulshan-e-Iqbal, Karachi",,,Risk Flagged,85,"HIGH
+","Ambiguity: Gulshan-e-Iqbal is a large area, and DHA Phase 6 is also a distinct locality within Karachi. Please specify if the delivery is within Gulshan-e-Iqbal but outside DHA, or within DHA Phase 6. The address combines two distinct major localities. Also, the provided landmark 'Gulshan-e-Iqbal' is redundant and potentially confusing when 'DHA Phase 6' is already specified. This combination suggests a misunderstanding or a potential mapping error by the user.",OK,01-05-2026
+ORD-1777632780376-793,Farhan,3084743565,Texas,"Szabist | 99 3rd Ave, Block 5 Clifton, Karachi, 75600",,,Rejected,85,"HIGH
+",Address is not in Pakistan.,OK,01-05-2026
+ORD-1777633508523-60,Farhan,3084743565,Islamabad,"House 44 | Street 44, Bahria Town Phase III Phase 3 Bahria Town, Islamabad",,,Rejected,95,"CRITICAL
+",Missing critical sub-locality (Phase/Block/Sector). This society is too large for delivery without it.,OK,01-05-2026
+ORD-1777633933906-291,Farhan,3084743565,Karachi,"Paradise Bakery | Abul Hasan Isphahani Road Karachi Block 4A Gulzar E Hijri Scheme 33, Plot A 1970, Gulzar-e-Hijri Block 1/1 Metrovil Colony, Karachi",,,Risk Flagged,70,"HIGH
+","Ambiguous landmark — multiple branches exist. Please specify the area (e.g., PECHS branch or Tariq Road branch).",OK,01-05-2026
