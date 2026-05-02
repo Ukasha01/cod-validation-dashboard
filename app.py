@@ -31,8 +31,9 @@ if url:
         df = df.dropna(axis=1, how='all')
 
         # 🚫 REMOVE EMPTY ROWS (important)
-        df = df.dropna(how='any')
+required_columns = ['status', 'city', 'address']
 
+df = df.dropna(subset=[col for col in required_columns if col in df.columns])
         if df.empty:
             st.warning("⚠️ No valid data available")
             st.stop()
