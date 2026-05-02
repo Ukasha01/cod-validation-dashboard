@@ -51,7 +51,11 @@ risk = len(df[df['status'] == 'Risk Flagged'])
 rejected = len(df[df['status'] == 'Rejected'])
 
 high_risk = len(df[df['risk_level'] == 'HIGH']) if 'risk_level' in df.columns else 0
-avg_risk = round(df['risk_score'].mean(), 1) if 'risk_score' in df.columns else 0
+if 'risk_score' in df.columns:
+    df['risk_score'] = pd.to_numeric(df['risk_score'], errors='coerce')
+    avg_risk = round(df['risk_score'].mean(), 1)
+else:
+    avg_risk = 0
 
 # ======================
 # 📊 METRICS UI
