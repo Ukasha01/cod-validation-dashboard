@@ -16,27 +16,24 @@ url = st.text_input("https://docs.google.com/spreadsheets/d/1QXHOICBrv0zMk5nFFqT
 # ======================
 # 📥 LOAD DATA
 # ======================
-@st.cache_data(ttl=10)
-def load_data(url):
-    return pd.read_csv(url)
+csv_url = "https://docs.google.com/spreadsheets/d/1QXHOICBrv0zMk5nFFqTWxg43p4_mA5ENxk6rBoXEXyI/export?format=csv"
 
-if url:
-    try:
-        df = load_data(url)
+try:
+    df = pd.read_csv(csv_url)
 
-        # Clean columns
-        df.columns = df.columns.str.strip().str.lower()
+    # Clean column names
+    df.columns = df.columns.str.strip().str.lower()
 
-        # 🚫 REMOVE EMPTY COLUMNS
-        df = df.dropna(axis=1, how='all')
+    # Remove empty columns
+    df = df.dropna(axis=1, how='all')
 
-        # 🚫 REMOVE EMPTY ROWS (important)
-required_columns = ['status', 'city', 'address']
+    # Keep only important rows
+    required_columns = ['status', 'city', 'address']
+    df = df.dropna(subset=[col for col in required_columns if col in df.columns])
 
-df = df.dropna(subset=[col for col in required_columns if col in df.columns])
-        if df.empty:
-            st.warning("⚠️ No valid data available")
-            st.stop()
+except Exception as e:
+    st.error(f"Error loading data: {e}")
+    df = pd.DataFrame()
 
         # ======================
         # 📊 SMART STATS
