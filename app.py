@@ -76,7 +76,7 @@ except Exception as e:
                 return "background-color: #fff4e5; color: #e67e22; font-weight: bold;"
         elif val == "Auto-Confirmed":
                 return "background-color: #eafaf1; color: #27ae60; font-weight: bold;"
-            return ""
+            
 
         def color_risk(val):
             if val == "HIGH":
