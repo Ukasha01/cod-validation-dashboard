@@ -112,6 +112,4 @@ except Exception as e:
         st.subheader("📋 Orders Overview")
         st.dataframe(styled_df, use_container_width=True)
 
-    except Exception as e:
-        st.error("❌ Error loading dashboard")
-        st.text(str(e))
+ 
