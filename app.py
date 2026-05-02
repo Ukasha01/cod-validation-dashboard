@@ -55,16 +55,16 @@ except Exception as e:
         # ======================
         # 📊 METRICS UI
         # ======================
-        col1, col2, col3, col4, col5, col6 = st.columns(6)
+    col1, col2, col3, col4, col5, col6 = st.columns(6)
 
-        col1.metric("📦 Orders", total)
-        col2.metric("✅ Confirmed", confirmed)
-        col3.metric("⚠️ Risk", risk, f"{risk_rate}%")
-        col4.metric("❌ Rejected", rejected, f"{rejection_rate}%")
-        col5.metric("🔥 High Risk", high_risk)
-        col6.metric("📊 Avg Risk", avg_risk)
+    col1.metric("📦 Orders", total)
+    col2.metric("✅ Confirmed", confirmed)
+    col3.metric("⚠️ Risk", risk, f"{risk_rate}%")
+    col4.metric("❌ Rejected", rejected, f"{rejection_rate}%")
+    col5.metric("🔥 High Risk", high_risk)
+    col6.metric("📊 Avg Risk", avg_risk)
 
-        st.divider()
+    st.divider()
 
         # ======================
         # 🎨 STYLE FUNCTIONS
