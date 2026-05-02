@@ -39,18 +39,18 @@ except Exception as e:
         # 📊 SMART STATS
         # ======================
     total = len(df)
-        confirmed = len(df[df['status'] == 'Auto-Confirmed'])
-        risk = len(df[df['status'] == 'Risk Flagged'])
-        rejected = len(df[df['status'] == 'Rejected'])
+    confirmed = len(df[df['status'] == 'Auto-Confirmed'])
+    risk = len(df[df['status'] == 'Risk Flagged'])
+    rejected = len(df[df['status'] == 'Rejected'])
 
-        high_risk = len(df[df['risk_level'] == 'HIGH']) if 'risk_level' in df.columns else 0
+    high_risk = len(df[df['risk_level'] == 'HIGH']) if 'risk_level' in df.columns else 0
 
-        rejection_rate = round((rejected / total) * 100, 2)
-        risk_rate = round((risk / total) * 100, 2)
+    rejection_rate = round((rejected / total) * 100, 2)
+    risk_rate = round((risk / total) * 100, 2)
 
-        top_city = df['city'].mode()[0] if 'city' in df.columns else "N/A"
+    top_city = df['city'].mode()[0] if 'city' in df.columns else "N/A"
 
-        avg_risk = round(df['risk_score'].mean(), 1) if 'risk_score' in df.columns else 0
+    avg_risk = round(df['risk_score'].mean(), 1) if 'risk_score' in df.columns else 0
 
         # ======================
         # 📊 METRICS UI
