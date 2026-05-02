@@ -38,7 +38,7 @@ except Exception as e:
         # ======================
         # 📊 SMART STATS
         # ======================
-        total = len(df)
+    total = len(df)
         confirmed = len(df[df['status'] == 'Auto-Confirmed'])
         risk = len(df[df['status'] == 'Risk Flagged'])
         rejected = len(df[df['status'] == 'Rejected'])
