@@ -72,9 +72,9 @@ except Exception as e:
     def color_status(val):
         if val == "Rejected":
                 return "background-color: #fdecea; color: #c0392b; font-weight: bold;"
-            elif val == "Risk Flagged":
+        elif val == "Risk Flagged":
                 return "background-color: #fff4e5; color: #e67e22; font-weight: bold;"
-            elif val == "Auto-Confirmed":
+        elif val == "Auto-Confirmed":
                 return "background-color: #eafaf1; color: #27ae60; font-weight: bold;"
             return ""
 
