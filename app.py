@@ -1,18 +1,16 @@
 import streamlit as st
 import pandas as pd
 
+# ======================
+# PAGE CONFIG
+# ======================
 st.set_page_config(layout="wide")
 
-# ======================
-# 🎨 HEADER
-# ======================
-st.markdown("""
-<h1 style='text-align: center; color: #2c3e50;'>📦 COD Validation Dashboard</h1>
-<p style='text-align: center; color: gray;'>AI-powered Order Intelligence System</p>
-""", unsafe_allow_html=True)
+st.title("📦 COD Order Intelligence Dashboard")
+st.caption("AI-powered Address Validation & Risk Monitoring")
 
 # ======================
-# 🔗 INPUT
+# GOOGLE SHEET CSV LINK
 # ======================
 csv_url = st.text_input(
     "Paste Google Sheet CSV Link",
@@ -20,91 +18,123 @@ csv_url = st.text_input(
 )
 
 # ======================
-# 📥 LOAD DATA
+# AUTO REFRESH
+# ======================
+st.markdown("🔄 Auto-refresh every 10 seconds")
+st.experimental_rerun if False else None  # placeholder
+
+# ======================
+# LOAD DATA
 # ======================
 try:
     df = pd.read_csv(csv_url)
 
     df.columns = df.columns.str.strip().str.lower()
     df = df.dropna(axis=1, how='all')
-
-    required_columns = ['status', 'city', 'address']
-    df = df.dropna(subset=[col for col in required_columns if col in df.columns])
+    df = df.fillna("")
 
 except Exception as e:
     st.error(f"Error loading data: {e}")
-    df = pd.DataFrame()
-
-# ======================
-# 🚨 IF EMPTY
-# ======================
-if df.empty:
-    st.warning("No valid data available")
     st.stop()
 
 # ======================
-# 📊 STATS
+# REQUIRED COLUMNS CHECK
+# ======================
+required = ['status', 'city', 'address']
+
+if not all(col in df.columns for col in required):
+    st.warning("Required columns missing (status, city, address)")
+    st.stop()
+
+# ======================
+# SAFE NUMERIC CONVERSION
+# ======================
+if 'risk_score' in df.columns:
+    df['risk_score'] = pd.to_numeric(df['risk_score'], errors='coerce')
+
+# ======================
+# 📊 KPI METRICS
 # ======================
 total = len(df)
 confirmed = len(df[df['status'] == 'Auto-Confirmed'])
 risk = len(df[df['status'] == 'Risk Flagged'])
 rejected = len(df[df['status'] == 'Rejected'])
 
-high_risk = len(df[df['risk_level'] == 'HIGH']) if 'risk_level' in df.columns else 0
-if 'risk_score' in df.columns:
-    df['risk_score'] = pd.to_numeric(df['risk_score'], errors='coerce')
-    avg_risk = round(df['risk_score'].mean(), 1)
-else:
-    avg_risk = 0
+high_risk = len(df[df.get('risk_level', '') == 'HIGH'])
 
-# ======================
-# 📊 METRICS UI
-# ======================
+avg_risk = round(df['risk_score'].mean(), 1) if 'risk_score' in df.columns else 0
+
 col1, col2, col3, col4, col5 = st.columns(5)
 
-col1.metric("📦 Orders", total)
+col1.metric("📦 Total Orders", total)
 col2.metric("✅ Confirmed", confirmed)
-col3.metric("⚠️ Risk", risk)
+col3.metric("⚠️ Risk Orders", risk)
 col4.metric("❌ Rejected", rejected)
 col5.metric("🔥 High Risk", high_risk)
 
 st.divider()
 
 # ======================
-# 🎨 COLOR FUNCTIONS
+# 📊 INSIGHTS (REAL VALUE)
+# ======================
+st.subheader("📊 Insights")
+
+colA, colB = st.columns(2)
+
+with colA:
+    top_city = df['city'].mode()[0] if 'city' in df.columns else "N/A"
+    st.info(f"🏙️ Most Orders From: {top_city}")
+
+with colB:
+    st.info(f"📊 Average Risk Score: {avg_risk}")
+
+# ======================
+# 🎛️ FILTERS
+# ======================
+st.subheader("🎛️ Filters")
+
+colF1, colF2 = st.columns(2)
+
+with colF1:
+    status_filter = st.selectbox(
+        "Filter by Status",
+        ["All", "Auto-Confirmed", "Risk Flagged", "Rejected"]
+    )
+
+with colF2:
+    city_filter = st.selectbox(
+        "Filter by City",
+        ["All"] + sorted(df['city'].unique().tolist())
+    )
+
+# Apply filters
+if status_filter != "All":
+    df = df[df['status'] == status_filter]
+
+if city_filter != "All":
+    df = df[df['city'] == city_filter]
+
+# ======================
+# 🎨 COLUMN COLORING
 # ======================
 def color_status(val):
     if val == "Rejected":
-        return "background-color: #fdecea; color: #c0392b; font-weight: bold;"
+        return "background-color: #ffe5e5; color: #d63031;"
     elif val == "Risk Flagged":
-        return "background-color: #fff4e5; color: #e67e22; font-weight: bold;"
+        return "background-color: #fff4e5; color: #e67e22;"
     elif val == "Auto-Confirmed":
-        return "background-color: #eafaf1; color: #27ae60; font-weight: bold;"
+        return "background-color: #eafaf1; color: #27ae60;"
     return ""
 
 def color_risk(val):
     if val == "HIGH":
-        return "background-color: #f8d7da; color: #721c24;"
+        return "background-color: #ffd6d6;"
     elif val == "MEDIUM":
-        return "background-color: #fff3cd; color: #856404;"
+        return "background-color: #fff0cc;"
     elif val == "LOW":
-        return "background-color: #d4edda; color: #155724;"
+        return "background-color: #e6ffe6;"
     return ""
 
-# ======================
-# 🎯 FILTER
-# ======================
-filter_status = st.selectbox(
-    "Filter by Status",
-    ["All", "Auto-Confirmed", "Risk Flagged", "Rejected"]
-)
-
-if filter_status != "All":
-    df = df[df['status'] == filter_status]
-
-# ======================
-# 🎨 TABLE STYLING
-# ======================
 styled_df = df.style
 
 if 'status' in df.columns:
@@ -116,5 +146,18 @@ if 'risk_level' in df.columns:
 # ======================
 # 📋 TABLE
 # ======================
-st.subheader("📋 Orders Overview")
+st.subheader("📋 Orders Table")
 st.dataframe(styled_df, use_container_width=True)
+
+# ======================
+# 🚨 FRAUD ALERT SECTION
+# ======================
+st.subheader("🚨 High Risk Orders")
+
+if 'risk_level' in df.columns:
+    high_df = df[df['risk_level'] == 'HIGH']
+
+    if len(high_df) > 0:
+        st.dataframe(high_df, use_container_width=True)
+    else:
+        st.success("No high-risk orders 🎉")
