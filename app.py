@@ -4,14 +4,24 @@ import matplotlib.pyplot as plt
 import time
 
 # ======================
-# ⚙️ CONFIG
+# ⚙️ PAGE CONFIG
 # ======================
 st.set_page_config(page_title="COD Intelligence", layout="wide")
 
+# Reduce spacing (important for SaaS look)
+st.markdown("""
+<style>
+.block-container {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # ======================
-# 🔐 LOGIN (Simple SaaS Gate)
+# 🔐 LOGIN
 # ======================
-st.markdown("## 🔐 Secure Access")
+st.markdown("### 🔐 Secure Access")
 password = st.text_input("Enter Password", type="password")
 
 if password != "admin123":
@@ -19,15 +29,15 @@ if password != "admin123":
     st.stop()
 
 # ======================
-# 🎨 CLEAN HEADER
+# 🎯 HEADER
 # ======================
 st.markdown("""
-<h1 style='text-align:center;'>📦 COD Intelligence Dashboard</h1>
-<p style='text-align:center;color:gray;'>AI-powered Order Validation & Profit Intelligence</p>
+<h2 style='text-align:center;'>📦 COD Intelligence Dashboard</h2>
+<p style='text-align:center;color:gray;'>AI-powered Order Validation & Profit Insights</p>
 """, unsafe_allow_html=True)
 
 # ======================
-# 🔗 HIDDEN DATA SOURCE
+# 🔗 DATA SOURCE (HIDDEN)
 # ======================
 CSV_URL = "https://docs.google.com/spreadsheets/d/1QXHOICBrv0zMk5nFFqTWxg43p4_mA5ENxk6rBoXEXyI/export?format=csv"
 
@@ -36,22 +46,15 @@ CSV_URL = "https://docs.google.com/spreadsheets/d/1QXHOICBrv0zMk5nFFqTWxg43p4_mA
 # ======================
 try:
     df = pd.read_csv(CSV_URL)
-
-    # Clean columns
     df.columns = df.columns.str.strip().str.lower()
-
-    # Remove empty columns
     df = df.dropna(axis=1, how='all')
-
-    # Fill empty
     df = df.fillna("")
-
 except Exception as e:
     st.error(f"Error loading data: {e}")
     st.stop()
 
 # ======================
-# 🧹 DATA CLEANING
+# 🧹 CLEAN DATA
 # ======================
 if 'status' in df.columns:
     df['status'] = df['status'].astype(str).str.strip()
@@ -59,24 +62,35 @@ if 'status' in df.columns:
 if 'city' in df.columns:
     df['city'] = df['city'].astype(str).str.strip().str.title()
 
-# Remove garbage rows
+# Remove junk values
 df = df[~df['status'].isin(["", "new", "pending", "#NAME?"])]
 
-# Convert risk_score
+# Fix numeric
 if 'risk_score' in df.columns:
     df['risk_score'] = pd.to_numeric(df['risk_score'], errors='coerce')
 
 # ======================
 # 💰 BUSINESS INPUT
 # ======================
-st.subheader("💰 Business Settings")
+avg_order_value = st.number_input("💰 Avg Order Value (Rs)", value=3000)
 
-avg_order_value = st.number_input("Average Order Value (Rs)", value=3000)
 # ======================
-# 🎯 COMPACT KPI CARDS
+# 📊 KPIs
 # ======================
-st.markdown("### 📊 Overview")
+total = len(df)
+confirmed = len(df[df['status'] == 'Auto-Confirmed'])
+risk = len(df[df['status'] == 'Risk Flagged'])
+rejected = len(df[df['status'] == 'Rejected'])
+high_risk = len(df[df.get('risk_level', '') == 'HIGH'])
 
+avg_risk = round(df['risk_score'].mean(), 1) if 'risk_score' in df.columns else 0
+
+loss = rejected * avg_order_value
+risk_amount = risk * avg_order_value
+
+# ======================
+# 📊 KPI ROW (COMPACT)
+# ======================
 k1, k2, k3, k4, k5, k6 = st.columns(6)
 
 k1.metric("Orders", total)
@@ -86,24 +100,29 @@ k4.metric("Rejected", rejected)
 k5.metric("High Risk", high_risk)
 k6.metric("Avg Risk", avg_risk)
 
+k7, k8 = st.columns(2)
+
+k7.metric("💸 Loss", f"Rs {loss:,}")
+k8.metric("⚠️ At Risk", f"Rs {risk_amount:,}")
+
 st.divider()
 
 # ======================
-# 📊 COMPACT ANALYTICS ROW
+# 📊 COMPACT ANALYTICS
 # ======================
 c1, c2, c3 = st.columns([1,1,1])
 
-# 🍩 SMALL DONUT (FIXED SIZE)
+# 🍩 SMALL DONUT
 with c1:
     st.markdown("#### Status")
 
     status_counts = df['status'].value_counts()
 
-    fig, ax = plt.subplots(figsize=(2.5,2.5))  # 👈 SMALL SIZE
+    fig, ax = plt.subplots(figsize=(2.5,2.5))
 
     ax.pie(
         status_counts,
-        labels=None,  # 👈 REMOVE LABEL CLUTTER
+        labels=None,
         autopct='%1.0f%%',
         textprops={'fontsize':8}
     )
@@ -111,29 +130,28 @@ with c1:
     centre = plt.Circle((0,0),0.65,fc='white')
     fig.gca().add_artist(centre)
 
-    ax.set_title("", fontsize=8)
-
     st.pyplot(fig, use_container_width=True)
 
-# 📊 SMALL BAR CHART
+# 📊 CITY CHART
 with c2:
     st.markdown("#### Cities")
 
-    city_counts = df['city'].value_counts().head(5)
+    if 'city' in df.columns:
+        city_counts = df['city'].value_counts().head(5)
 
-    fig2, ax2 = plt.subplots(figsize=(3,2))  # 👈 SMALL
-    ax2.barh(city_counts.index, city_counts.values)
-    ax2.tick_params(labelsize=8)
+        fig2, ax2 = plt.subplots(figsize=(3,2))
+        ax2.barh(city_counts.index, city_counts.values)
+        ax2.tick_params(labelsize=8)
 
-    st.pyplot(fig2, use_container_width=True)
+        st.pyplot(fig2, use_container_width=True)
 
-# 🧠 MICRO INSIGHTS PANEL
+# 🧠 INSIGHTS
 with c3:
     st.markdown("#### Insights")
 
     risk_pct = round((risk/total)*100,1) if total > 0 else 0
 
-    top_city = df['city'].value_counts().idxmax()
+    top_city = df['city'].value_counts().idxmax() if 'city' in df.columns else "N/A"
 
     st.markdown(f"""
     **Top City:** {top_city}  
@@ -147,56 +165,11 @@ with c3:
         st.warning("Moderate Risk ⚠️")
     else:
         st.success("Healthy ✅")
-# 📈 Insights
-with colB:
-    st.markdown("### 🧠 Business Insights")
-
-    if total > 0:
-        risk_pct = round((risk/total)*100,1)
-    else:
-        risk_pct = 0
-
-    top_city = df['city'].value_counts().idxmax() if 'city' in df.columns else "N/A"
-
-    high_risk_city = "N/A"
-    if 'risk_level' in df.columns:
-        high_df = df[df['risk_level']=="HIGH"]
-        if len(high_df)>0:
-            high_risk_city = high_df['city'].value_counts().idxmax()
-
-    st.info(f"📍 Most Orders: {top_city}")
-    st.warning(f"⚠️ High Risk City: {high_risk_city}")
-    st.error(f"🚨 Risk Rate: {risk_pct}%")
-
-    if risk_pct > 50:
-        st.error("👉 Action: Enable strict verification")
-    elif risk_pct > 30:
-        st.warning("👉 Action: Monitor risky orders")
-    else:
-        st.success("👉 System stable")
-
-# ======================
-# 📊 CITY ANALYSIS
-# ======================
-st.subheader("🏙 City Analysis")
-
-colC, colD = st.columns(2)
-
-# Top Cities
-with colC:
-    city_counts = df['city'].value_counts().head(5)
-    st.bar_chart(city_counts)
-
-# Loss by City
-with colD:
-    df['loss'] = df['status'].apply(lambda x: avg_order_value if x=="Rejected" else 0)
-    loss_city = df.groupby('city')['loss'].sum().sort_values(ascending=False).head(5)
-    st.bar_chart(loss_city)
 
 # ======================
 # 🎛 FILTERS
 # ======================
-st.subheader("🎛 Filters")
+st.subheader("Filters")
 
 status_filter = st.selectbox("Status", ["All", "Auto-Confirmed", "Risk Flagged", "Rejected"])
 city_filter = st.selectbox("City", ["All"] + sorted(df['city'].unique()))
@@ -245,6 +218,6 @@ st.dataframe(styled_df, use_container_width=True)
 # ======================
 # 🔄 AUTO REFRESH
 # ======================
-st.caption("Auto-refresh every 15 seconds")
+st.caption("Refreshing every 15 seconds...")
 time.sleep(15)
 st.rerun()
