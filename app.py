@@ -72,61 +72,81 @@ if 'risk_score' in df.columns:
 st.subheader("💰 Business Settings")
 
 avg_order_value = st.number_input("Average Order Value (Rs)", value=3000)
-
 # ======================
-# 📊 KPIs
+# 🎯 COMPACT KPI CARDS
 # ======================
-total = len(df)
-confirmed = len(df[df['status'] == 'Auto-Confirmed'])
-risk = len(df[df['status'] == 'Risk Flagged'])
-rejected = len(df[df['status'] == 'Rejected'])
+st.markdown("### 📊 Overview")
 
-high_risk = len(df[df.get('risk_level', '') == 'HIGH'])
+k1, k2, k3, k4, k5, k6 = st.columns(6)
 
-avg_risk = round(df['risk_score'].mean(), 1) if 'risk_score' in df.columns else 0
-
-# Financials
-loss = rejected * avg_order_value
-risk_amount = risk * avg_order_value
-
-# ======================
-# 📊 KPI UI
-# ======================
-col1, col2, col3, col4, col5 = st.columns(5)
-
-col1.metric("📦 Orders", total)
-col2.metric("✅ Confirmed", confirmed)
-col3.metric("⚠️ Risk", risk)
-col4.metric("❌ Rejected", rejected)
-col5.metric("🔥 High Risk", high_risk)
-
-col6, col7, col8 = st.columns(3)
-
-col6.metric("💸 Loss", f"Rs {loss:,}")
-col7.metric("⚠️ At Risk", f"Rs {risk_amount:,}")
-col8.metric("📊 Avg Risk", avg_risk)
+k1.metric("Orders", total)
+k2.metric("Confirmed", confirmed)
+k3.metric("Risk", risk)
+k4.metric("Rejected", rejected)
+k5.metric("High Risk", high_risk)
+k6.metric("Avg Risk", avg_risk)
 
 st.divider()
 
 # ======================
-# 📊 CHARTS + INSIGHTS
+# 📊 COMPACT ANALYTICS ROW
 # ======================
-colA, colB = st.columns([1,1])
+c1, c2, c3 = st.columns([1,1,1])
 
-# 🍩 Donut Chart
-with colA:
-    st.markdown("### 📊 Order Status")
+# 🍩 SMALL DONUT (FIXED SIZE)
+with c1:
+    st.markdown("#### Status")
 
     status_counts = df['status'].value_counts()
 
-    fig, ax = plt.subplots(figsize=(4,4))
-    ax.pie(status_counts, labels=status_counts.index, autopct='%1.0f%%', startangle=90)
+    fig, ax = plt.subplots(figsize=(2.5,2.5))  # 👈 SMALL SIZE
 
-    centre = plt.Circle((0,0),0.70,fc='white')
+    ax.pie(
+        status_counts,
+        labels=None,  # 👈 REMOVE LABEL CLUTTER
+        autopct='%1.0f%%',
+        textprops={'fontsize':8}
+    )
+
+    centre = plt.Circle((0,0),0.65,fc='white')
     fig.gca().add_artist(centre)
 
-    st.pyplot(fig)
+    ax.set_title("", fontsize=8)
 
+    st.pyplot(fig, use_container_width=True)
+
+# 📊 SMALL BAR CHART
+with c2:
+    st.markdown("#### Cities")
+
+    city_counts = df['city'].value_counts().head(5)
+
+    fig2, ax2 = plt.subplots(figsize=(3,2))  # 👈 SMALL
+    ax2.barh(city_counts.index, city_counts.values)
+    ax2.tick_params(labelsize=8)
+
+    st.pyplot(fig2, use_container_width=True)
+
+# 🧠 MICRO INSIGHTS PANEL
+with c3:
+    st.markdown("#### Insights")
+
+    risk_pct = round((risk/total)*100,1) if total > 0 else 0
+
+    top_city = df['city'].value_counts().idxmax()
+
+    st.markdown(f"""
+    **Top City:** {top_city}  
+    **Risk Rate:** {risk_pct}%  
+    **Loss:** Rs {loss:,}  
+    """)
+
+    if risk_pct > 50:
+        st.error("High Risk 🚨")
+    elif risk_pct > 30:
+        st.warning("Moderate Risk ⚠️")
+    else:
+        st.success("Healthy ✅")
 # 📈 Insights
 with colB:
     st.markdown("### 🧠 Business Insights")
