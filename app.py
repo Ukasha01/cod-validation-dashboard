@@ -351,10 +351,16 @@ def load_data():
         return pd.DataFrame()
 
 
+st.markdown("""
+<style>
+
 [data-testid="stSidebar"] {
-    background: #0B0F19 !important; /* Deep slate dark background */
+    background: #0B0F19 !important;
     border-right: 1px solid #1E293B !important;
 }
+
+</style>
+""", unsafe_allow_html=True)
 [data-testid="stSidebar"] * { color: #CBD5E1 !important; } /* Light text */
 
 /* Sidebar Labels (Filters, Date Range) */
