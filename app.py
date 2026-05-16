@@ -468,18 +468,19 @@ st.markdown(f"""
 # KPI ROW 1  — ORDER OVERVIEW
 # ════════════════════════════════════════════════════════
 st.markdown('<div class="sec-title">Order Overview</div>', unsafe_allow_html=True)
-
-k1, k2, k3, k4, k5, k6 = st.columns(6)
 order_kpis = [
-    (k1, "Total Processed",  total,    "",                        "blue",   "📊"),
-    (k2, "Auto-Confirmed",   confirmed, f"{clean_pct}% clean rate","green",  "✅"),
-    (k3, "Risk Flagged",     flagged,  "awaiting manual review",  "amber",  "⚠️"),
-    (k4, "Rejected",         rejected, "blocked before dispatch", "red",    "❌"),
-    (k5, "Pending / Stuck",  pending,  "AI not yet processed",    "violet", "⏳"),
-    (k6, "Avg Risk Score",   avg_risk, "0 = clean · 100 = fake", "cyan",   "🎯"),
+    ("Total Processed", total, "", "blue", "📊"),
+    ("Auto-Confirmed", confirmed, f"{clean_pct}% clean rate", "green", "✅"),
+    ("Risk Flagged", flagged, "awaiting manual review", "amber", "⚠️"),
+    ("Rejected", rejected, "blocked before dispatch", "red", "❌"),
+    ("Pending / Stuck", pending, "AI not yet processed", "violet", "⏳"),
+    ("Avg Risk Score", avg_risk, "0 = clean · 100 = fake", "cyan", "🎯"),
 ]
-for col, (label, val, sub, color, icon) in zip(
-        [k1,k2,k3,k4,k5,k6], order_kpis):
+
+for col, (_, label, val, sub, color, icon) in zip(
+    [k1, k2, k3, k4, k5, k6],
+    order_kpis
+):
     with col:
         st.markdown(f"""
         <div class="kcard kc-{color}">
@@ -488,8 +489,8 @@ for col, (label, val, sub, color, icon) in zip(
           <div class="kcard-label">{label}</div>
           <div class="kcard-value">{val}</div>
           <div class="kcard-sub">{sub}</div>
-        </div>""", unsafe_allow_html=True)
-
+        </div>
+        """, unsafe_allow_html=True)
 # ════════════════════════════════════════════════════════
 # KPI ROW 2  — FINANCIAL
 # ════════════════════════════════════════════════════════
