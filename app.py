@@ -463,8 +463,8 @@ html {
 # SUPABASE
 # ════════════════════════════════════════════════════════
 
-SUPABASE_URL = "YOUR_URL"
-SUPABASE_KEY = "YOUR_KEY"
+SUPABASE_URL = "https://obzbfrakrzkywshwrbne.supabase.co"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9iemJmcmFrcnpreXdzaHdyYm5lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5ODM0NDEsImV4cCI6MjA5MzU1OTQ0MX0.gKDqt9wWsZdriuXWUDNMi10F26zojmTzg-GKsbwImA0"
 
 # ════════════════════════════════════════════════════════
 # LOGIN
