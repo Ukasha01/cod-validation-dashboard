@@ -469,12 +469,12 @@ st.markdown(f"""
 # ════════════════════════════════════════════════════════
 st.markdown('<div class="sec-title">Order Overview</div>', unsafe_allow_html=True)
 order_kpis = [
-    ("Total Processed", total, "", "blue", "📊"),
-    ("Auto-Confirmed", confirmed, f"{clean_pct}% clean rate", "green", "✅"),
-    ("Risk Flagged", flagged, "awaiting manual review", "amber", "⚠️"),
-    ("Rejected", rejected, "blocked before dispatch", "red", "❌"),
-    ("Pending / Stuck", pending, "AI not yet processed", "violet", "⏳"),
-    ("Avg Risk Score", avg_risk, "0 = clean · 100 = fake", "cyan", "🎯"),
+    (k1, "Total Processed", total, "", "blue", "📊"),
+    (k2, "Auto-Confirmed", confirmed, f"{clean_pct}% clean rate", "green", "✅"),
+    (k3, "Risk Flagged", flagged, "awaiting manual review", "amber", "⚠️"),
+    (k4, "Rejected", rejected, "blocked before dispatch", "red", "❌"),
+    (k5, "Pending / Stuck", pending, "AI not yet processed", "violet", "⏳"),
+    (k6, "Avg Risk Score", avg_risk, "0 = clean · 100 = fake", "cyan", "🎯"),
 ]
 for col, label, val, sub, color, icon in order_kpis:
     with col:
