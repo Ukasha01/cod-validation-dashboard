@@ -16,7 +16,7 @@ st.set_page_config(
 )
 
 # ════════════════════════════════════════════════════════
-# MASTER CSS
+# MASTER CSS (All styling unified here)
 # ════════════════════════════════════════════════════════
 st.markdown("""
 <style>
@@ -27,98 +27,109 @@ st.markdown("""
     box-sizing: border-box;
 }
 
+/* ══ MAIN APP BACKGROUND (LIGHT YELLOW) ══ */
 .stApp { background: #FDFCE9; }
 .block-container { padding: 2rem 2.4rem 3rem !important; max-width: 1480px !important; }
 
-
+/* ══ SIDEBAR (PREMIUM DARK) ══ */
 [data-testid="stSidebar"] {
-    background: #1a1d2e !important;
-    border-right: none !important;
+    background: #0B0F19 !important;
+    border-right: 1px solid #1E293B !important;
     min-width: 260px !important;
 }
-[data-testid="stSidebar"] * { color: #c8cde8 !important; }
+[data-testid="stSidebar"] * {
+    color: #CBD5E1 !important;
+}
 [data-testid="stSidebar"] .stSelectbox > label,
-[data-testid="stSidebar"] .stNumberInput > label {
-    font-size: 10px !important;
-    font-weight: 700 !important;
-    letter-spacing: 1.2px !important;
+[data-testid="stSidebar"] .stNumberInput > label,
+[data-testid="stSidebar"] strong {
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    letter-spacing: 1.5px !important;
     text-transform: uppercase !important;
-    color: #5a6080 !important;
+    color: #64748B !important;
 }
-[data-testid="stSidebar"] [data-baseweb="select"] > div {
-    background: #252840 !important;
-    border-color: #32365a !important;
-    color: #c8cde8 !important;
-    border-radius: 10px !important;
-}
+[data-testid="stSidebar"] [data-baseweb="select"] > div,
 [data-testid="stSidebar"] input {
-    background: #252840 !important;
-    border-color: #32365a !important;
-    color: #c8cde8 !important;
-    border-radius: 10px !important;
+    background: #1E293B !important;
+    border: 1px solid #334155 !important;
+    color: #FFFFFF !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
 }
-[data-testid="stSidebar"] hr { border-color: #252840 !important; }
+[data-testid="stSidebar"] hr { border-color: #1E293B !important; }
 
-/* ══ TOPBAR ═══════════════════════════════════════════ */
+.sb-brand {
+    padding: 20px 8px 16px;
+    border-bottom: 1px solid #1E293B;
+    margin-bottom: 8px;
+}
+.sb-logo {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg,#6366f1,#8b5cf6);
+    border-radius: 12px;
+    display: flex; align-items:center; justify-content:center;
+    font-size: 20px; margin-bottom: 10px;
+    box-shadow: 0 4px 14px rgba(99,102,241,0.35);
+}
+.sb-name { 
+    font-size: 18px !important; 
+    font-weight: 800 !important; 
+    color: #FFFFFF !important; 
+    letter-spacing: -0.5px;
+}
+.sb-tag { 
+    font-size: 10px !important; 
+    font-weight: 700 !important; 
+    letter-spacing: 1.5px !important; 
+    color: #38BDF8 !important;
+    text-transform: uppercase; 
+}
+
+/* ══ TOPBAR (PREMIUM DARK) ══ */
 .topbar {
-    background: linear-gradient(135deg, #1a1d2e 0%, #252840 50%, #1e2238 100%);
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+    border: 1px solid #334155;
     border-radius: 20px;
-    padding: 24px 32px;
-    margin-bottom: 28px;
+    padding: 24px 36px;
+    margin-bottom: 30px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 4px 24px rgba(26,29,46,0.18);
-    position: relative;
-    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
 }
-.topbar::before {
-    content: '';
-    position: absolute;
-    top: -30px; right: -30px;
-    width: 160px; height: 160px;
-    background: radial-gradient(circle, rgba(99,102,241,0.25), transparent 70%);
-    border-radius: 50%;
-}
-.topbar::after {
-    content: '';
-    position: absolute;
-    bottom: -20px; left: 200px;
-    width: 120px; height: 120px;
-    background: radial-gradient(circle, rgba(16,185,129,0.15), transparent 70%);
-    border-radius: 50%;
-}
-.tb-left { display: flex; align-items: center; gap: 18px; z-index: 1; }
+.tb-left { display: flex; align-items: center; gap: 20px; z-index: 1; }
 .tb-icon {
-    width: 56px; height: 56px;
+    width: 60px; height: 60px;
     background: linear-gradient(135deg, #6366f1, #8b5cf6);
     border-radius: 16px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 26px;
-    box-shadow: 0 6px 20px rgba(99,102,241,0.4);
+    font-size: 28px;
+    box-shadow: 0 8px 24px rgba(99,102,241,0.4);
     flex-shrink: 0;
 }
 .tb-title {
-    font-size: 22px;
+    font-size: 26px;
     font-weight: 800;
-    color: #ffffff;
-    letter-spacing: -0.3px;
+    color: #FFFFFF;
+    letter-spacing: -0.5px;
     line-height: 1.2;
+    margin-bottom: 4px;
 }
 .tb-sub {
-    font-size: 13px;
-    color: #8890b8;
-    font-weight: 400;
+    font-size: 14px;
+    color: #94A3B8;
+    font-weight: 500;
     margin-top: 3px;
 }
-.tb-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; z-index: 1; }
+.tb-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; z-index: 1; }
 .live-pill {
-    display: inline-flex; align-items: center; gap: 7px;
+    display: inline-flex; align-items: center; gap: 8px;
     background: rgba(16,185,129,0.15);
-    border: 1px solid rgba(16,185,129,0.35);
-    color: #10b981;
-    font-size: 11px; font-weight: 700;
-    padding: 6px 14px;
+    border: 1px solid rgba(16,185,129,0.4);
+    color: #34D399;
+    font-size: 12px; font-weight: 800;
+    padding: 6px 16px;
     border-radius: 30px;
     letter-spacing: 0.5px;
 }
@@ -128,9 +139,9 @@ st.markdown("""
     animation: blink 2s infinite;
 }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
-.tb-meta { font-size: 12px; color: #5a6080; }
+.tb-meta { font-size: 13px; color: #64748B; font-weight: 600; }
 
-/* ══ SECTION TITLE ════════════════════════════════════ */
+/* ══ SECTION TITLE ══ */
 .sec-title {
     font-size: 11px;
     font-weight: 800;
@@ -149,7 +160,7 @@ st.markdown("""
     background: linear-gradient(90deg, #d4d9ee, transparent);
 }
 
-/* ══ KPI CARDS ════════════════════════════════════════ */
+/* ══ KPI CARDS ══ */
 .kcard {
     background: #ffffff;
     border-radius: 18px;
@@ -199,7 +210,6 @@ st.markdown("""
     color: #a0acc8;
     font-weight: 500;
 }
-/* color themes */
 .kc-blue  .kcard-bar { background: linear-gradient(90deg,#6366f1,#818cf8); }
 .kc-blue  .kcard-value { color: #4f46e5; }
 .kc-green .kcard-bar { background: linear-gradient(90deg,#10b981,#34d399); }
@@ -215,7 +225,7 @@ st.markdown("""
 .kc-rose  .kcard-bar { background: linear-gradient(90deg,#f43f5e,#fb7185); }
 .kc-rose  .kcard-value { color: #e11d48; }
 
-/* ══ INSIGHT CARDS ════════════════════════════════════ */
+/* ══ INSIGHT CARDS ══ */
 .icard {
     border-radius: 14px;
     padding: 16px 20px;
@@ -235,7 +245,7 @@ st.markdown("""
 .ic-violet { background: #f8f5ff; border-color: #ddd6fe; }
 .ic-cyan   { background: #f0fbff; border-color: #a5f3fc; }
 
-/* ══ CHART WRAPPER ════════════════════════════════════ */
+/* ══ CHART WRAPPER ══ */
 .chart-wrap {
     background: #ffffff;
     border-radius: 18px;
@@ -245,49 +255,14 @@ st.markdown("""
     height: 100%;
 }
 
-/* ══ DATAFRAME ════════════════════════════════════════ */
+/* ══ DATAFRAME ══ */
 [data-testid="stDataFrame"] { border-radius: 16px !important; overflow: hidden; }
 .stDataFrame { border: 1.5px solid #e8ecf8 !important; border-radius: 16px !important; }
 
-/* ══ SIDEBAR BRAND ════════════════════════════════════ */
-.sb-brand {
-    padding: 20px 8px 16px;
-    border-bottom: 1px solid #252840;
-    margin-bottom: 8px;
-}
-.sb-logo {
-    width: 40px; height: 40px;
-    background: linear-gradient(135deg,#6366f1,#8b5cf6);
-    border-radius: 12px;
-    display: flex; align-items:center; justify-content:center;
-    font-size: 20px; margin-bottom: 10px;
-    box-shadow: 0 4px 14px rgba(99,102,241,0.35);
-}
-.sb-name { font-size: 16px; font-weight: 800; color: #e8ecff !important; }
-.sb-tag  { font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; color: #4a5080 !important; text-transform: uppercase; }
-
-/* ══ LOGIN ════════════════════════════════════════════ */
-.login-bg {
-    min-height: 80vh;
-    display: flex; align-items: center; justify-content: center;
-}
-.login-card {
-    background: #fff;
-    border-radius: 24px;
-    border: 1.5px solid #e8ecf8;
-    box-shadow: 0 12px 48px rgba(26,29,46,0.10);
-    padding: 48px 44px;
-    max-width: 420px;
-    text-align: center;
-}
-.login-icon {
-    width: 72px; height: 72px;
-    background: linear-gradient(135deg,#6366f1,#8b5cf6);
-    border-radius: 20px;
-    display: flex; align-items:center; justify-content:center;
-    font-size: 34px; margin: 0 auto 24px;
-    box-shadow: 0 8px 24px rgba(99,102,241,0.35);
-}
+/* ══ LOGIN ══ */
+.login-bg { min-height: 80vh; display: flex; align-items: center; justify-content: center; }
+.login-card { background: #fff; border-radius: 24px; border: 1.5px solid #e8ecf8; box-shadow: 0 12px 48px rgba(26,29,46,0.10); padding: 48px 44px; max-width: 420px; text-align: center; }
+.login-icon { width: 72px; height: 72px; background: linear-gradient(135deg,#6366f1,#8b5cf6); border-radius: 20px; display: flex; align-items:center; justify-content:center; font-size: 34px; margin: 0 auto 24px; box-shadow: 0 8px 24px rgba(99,102,241,0.35); }
 .login-title { font-size: 26px; font-weight: 800; color: #1a1d2e; letter-spacing: -0.5px; margin-bottom: 6px; }
 .login-sub   { font-size: 13.5px; color: #8890b8; font-weight: 400; margin-bottom: 32px; line-height: 1.5; }
 </style>
@@ -350,71 +325,43 @@ def load_data():
         st.error(f"Supabase error: {e}")
         return pd.DataFrame()
 
+# ════════════════════════════════════════════════════════
+# SIDEBAR
+# ════════════════════════════════════════════════════════
+with st.sidebar:
+    st.markdown("""
+    <div class="sb-brand">
+      <div class="sb-logo">📦</div>
+      <div class="sb-name">COD Intelligence</div>
+      <div class="sb-tag">Pakistan · AI Validation</div>
+    </div>
+    """, unsafe_allow_html=True)
 
-st.markdown("""
-<style>
+    st.markdown("**📅 DATE RANGE**")
+    date_range = st.selectbox("dr", ["All time","Today","Last 7 days","Last 30 days"],
+                              label_visibility="collapsed")
+    st.markdown("**📋 ORDER STATUS**")
+    status_filter = st.selectbox("sf", ["All","Auto-Confirmed","Risk Flagged","Rejected","Pending"],
+                                 label_visibility="collapsed")
+    st.markdown("**⚠️ RISK LEVEL**")
+    risk_filter = st.selectbox("rf", ["All","CRITICAL","HIGH","MEDIUM","LOW"],
+                               label_visibility="collapsed")
 
-[data-testid="stSidebar"] {
-    background: #0B0F19 !important;
-    border-right: 1px solid #1E293B !important;
-}
+    st.markdown("---")
+    st.markdown("**💰 FINANCIAL SETTINGS**")
+    avg_order_val = st.number_input("Avg Order Value (Rs)", value=3000, step=500, min_value=0)
+    shipping_cost = st.number_input("Shipping Cost (Rs)",   value=250,  step=50,  min_value=0)
+    reverse_cost  = st.number_input("Reverse Cost (Rs)",    value=150,  step=50,  min_value=0)
 
-st.markdown("""
-<style>
+    st.markdown("---")
+    col_r, col_l = st.columns(2)
+    with col_r:
+        if st.button("🔄 Refresh", use_container_width=True):
+            st.cache_data.clear(); st.rerun()
+    with col_l:
+        if st.button("🚪 Logout", use_container_width=True):
+            st.session_state.auth = False; st.rerun()
 
-/* SIDEBAR */
-[data-testid="stSidebar"] {
-    background: #0B0F19 !important;
-    border-right: 1px solid #1E293B !important;
-}
-
-</style>
-""", unsafe_allow_html=True)
-
-/* Sidebar Text */
-[data-testid="stSidebar"] * {
-    color: #CBD5E1 !important;
-}
-
-/* Sidebar Labels */
-[data-testid="stSidebar"] .stSelectbox > label,
-[data-testid="stSidebar"] .stNumberInput > label,
-[data-testid="stSidebar"] strong {
-    font-size: 11px !important;
-    font-weight: 800 !important;
-    letter-spacing: 1.5px !important;
-    text-transform: uppercase !important;
-    color: #64748B !important;
-}
-
-/* Sidebar Inputs */
-[data-testid="stSidebar"] [data-baseweb="select"] > div,
-[data-testid="stSidebar"] input {
-    background: #1E293B !important;
-    border: 1px solid #334155 !important;
-    color: #FFFFFF !important;
-    border-radius: 8px !important;
-    font-weight: 500 !important;
-}
-
-/* Sidebar Brand */
-.sb-name { 
-    font-size: 18px !important; 
-    font-weight: 800 !important; 
-    color: #FFFFFF !important; 
-    letter-spacing: -0.5px;
-}
-
-.sb-tag { 
-    font-size: 10px !important; 
-    font-weight: 700 !important; 
-    letter-spacing: 1.5px !important; 
-    color: #38BDF8 !important;
-    text-transform: uppercase; 
-}
-
-</style>
-""", unsafe_allow_html=True)
 # ════════════════════════════════════════════════════════
 # LOAD DATA
 # ════════════════════════════════════════════════════════
@@ -472,51 +419,26 @@ avg_fl_risk   = round(fl_df["risk_score"].mean(), 1) if len(fl_df) else 0
 critical_cnt  = len(df_proc[df_proc["risk_score"] >= 85])
 border_cnt    = len(df_proc[(df_proc["risk_score"] >= 60) & (df_proc["risk_score"] < 85)])
 
-.topbar {
-    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
-    border: 1px solid #334155;
-    border-radius: 20px;
-    padding: 24px 36px;
-    margin-bottom: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
-}
-.tb-left { display: flex; align-items: center; gap: 20px; }
-.tb-icon {
-    width: 60px; height: 60px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    border-radius: 16px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 28px;
-    box-shadow: 0 8px 24px rgba(99,102,241,0.4);
-}
-.tb-title {
-    font-size: 26px;
-    font-weight: 800;
-    color: #FFFFFF;
-    letter-spacing: -0.5px;
-    line-height: 1.2;
-    margin-bottom: 4px;
-}
-.tb-sub {
-    font-size: 14px;
-    color: #94A3B8;
-    font-weight: 500;
-}
-.tb-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
-.live-pill {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(16,185,129,0.15);
-    border: 1px solid rgba(16,185,129,0.4);
-    color: #34D399;
-    font-size: 12px; font-weight: 800;
-    padding: 6px 16px;
-    border-radius: 30px;
-    letter-spacing: 0.5px;
-}
-.tb-meta { font-size: 13px; color: #64748B; font-weight: 600; }
+# ════════════════════════════════════════════════════════
+# TOP BAR
+# ════════════════════════════════════════════════════════
+now_str = datetime.now().strftime("%d %b %Y · %I:%M %p")
+st.markdown(f"""
+<div class="topbar">
+  <div class="tb-left">
+    <div class="tb-icon">📦</div>
+    <div>
+      <div class="tb-title">eCommerce Intelligence Dashboard</div>
+      <div class="tb-sub">AI-powered COD Order Validation System · Pakistan</div>
+    </div>
+  </div>
+  <div class="tb-right">
+    <div class="live-pill"><span class="live-dot"></span> LIVE · auto-refresh 60s</div>
+    <div class="tb-meta">{now_str} &nbsp;·&nbsp; {total} processed &nbsp;·&nbsp; {pending} pending</div>
+  </div>
+</div>
+""", unsafe_allow_html=True)
+
 # ════════════════════════════════════════════════════════
 # KPI ROW 1  — ORDER OVERVIEW
 # ════════════════════════════════════════════════════════
@@ -524,12 +446,12 @@ st.markdown('<div class="sec-title">Order Overview</div>', unsafe_allow_html=Tru
 
 k1, k2, k3, k4, k5, k6 = st.columns(6)
 order_kpis = [
-    (k1, "Total Processed",  total,    "",                        "blue",   "📊"),
+    (k1, "Total Processed",  total,     "",                        "blue",   "📊"),
     (k2, "Auto-Confirmed",   confirmed, f"{clean_pct}% clean rate","green",  "✅"),
-    (k3, "Risk Flagged",     flagged,  "awaiting manual review",  "amber",  "⚠️"),
-    (k4, "Rejected",         rejected, "blocked before dispatch", "red",    "❌"),
-    (k5, "Pending / Stuck",  pending,  "AI not yet processed",    "violet", "⏳"),
-    (k6, "Avg Risk Score",   avg_risk, "0 = clean · 100 = fake", "cyan",   "🎯"),
+    (k3, "Risk Flagged",     flagged,   "awaiting manual review",  "amber",  "⚠️"),
+    (k4, "Rejected",         rejected,  "blocked before dispatch", "red",    "❌"),
+    (k5, "Pending / Stuck",  pending,   "AI not yet processed",    "violet", "⏳"),
+    (k6, "Avg Risk Score",   avg_risk,  "0 = clean · 100 = fake", "cyan",   "🎯"),
 ]
 for col, label, val, sub, color, icon in order_kpis:
     with col:
