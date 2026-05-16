@@ -30,7 +30,7 @@ st.markdown("""
 .stApp { background: #FDFCE9; }
 .block-container { padding: 2rem 2.4rem 3rem !important; max-width: 1480px !important; }
 
-/* ══ SIDEBAR ══════════════════════════════════════════ */
+
 [data-testid="stSidebar"] {
     background: #1a1d2e !important;
     border-right: none !important;
