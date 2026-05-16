@@ -27,7 +27,7 @@ st.markdown("""
     box-sizing: border-box;
 }
 
-.stApp { background: #f0f2f8; }
+.stApp { background: #FCFBF5; }
 .block-container { padding: 2rem 2.4rem 3rem !important; max-width: 1480px !important; }
 
 /* ══ SIDEBAR ══════════════════════════════════════════ */
