@@ -368,6 +368,9 @@ st.markdown("""
     border-right: 1px solid #1E293B !important;
 }
 
+</style>
+""", unsafe_allow_html=True)
+
 /* Sidebar Text */
 [data-testid="stSidebar"] * {
     color: #CBD5E1 !important;
