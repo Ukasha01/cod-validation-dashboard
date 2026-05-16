@@ -757,8 +757,14 @@ with ch3:
             "threshold": {"line":{"color":"#EF4444","width":2},"value":70}
         }
     ))
-    fig3.update_layout(**CHART_THEME, height=290, margin=dict(t=28,b=8,l=28,r=28))
-    st.plotly_chart(fig3, use_container_width=True)
+gauge_theme = CHART_THEME.copy()
+gauge_theme["margin"] = dict(t=28, b=8, l=28, r=28)
+
+fig3.update_layout(
+    **gauge_theme,
+    height=290
+)
+st.plotly_chart(fig3, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
 # ═══════════════════════════════════════════════════════════════
