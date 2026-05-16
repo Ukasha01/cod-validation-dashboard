@@ -509,17 +509,26 @@ fin_kpis = [
     (f4, "Saved by AI",         f"Rs {saved:,}",         "bad orders blocked",           "green", "🛡️"),
     (f5, "Worst Case Exposure", f"Rs {worst_case:,}",    "if all flagged orders return", "rose",  "⛔"),
 ]
+f1, f2, f3, f4, f5 = st.columns(5)
+fin_kpis = [
+    (f1, "Confirmed Revenue",   f"Rs {conf_revenue:,}",  "from clean orders",            "green", "💰"),
+    (f2, "Money at Risk",       f"Rs {money_at_risk:,}", "flagged, not dispatched",      "amber", "⚠️"),
+    (f3, "RTO Loss Cost",       f"Rs {rto_loss:,}",      "shipping + reverse logistics", "red",   "📦"),
+    (f4, "Saved by AI",         f"Rs {saved:,}",         "bad orders blocked",           "green", "🛡️"),
+    (f5, "Worst Case Exposure", f"Rs {worst_case:,}",    "if all flagged orders return", "rose",  "⛔"),
+]
 for col, label, val, sub, color, icon in fin_kpis:
     with col:
-        st.markdown(f"""...""", unsafe_allow_html=True)    with col:
-        <div class="kcard kc-{color}">
-          <div class="kcard-bar"></div>
-          <div class="kcard-bg-icon">{icon}</div>
-          <div class="kcard-label">{label}</div>
-          <div class="kcard-value" style="font-size:24px;letter-spacing:-0.5px">{val}</div>
-          <div class="kcard-sub">{sub}</div>
-        </div>, unsafe_allow_html=True)
-
+        st.markdown(
+            f"""<div class="kcard kc-{color}">
+              <div class="kcard-bar"></div>
+              <div class="kcard-bg-icon">{icon}</div>
+              <div class="kcard-label">{label}</div>
+              <div class="kcard-value" style="font-size:24px;letter-spacing:-0.5px">{val}</div>
+              <div class="kcard-sub">{sub}</div>
+            </div>""",
+            unsafe_allow_html=True
+        )
 # ════════════════════════════════════════════════════════
 # CHARTS  (3 columns)
 # ════════════════════════════════════════════════════════
