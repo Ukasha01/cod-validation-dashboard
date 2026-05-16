@@ -478,8 +478,7 @@ order_kpis = [
     (k5, "Pending / Stuck",  pending,  "AI not yet processed",    "violet", "⏳"),
     (k6, "Avg Risk Score",   avg_risk, "0 = clean · 100 = fake", "cyan",   "🎯"),
 ]
-for col, (label, val, sub, color, icon) in zip(
-        [k1,k2,k3,k4,k5,k6], order_kpis):
+for col, label, val, sub, color, icon in order_kpis:
     with col:
         st.markdown(f"""
         <div class="kcard kc-{color}">
@@ -503,7 +502,7 @@ fin_kpis = [
     (f4, "Saved by AI",         f"Rs {saved:,}",          "bad orders blocked",           "green",  "🛡️"),
     (f5, "Worst Case Exposure", f"Rs {worst_case:,}",     "if all flagged orders return", "rose",   "⛔"),
 ]
-for col, (label, val, sub, color, icon) in zip([f1,f2,f3,f4,f5], fin_kpis):
+for col, label, val, sub, color, icon in fin_kpis:
     with col:
         st.markdown(f"""
         <div class="kcard kc-{color}">
