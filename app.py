@@ -765,7 +765,7 @@ fig3.update_layout(
     height=290
 )
 st.plotly_chart(fig3, use_container_width=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
 
 # ═══════════════════════════════════════════════════════════════
 # CHARTS ROW 2 — Risk Distribution + Timeline
