@@ -350,43 +350,48 @@ def load_data():
         st.error(f"Supabase error: {e}")
         return pd.DataFrame()
 
-# ════════════════════════════════════════════════════════
-# SIDEBAR
-# ════════════════════════════════════════════════════════
-with st.sidebar:
-    st.markdown("""
-    <div class="sb-brand">
-      <div class="sb-logo">📦</div>
-      <div class="sb-name">COD Intelligence</div>
-      <div class="sb-tag">Pakistan · AI Validation</div>
-    </div>
-    """, unsafe_allow_html=True)
+/* ══ SIDEBAR (PREMIUM DARK) ════════════════════════════════════ */
+[data-testid="stSidebar"] {
+    background: #0B0F19 !important; /* Deep slate dark background */
+    border-right: 1px solid #1E293B !important;
+}
+[data-testid="stSidebar"] * { color: #CBD5E1 !important; } /* Light text */
 
-    st.markdown("**📅 DATE RANGE**")
-    date_range = st.selectbox("dr", ["All time","Today","Last 7 days","Last 30 days"],
-                              label_visibility="collapsed")
-    st.markdown("**📋 ORDER STATUS**")
-    status_filter = st.selectbox("sf", ["All","Auto-Confirmed","Risk Flagged","Rejected","Pending"],
-                                 label_visibility="collapsed")
-    st.markdown("**⚠️ RISK LEVEL**")
-    risk_filter = st.selectbox("rf", ["All","CRITICAL","HIGH","MEDIUM","LOW"],
-                               label_visibility="collapsed")
+/* Sidebar Labels (Filters, Date Range) */
+[data-testid="stSidebar"] .stSelectbox > label,
+[data-testid="stSidebar"] .stNumberInput > label,
+[data-testid="stSidebar"] strong {
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    letter-spacing: 1.5px !important;
+    text-transform: uppercase !important;
+    color: #64748B !important;
+}
 
-    st.markdown("---")
-    st.markdown("**💰 FINANCIAL SETTINGS**")
-    avg_order_val = st.number_input("Avg Order Value (Rs)", value=3000, step=500, min_value=0)
-    shipping_cost = st.number_input("Shipping Cost (Rs)",   value=250,  step=50,  min_value=0)
-    reverse_cost  = st.number_input("Reverse Cost (Rs)",    value=150,  step=50,  min_value=0)
+/* Sidebar Inputs/Dropdowns */
+[data-testid="stSidebar"] [data-baseweb="select"] > div,
+[data-testid="stSidebar"] input {
+    background: #1E293B !important;
+    border: 1px solid #334155 !important;
+    color: #FFFFFF !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+}
 
-    st.markdown("---")
-    col_r, col_l = st.columns(2)
-    with col_r:
-        if st.button("🔄 Refresh", use_container_width=True):
-            st.cache_data.clear(); st.rerun()
-    with col_l:
-        if st.button("🚪 Logout", use_container_width=True):
-            st.session_state.auth = False; st.rerun()
-
+/* Sidebar Brand Branding */
+.sb-name { 
+    font-size: 18px !important; 
+    font-weight: 800 !important; 
+    color: #FFFFFF !important; 
+    letter-spacing: -0.5px;
+}
+.sb-tag { 
+    font-size: 10px !important; 
+    font-weight: 700 !important; 
+    letter-spacing: 1.5px !important; 
+    color: #38BDF8 !important; /* Neon blue accent */
+    text-transform: uppercase; 
+}
 # ════════════════════════════════════════════════════════
 # LOAD DATA
 # ════════════════════════════════════════════════════════
@@ -444,26 +449,51 @@ avg_fl_risk   = round(fl_df["risk_score"].mean(), 1) if len(fl_df) else 0
 critical_cnt  = len(df_proc[df_proc["risk_score"] >= 85])
 border_cnt    = len(df_proc[(df_proc["risk_score"] >= 60) & (df_proc["risk_score"] < 85)])
 
-# ════════════════════════════════════════════════════════
-# TOP BAR
-# ════════════════════════════════════════════════════════
-now_str = datetime.now().strftime("%d %b %Y · %I:%M %p")
-st.markdown(f"""
-<div class="topbar">
-  <div class="tb-left">
-    <div class="tb-icon">📦</div>
-    <div>
-      <div class="tb-title">eCommerce Intelligence Dashboard</div>
-      <div class="tb-sub">AI-powered COD Order Validation System · Pakistan</div>
-    </div>
-  </div>
-  <div class="tb-right">
-    <div class="live-pill"><span class="live-dot"></span> LIVE · auto-refresh 60s</div>
-    <div class="tb-meta">{now_str} &nbsp;·&nbsp; {total} processed &nbsp;·&nbsp; {pending} pending</div>
-  </div>
-</div>
-""", unsafe_allow_html=True)
-
+.topbar {
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+    border: 1px solid #334155;
+    border-radius: 20px;
+    padding: 24px 36px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
+}
+.tb-left { display: flex; align-items: center; gap: 20px; }
+.tb-icon {
+    width: 60px; height: 60px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 8px 24px rgba(99,102,241,0.4);
+}
+.tb-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+    margin-bottom: 4px;
+}
+.tb-sub {
+    font-size: 14px;
+    color: #94A3B8;
+    font-weight: 500;
+}
+.tb-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.live-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(16,185,129,0.15);
+    border: 1px solid rgba(16,185,129,0.4);
+    color: #34D399;
+    font-size: 12px; font-weight: 800;
+    padding: 6px 16px;
+    border-radius: 30px;
+    letter-spacing: 0.5px;
+}
+.tb-meta { font-size: 13px; color: #64748B; font-weight: 600; }
 # ════════════════════════════════════════════════════════
 # KPI ROW 1  — ORDER OVERVIEW
 # ════════════════════════════════════════════════════════
