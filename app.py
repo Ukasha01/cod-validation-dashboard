@@ -71,16 +71,14 @@ st.markdown("""
 # ======================
 # 🔗 DATA LOAD
 # ======================
-CSV_URL = "https://docs.google.com/spreadsheets/d/1QXHOICBrv0zMk5nFFqTWxg43p4_mA5ENxk6rBoXEXyI/export?format=csv"
+from supabase import create_client
 
-try:
-    df = pd.read_csv(CSV_URL)
-    df.columns = df.columns.str.strip().str.lower()
-    df = df.dropna(axis=1, how='all')
-    df = df.fillna("")
-except Exception as e:
-    st.error(f"Error loading data: {e}")
-    st.stop()
+SUPABASE_URL = "https://obzbfrakrzkywshwrbne.supabase.co"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9iemJmcmFrcnpreXdzaHdyYm5lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5ODM0NDEsImV4cCI6MjA5MzU1OTQ0MX0.gKDqt9wWsZdriuXWUDNMi10F26zojmTzg-GKsbwImA0"  # your anon key
+
+supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+response = supabase.table("orders").select("*").execute()
+df = pd.DataFrame(response.data)
 
 # ======================
 # 🧹 CLEAN DATA
@@ -384,3 +382,4 @@ st.dataframe(styled, use_container_width=True)
 st.caption("🔄 Auto-refreshing every 30 seconds...")
 time.sleep(30)
 st.rerun()
+
