@@ -32,8 +32,9 @@ st.markdown("""
 .block-container { padding: 2rem 2.4rem 3rem !important; max-width: 1480px !important; }
 
 /* ══ SIDEBAR (PREMIUM DARK) ══ */
-[data-testid="stSidebar"] {
-    background: #0B0F19 !important;
+[data-testid="stSidebar"],
+[data-testid="stSidebar"] > div:first-child {
+    background-color: #0B0F19 !important;
     border-right: 1px solid #1E293B !important;
     min-width: 260px !important;
 }
@@ -58,34 +59,6 @@ st.markdown("""
     font-weight: 500 !important;
 }
 [data-testid="stSidebar"] hr { border-color: #1E293B !important; }
-
-.sb-brand {
-    padding: 20px 8px 16px;
-    border-bottom: 1px solid #1E293B;
-    margin-bottom: 8px;
-}
-.sb-logo {
-    width: 40px; height: 40px;
-    background: linear-gradient(135deg,#6366f1,#8b5cf6);
-    border-radius: 12px;
-    display: flex; align-items:center; justify-content:center;
-    font-size: 20px; margin-bottom: 10px;
-    box-shadow: 0 4px 14px rgba(99,102,241,0.35);
-}
-.sb-name { 
-    font-size: 18px !important; 
-    font-weight: 800 !important; 
-    color: #FFFFFF !important; 
-    letter-spacing: -0.5px;
-}
-.sb-tag { 
-    font-size: 10px !important; 
-    font-weight: 700 !important; 
-    letter-spacing: 1.5px !important; 
-    color: #38BDF8 !important;
-    text-transform: uppercase; 
-}
-
 /* ══ TOPBAR (PREMIUM DARK) ══ */
 .topbar {
     background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
@@ -93,12 +66,15 @@ st.markdown("""
     border-radius: 20px;
     padding: 24px 36px;
     margin-bottom: 30px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr; /* Forces perfect centering */
     align-items: center;
-    justify-content: space-between;
     box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
 }
-.tb-left { display: flex; align-items: center; gap: 20px; z-index: 1; }
+.tb-left { justify-self: start; display: flex; align-items: center; gap: 20px; }
+.tb-center { justify-self: center; text-align: center; } /* New center block */
+.tb-right { justify-self: end; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+
 .tb-icon {
     width: 60px; height: 60px;
     background: linear-gradient(135deg, #6366f1, #8b5cf6);
@@ -106,23 +82,19 @@ st.markdown("""
     display: flex; align-items: center; justify-content: center;
     font-size: 28px;
     box-shadow: 0 8px 24px rgba(99,102,241,0.4);
-    flex-shrink: 0;
 }
 .tb-title {
-    font-size: 26px;
+    font-size: 28px;
     font-weight: 800;
-    color: #FFFFFF;
+    /* Premium Blue/Purple Gradient Text */
+    background: linear-gradient(to right, #38BDF8, #818CF8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     letter-spacing: -0.5px;
     line-height: 1.2;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
-.tb-sub {
-    font-size: 14px;
-    color: #94A3B8;
-    font-weight: 500;
-    margin-top: 3px;
-}
-.tb-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; z-index: 1; }
+.tb-sub { font-size: 14px; color: #94A3B8; font-weight: 500; }
 .live-pill {
     display: inline-flex; align-items: center; gap: 8px;
     background: rgba(16,185,129,0.15);
@@ -427,18 +399,19 @@ st.markdown(f"""
 <div class="topbar">
   <div class="tb-left">
     <div class="tb-icon">📦</div>
-    <div>
-      <div class="tb-title">eCommerce Intelligence Dashboard</div>
-      <div class="tb-sub">AI-powered COD Order Validation System · Pakistan</div>
-    </div>
   </div>
+  
+  <div class="tb-center">
+    <div class="tb-title">eCommerce Intelligence Dashboard</div>
+    <div class="tb-sub">AI-powered COD Order Validation System · Pakistan</div>
+  </div>
+  
   <div class="tb-right">
     <div class="live-pill"><span class="live-dot"></span> LIVE · auto-refresh 60s</div>
     <div class="tb-meta">{now_str} &nbsp;·&nbsp; {total} processed &nbsp;·&nbsp; {pending} pending</div>
   </div>
 </div>
 """, unsafe_allow_html=True)
-
 # ════════════════════════════════════════════════════════
 # KPI ROW 1  — ORDER OVERVIEW
 # ════════════════════════════════════════════════════════
