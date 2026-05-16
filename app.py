@@ -476,11 +476,17 @@ order_kpis = [
     ("Pending / Stuck", pending, "AI not yet processed", "violet", "⏳"),
     ("Avg Risk Score", avg_risk, "0 = clean · 100 = fake", "cyan", "🎯"),
 ]
-
-for col, (_, label, val, sub, color, icon) in zip(
-    [k1, k2, k3, k4, k5, k6],
-    order_kpis
-):
+for col, label, val, sub, color, icon in order_kpis:
+    with col:
+        st.markdown(f"""
+        <div class="kcard kc-{color}">
+          <div class="kcard-bar"></div>
+          <div class="kcard-bg-icon">{icon}</div>
+          <div class="kcard-label">{label}</div>
+          <div class="kcard-value">{val}</div>
+          <div class="kcard-sub">{sub}</div>
+        </div>
+        """, unsafe_allow_html=True)
     with col:
         st.markdown(f"""
         <div class="kcard kc-{color}">
