@@ -518,7 +518,7 @@ for col, label, val, sub, color, icon in fin_kpis:
           <div class="kcard-label">{label}</div>
           <div class="kcard-value" style="font-size:24px;letter-spacing:-0.5px">{val}</div>
           <div class="kcard-sub">{sub}</div>
-        </div>""", unsafe_allow_html=True)
+        </div>, unsafe_allow_html=True)
 
 # ════════════════════════════════════════════════════════
 # CHARTS  (3 columns)
