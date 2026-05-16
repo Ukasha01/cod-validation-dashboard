@@ -402,7 +402,7 @@ st.markdown(f"""
   </div>
   
   <div class="tb-center">
-    <div class="tb-title">eCommerce Intelligence Dashboard</div>
+    <div class="tb-title">E-commerce Intelligence Dashboard</div>
     <div class="tb-sub">AI-powered COD Order Validation System · Pakistan</div>
   </div>
   
