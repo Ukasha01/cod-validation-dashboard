@@ -476,47 +476,20 @@ if "auth" not in st.session_state:
 if not st.session_state.auth:
 
     st.markdown("""
-    <div style="display:flex;justify-content:center;align-items:center;height:85vh;">
-        <div style="
-            background:#111827;
-            border:1px solid rgba(255,255,255,.06);
-            padding:50px;
-            border-radius:28px;
-            width:420px;
-            text-align:center;
-        ">
-            <div style="
-                width:82px;
-                height:82px;
-                margin:auto;
-                border-radius:24px;
-                background:linear-gradient(135deg,#6366f1,#8b5cf6);
-                display:flex;
-                align-items:center;
-                justify-content:center;
-                font-size:42px;
-                margin-bottom:24px;
-            ">
-                📦
-            </div>
-
-            <div style="
-                font-size:32px;
-                font-weight:800;
-                color:white;
-                margin-bottom:10px;
-            ">
-                COD Intelligence
-            </div>
-
-            <div style="
-                color:#94a3b8;
-                line-height:1.8;
-                margin-bottom:30px;
-            ">
-                Enterprise AI logistics intelligence system for Pakistan COD fraud detection.
-            </div>
-    """, unsafe_allow_html=True)
+<div style="display:flex;justify-content:center;align-items:center;height:85vh;">
+    <div style="background:#111827; border:1px solid rgba(255,255,255,.06); padding:50px; border-radius:28px; width:420px; text-align:center;">
+        <div style="width:82px; height:82px; margin:auto; border-radius:24px; background:linear-gradient(135deg,#6366f1,#8b5cf6); display:flex; align-items:center; justify-content:center; font-size:42px; margin-bottom:24px;">
+            📦
+        </div>
+        <div style="font-size:32px; font-weight:800; color:white; margin-bottom:10px;">
+            COD Intelligence
+        </div>
+        <div style="color:#94a3b8; line-height:1.8; margin-bottom:30px;">
+            Enterprise AI logistics intelligence system for Pakistan COD fraud detection.
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
     c1, c2, c3 = st.columns([1,1.2,1])
 
@@ -590,12 +563,12 @@ if df.empty:
 with st.sidebar:
 
     st.markdown("""
-    <div class="sb-brand">
-        <div class="sb-logo">📦</div>
-        <div class="sb-name">COD Intelligence</div>
-        <div class="sb-tag">Enterprise AI Logistics</div>
-    </div>
-    """, unsafe_allow_html=True)
+<div class="sb-brand">
+    <div class="sb-logo">📦</div>
+    <div class="sb-name">COD Intelligence</div>
+    <div class="sb-tag">Enterprise AI Logistics</div>
+</div>
+""", unsafe_allow_html=True)
 
     st.markdown("### Filters")
 
@@ -661,39 +634,19 @@ now = datetime.now().strftime("%d %b %Y · %I:%M %p")
 
 st.markdown(f"""
 <div class="topbar">
-
     <div class="tb-left">
-
         <div class="tb-icon">📦</div>
-
         <div>
-
-            <div class="tb-title">
-                Ecommerce Intelligence Dashboard
-            </div>
-
-            <div class="tb-sub">
-                Enterprise AI logistics intelligence system for Pakistan COD fraud detection,
-                real-time risk analytics, delivery optimization, and operational monitoring.
-            </div>
-
+            <div class="tb-title">Ecommerce Intelligence Dashboard</div>
+            <div class="tb-sub">Enterprise AI logistics intelligence system for Pakistan COD fraud detection, real-time risk analytics, delivery optimization, and operational monitoring.</div>
         </div>
-
     </div>
-
     <div class="tb-right">
-
         <div class="live-pill">
-            <span class="live-dot"></span>
-            LIVE AI MONITORING
+            <span class="live-dot"></span> LIVE AI MONITORING
         </div>
-
-        <div class="tb-meta">
-            {now}
-        </div>
-
+        <div class="tb-meta">{now}</div>
     </div>
-
 </div>
 """, unsafe_allow_html=True)
 
@@ -702,54 +655,25 @@ st.markdown(f"""
 # ════════════════════════════════════════════════════════
 
 b1, b2 = st.columns(2)
-
 with b1:
     st.markdown(f"""
-    <div class="hero-card">
-
-        <div class="hero-label">
-            TOTAL REVENUE PROTECTED
-        </div>
-
-        <div class="hero-value">
-            Rs {saved:,}
-        </div>
-
-        <div class="hero-sub">
-            AI fraud detection blocked risky COD orders before dispatch,
-            significantly reducing reverse logistics and fake delivery losses.
-        </div>
-
-        <div class="hero-badge">
-            +32% efficiency improvement
-        </div>
-
-    </div>
-    """, unsafe_allow_html=True)
+<div class="hero-card">
+    <div class="hero-label">TOTAL REVENUE PROTECTED</div>
+    <div class="hero-value">Rs {saved:,}</div>
+    <div class="hero-sub">AI fraud detection blocked risky COD orders before dispatch, significantly reducing reverse logistics and fake delivery losses.</div>
+    <div class="hero-badge">+32% efficiency improvement</div>
+</div>
+""", unsafe_allow_html=True)
 
 with b2:
     st.markdown(f"""
-    <div class="hero-card">
-
-        <div class="hero-label">
-            CLEAN ORDER RATE
-        </div>
-
-        <div class="hero-value">
-            {clean_rate}%
-        </div>
-
-        <div class="hero-sub">
-            Percentage of successfully validated and AI-confirmed
-            legitimate customer orders.
-        </div>
-
-        <div class="hero-badge">
-            Enterprise AI confidence stable
-        </div>
-
-    </div>
-    """, unsafe_allow_html=True)
+<div class="hero-card">
+    <div class="hero-label">CLEAN ORDER RATE</div>
+    <div class="hero-value">{clean_rate}%</div>
+    <div class="hero-sub">Percentage of successfully validated and AI-confirmed legitimate customer orders.</div>
+    <div class="hero-badge">Enterprise AI confidence stable</div>
+</div>
+""", unsafe_allow_html=True)
 
 # ════════════════════════════════════════════════════════
 # KPI ROW
@@ -767,30 +691,15 @@ cards = [
 ]
 
 for col, label, value, sub, color, icon in cards:
-
     with col:
-
         st.markdown(f"""
-        <div class="kcard {color}">
-
-            <div class="kcard-icon">
-                {icon}
-            </div>
-
-            <div class="kcard-label">
-                {label}
-            </div>
-
-            <div class="kcard-value">
-                {value}
-            </div>
-
-            <div class="kcard-sub">
-                {sub}
-            </div>
-
-        </div>
-        """, unsafe_allow_html=True)
+<div class="kcard {color}">
+    <div class="kcard-icon">{icon}</div>
+    <div class="kcard-label">{label}</div>
+    <div class="kcard-value">{value}</div>
+    <div class="kcard-sub">{sub}</div>
+</div>
+""", unsafe_allow_html=True)
 
 # ════════════════════════════════════════════════════════
 # CHARTS
@@ -957,24 +866,17 @@ highest_score = round(city_risk.iloc[0]["risk_score"],1) if not city_risk.empty 
 
 st.markdown(f"""
 <div class="ai-box">
-
-    <div class="ai-title">
-        🧠 AI Intelligence Recommendation
-    </div>
-
+    <div class="ai-title">🧠 AI Intelligence Recommendation</div>
     <div class="ai-text">
         The AI engine detected elevated fraud probability patterns in
         <strong>{highest_city}</strong> with an average risk score of
-        <strong>{highest_score}</strong>.
-
-        Recommended actions:
-
+        <strong>{highest_score}</strong>.<br><br>
+        Recommended actions:<br>
         • Enable mandatory phone OTP verification<br>
         • Apply stricter address validation<br>
         • Hold high-value COD orders for manual review<br>
         • Increase fraud scoring sensitivity for repeat customers
     </div>
-
 </div>
 """, unsafe_allow_html=True)
 
