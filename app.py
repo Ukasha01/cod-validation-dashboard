@@ -359,11 +359,21 @@ st.markdown("""
     border-right: 1px solid #1E293B !important;
 }
 
-</style>
-""", unsafe_allow_html=True)
-[data-testid="stSidebar"] * { color: #CBD5E1 !important; } /* Light text */
+st.markdown("""
+<style>
 
-/* Sidebar Labels (Filters, Date Range) */
+/* SIDEBAR */
+[data-testid="stSidebar"] {
+    background: #0B0F19 !important;
+    border-right: 1px solid #1E293B !important;
+}
+
+/* Sidebar Text */
+[data-testid="stSidebar"] * {
+    color: #CBD5E1 !important;
+}
+
+/* Sidebar Labels */
 [data-testid="stSidebar"] .stSelectbox > label,
 [data-testid="stSidebar"] .stNumberInput > label,
 [data-testid="stSidebar"] strong {
@@ -374,7 +384,7 @@ st.markdown("""
     color: #64748B !important;
 }
 
-/* Sidebar Inputs/Dropdowns */
+/* Sidebar Inputs */
 [data-testid="stSidebar"] [data-baseweb="select"] > div,
 [data-testid="stSidebar"] input {
     background: #1E293B !important;
@@ -384,20 +394,24 @@ st.markdown("""
     font-weight: 500 !important;
 }
 
-/* Sidebar Brand Branding */
+/* Sidebar Brand */
 .sb-name { 
     font-size: 18px !important; 
     font-weight: 800 !important; 
     color: #FFFFFF !important; 
     letter-spacing: -0.5px;
 }
+
 .sb-tag { 
     font-size: 10px !important; 
     font-weight: 700 !important; 
     letter-spacing: 1.5px !important; 
-    color: #38BDF8 !important; /* Neon blue accent */
+    color: #38BDF8 !important;
     text-transform: uppercase; 
 }
+
+</style>
+""", unsafe_allow_html=True)
 # ════════════════════════════════════════════════════════
 # LOAD DATA
 # ════════════════════════════════════════════════════════
