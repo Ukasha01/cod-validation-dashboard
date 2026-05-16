@@ -780,12 +780,3 @@ st.dataframe(
     }
 )
 
-# ════════════════════════════════════════════════════════
-# FOOTER
-# ════════════════════════════════════════════════════════
-st.markdown("""
-<div style="text-align:center;padding:32px 0 8px;color:#b0bcd4;font-size:12px;font-weight:500;letter-spacing:0.4px">
-  COD Intelligence &nbsp;&nbsp; Pakistan eCommerce &nbsp;&nbsp;
-  Powered by Supabase : Gemini AI : Google Maps""", unsafe_allow_html=True)
-</div>
-
