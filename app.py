@@ -350,7 +350,7 @@ def load_data():
         st.error(f"Supabase error: {e}")
         return pd.DataFrame()
 
-/* ══ SIDEBAR (PREMIUM DARK) ════════════════════════════════════ */
+
 [data-testid="stSidebar"] {
     background: #0B0F19 !important; /* Deep slate dark background */
     border-right: 1px solid #1E293B !important;
