@@ -135,63 +135,66 @@ st.markdown("""
 /* ══ KPI CARDS ══ */
 .kcard {
     background: #ffffff;
-    border-radius: 18px;
-    padding: 22px 20px 18px;
+    border-radius: 16px;
+    padding: 16px 16px 14px;
     border: 1.5px solid #e8ecf8;
     box-shadow: 0 1px 4px rgba(26,29,46,0.05), 0 4px 16px rgba(26,29,46,0.04);
     position: relative;
     overflow: hidden;
     transition: all 0.22s ease;
 
-    height: 155px;          /* force equal card height */
-    min-height: 155px;
+    height: 125px;
+    min-height: 125px;
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
-.kcard-sub {
-    font-size: 12px;
-    color: #a0acc8;
-    font-weight: 500;
-    min-height: 34px;   /* keeps all cards aligned */
-}
+
 .kcard:hover {
     box-shadow: 0 4px 20px rgba(26,29,46,0.12);
-    transform: translateY(-3px);
+    transform: translateY(-2px);
     border-color: #d0d5f0;
 }
+
 .kcard-bar {
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 4px;
-    border-radius: 18px 18px 0 0;
+    height: 3px;
+    border-radius: 16px 16px 0 0;
 }
+
 .kcard-bg-icon {
     position: absolute;
-    right: 14px; top: 12px;
-    font-size: 36px;
-    opacity: 0.07;
+    right: 12px;
+    top: 10px;
+    font-size: 28px;
+    opacity: 0.06;
     line-height: 1;
 }
+
 .kcard-label {
-    font-size: 10.5px;
+    font-size: 9px;
     font-weight: 700;
-    letter-spacing: 0.9px;
+    letter-spacing: 1px;
     text-transform: uppercase;
     color: #8890b8;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 }
+
 .kcard-value {
-    font-size: 34px;
+    font-size: 26px;
     font-weight: 800;
     line-height: 1;
-    margin-bottom: 8px;
-    letter-spacing: -1px;
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
 }
+
 .kcard-sub {
-    font-size: 12px;
+    font-size: 11px;
     color: #a0acc8;
     font-weight: 500;
+    min-height: 24px;
 }
 .kc-blue  .kcard-bar { background: linear-gradient(90deg,#6366f1,#818cf8); }
 .kc-blue  .kcard-value { color: #4f46e5; }
