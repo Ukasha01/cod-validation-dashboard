@@ -142,7 +142,18 @@ st.markdown("""
     position: relative;
     overflow: hidden;
     transition: all 0.22s ease;
-    height: 100%;
+
+    height: 155px;          /* force equal card height */
+    min-height: 155px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.kcard-sub {
+    font-size: 12px;
+    color: #a0acc8;
+    font-weight: 500;
+    min-height: 34px;   /* keeps all cards aligned */
 }
 .kcard:hover {
     box-shadow: 0 4px 20px rgba(26,29,46,0.12);
