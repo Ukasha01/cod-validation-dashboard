@@ -42,6 +42,7 @@ st.markdown("""
     color: #CBD5E1 !important;
 }
 [data-testid="stSidebar"] .stSelectbox > label,
+[data-testid="stSidebarCollapseButton"] { display: none !important},
 [data-testid="stSidebar"] .stNumberInput > label,
 [data-testid="stSidebar"] strong {
     font-size: 11px !important;
@@ -323,7 +324,7 @@ with st.sidebar:
     st.markdown("**⚠️ RISK LEVEL**")
     risk_filter = st.selectbox("rf", ["All","CRITICAL","HIGH","MEDIUM","LOW"],
                                label_visibility="collapsed")
-[data-testid="stSidebarCollapseButton"] { display: none !important; }
+
     st.markdown("---")
     st.markdown("**💰 FINANCIAL SETTINGS**")
     avg_order_val = st.number_input("Avg Order Value (Rs)", value=3000, step=500, min_value=0)
