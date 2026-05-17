@@ -64,16 +64,21 @@ st.markdown("""
     background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
     border: 1px solid #334155;
     border-radius: 20px;
-    padding: 24px 36px;
+    padding: 20px 32px;
     margin-bottom: 30px;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr; /* Forces perfect centering */
+    display: flex;
     align-items: center;
+    justify-content: space-between;
     box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
+    position: relative;
 }
-.tb-left { justify-self: start; display: flex; align-items: center; gap: 20px; }
-.tb-center { justify-self: center; text-align: center; } /* New center block */
-.tb-right { justify-self: end; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.tb-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    pointer-events: none;
+}
 
 .tb-icon {
     width: 60px; height: 60px;
