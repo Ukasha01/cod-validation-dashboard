@@ -27,9 +27,9 @@ st.markdown("""
     box-sizing: border-box;
 }
 
-/* ══ MAIN APP BACKGROUND (LIGHT YELLOW) ══ */
+/* ══ MAIN APP BACKGROUND & FULL SCREEN ══ */
 .stApp { background: #FDFCE9; }
-.block-container { padding: 2rem 2.4rem 3rem !important; max-width: 1480px !important; }
+.block-container { padding: 2rem 2.4rem 3rem !important; max-width: 100% !important; }
 
 /* ══ SIDEBAR (PREMIUM DARK) ══ */
 [data-testid="stSidebar"],
@@ -59,7 +59,35 @@ st.markdown("""
     font-weight: 500 !important;
 }
 [data-testid="stSidebar"] hr { border-color: #1E293B !important; }
-/* ══ TOPBAR (PREMIUM DARK) ══ */
+
+.sb-brand {
+    padding: 20px 8px 16px;
+    border-bottom: 1px solid #1E293B;
+    margin-bottom: 8px;
+}
+.sb-logo {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg,#6366f1,#8b5cf6);
+    border-radius: 12px;
+    display: flex; align-items:center; justify-content:center;
+    font-size: 20px; margin-bottom: 10px;
+    box-shadow: 0 4px 14px rgba(99,102,241,0.35);
+}
+.sb-name { 
+    font-size: 18px !important; 
+    font-weight: 800 !important; 
+    color: #FFFFFF !important; 
+    letter-spacing: -0.5px;
+}
+.sb-tag { 
+    font-size: 10px !important; 
+    font-weight: 700 !important; 
+    letter-spacing: 1.5px !important; 
+    color: #38BDF8 !important;
+    text-transform: uppercase; 
+}
+
+/* ══ TOPBAR (PREMIUM DARK & CENTERED) ══ */
 .topbar {
     background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
     border: 1px solid #334155;
@@ -67,12 +95,12 @@ st.markdown("""
     padding: 24px 36px;
     margin-bottom: 30px;
     display: grid;
-    grid-template-columns: 1fr auto 1fr; /* Forces perfect centering */
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
     box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
 }
 .tb-left { justify-self: start; display: flex; align-items: center; gap: 20px; }
-.tb-center { justify-self: center; text-align: center; } /* New center block */
+.tb-center { justify-self: center; text-align: center; }
 .tb-right { justify-self: end; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
 
 .tb-icon {
@@ -86,7 +114,6 @@ st.markdown("""
 .tb-title {
     font-size: 28px;
     font-weight: 800;
-    /* Premium Blue/Purple Gradient Text */
     background: linear-gradient(to right, #38BDF8, #818CF8);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -142,28 +169,23 @@ st.markdown("""
     position: relative;
     overflow: hidden;
     transition: all 0.22s ease;
-
     height: 125px;
     min-height: 125px;
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
-
 .kcard:hover {
     box-shadow: 0 4px 20px rgba(26,29,46,0.12);
     transform: translateY(-2px);
     border-color: #d0d5f0;
 }
-
 .kcard-bar {
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 3px;
     border-radius: 16px 16px 0 0;
 }
-
 .kcard-bg-icon {
     position: absolute;
     right: 12px;
@@ -172,16 +194,14 @@ st.markdown("""
     opacity: 0.06;
     line-height: 1;
 }
-
 .kcard-label {
     font-size: 9px;
     font-weight: 800;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: #475569;   /* darker slate */
+    color: #475569;   
     margin-bottom: 8px;
 }
-
 .kcard-value {
     font-size: 26px;
     font-weight: 800;
@@ -189,10 +209,9 @@ st.markdown("""
     margin-bottom: 4px;
     letter-spacing: -0.5px;
 }
-
 .kcard-sub {
     font-size: 11px;
-    color: #64748B;   /* darker visible gray */
+    color: #64748B;   
     font-weight: 600;
     min-height: 24px;
     line-height: 1.4;
@@ -224,7 +243,6 @@ st.markdown("""
 .icard-title { font-size: 14px; font-weight: 700; color: #1a1d2e; margin-bottom: 7px; }
 .icard-body  { font-size: 13px; color: #4a5278; line-height: 1.7; }
 .icard-body strong { color: #1a1d2e; }
-
 .ic-green  { background: #f0fdf8; border-color: #a7f3d0; }
 .ic-amber  { background: #fffbf0; border-color: #fde68a; }
 .ic-red    { background: #fff5f5; border-color: #fecaca; }
@@ -417,7 +435,7 @@ st.markdown(f"""
   </div>
   
   <div class="tb-center">
-    <div class="tb-title">E-commerce Intelligence Dashboard</div>
+    <div class="tb-title">eCommerce Intelligence Dashboard</div>
     <div class="tb-sub">AI-powered COD Order Validation System · Pakistan</div>
   </div>
   
@@ -427,6 +445,7 @@ st.markdown(f"""
   </div>
 </div>
 """, unsafe_allow_html=True)
+
 # ════════════════════════════════════════════════════════
 # KPI ROW 1  — ORDER OVERVIEW
 # ════════════════════════════════════════════════════════
@@ -692,7 +711,8 @@ with ins2:
 # ════════════════════════════════════════════════════════
 st.markdown('<div class="sec-title">Order Details</div>', unsafe_allow_html=True)
 
-show_cols = ["order_id","name","phone","address","city","status",
+# Added 'clean_address' to the list of columns to show
+show_cols = ["order_id","name","phone","address","clean_address","city","status",
              "risk_score","risk_level","risk_reason","map_status","created_at"]
 show_cols = [c for c in show_cols if c in df_view.columns]
 
@@ -722,17 +742,18 @@ st.dataframe(
     use_container_width=True,
     height=440,
     column_config={
-        "order_id":    st.column_config.TextColumn("Order ID",   width=160),
-        "name":        st.column_config.TextColumn("Customer",   width=120),
-        "phone":       st.column_config.TextColumn("Phone",      width=115),
-        "address":     st.column_config.TextColumn("Address",    width=230),
-        "city":        st.column_config.TextColumn("City",       width=95),
-        "status":      st.column_config.TextColumn("Status",     width=135),
-        "risk_score":  st.column_config.NumberColumn("Score",    width=72, format="%d"),
-        "risk_level":  st.column_config.TextColumn("Level",      width=80),
-        "risk_reason": st.column_config.TextColumn("Reason",     width=290),
-        "map_status":  st.column_config.TextColumn("Maps",       width=115),
-        "created_at":  st.column_config.TextColumn("Date",       width=88),
+        "order_id":      st.column_config.TextColumn("Order ID",      width=160),
+        "name":          st.column_config.TextColumn("Customer",      width=120),
+        "phone":         st.column_config.TextColumn("Phone",         width=115),
+        "address":       st.column_config.TextColumn("Raw Address",   width=230),
+        "clean_address": st.column_config.TextColumn("Clean Address", width=230),
+        "city":          st.column_config.TextColumn("City",          width=95),
+        "status":        st.column_config.TextColumn("Status",        width=135),
+        "risk_score":    st.column_config.NumberColumn("Score",       width=72, format="%d"),
+        "risk_level":    st.column_config.TextColumn("Level",         width=80),
+        "risk_reason":   st.column_config.TextColumn("Reason",        width=290),
+        "map_status":    st.column_config.TextColumn("Maps",          width=115),
+        "created_at":    st.column_config.TextColumn("Date",          width=88),
     }
 )
 
