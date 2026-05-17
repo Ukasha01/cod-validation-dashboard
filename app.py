@@ -705,13 +705,13 @@ with ins2:
     Rs {money_at_risk:,} — flagged orders not dispatched (still recoverable)<br>
     Rs {rto_loss:,} — already lost to shipping + reverse logistics
     </div></div>''', unsafe_allow_html=True)
-
 # ════════════════════════════════════════════════════════
 # ORDER TABLE
 # ════════════════════════════════════════════════════════
-st.markdown('<div class="sec-title">Order Details</div>', unsafe_allow_html=True)
+col_t1, col_t2 = st.columns([8, 2])
+with col_t1:
+    st.markdown('<div class="sec-title">Order Details</div>', unsafe_allow_html=True)
 
-# Added 'clean_address' to the list of columns to show
 show_cols = ["order_id","name","phone","address","clean_address","city","status",
              "risk_score","risk_level","risk_reason","map_status","created_at"]
 show_cols = [c for c in show_cols if c in df_view.columns]
@@ -737,24 +737,38 @@ if "risk_level" in show_cols: styled = styled.map(style_risk,   subset=["risk_le
 if "risk_score" in show_cols:
     styled = styled.background_gradient(subset=["risk_score"], cmap="RdYlGn_r", vmin=0, vmax=100)
 
+table_config = {
+    "order_id":      st.column_config.TextColumn("Order ID",      width=160),
+    "name":          st.column_config.TextColumn("Customer",      width=120),
+    "phone":         st.column_config.TextColumn("Phone",         width=115),
+    "address":       st.column_config.TextColumn("Raw Address",   width=230),
+    "clean_address": st.column_config.TextColumn("Clean Address", width=230),
+    "city":          st.column_config.TextColumn("City",          width=95),
+    "status":        st.column_config.TextColumn("Status",        width=135),
+    "risk_score":    st.column_config.NumberColumn("Score",       width=72, format="%d"),
+    "risk_level":    st.column_config.TextColumn("Level",         width=80),
+    "risk_reason":   st.column_config.TextColumn("Reason",        width=290),
+    "map_status":    st.column_config.TextColumn("Maps",          width=115),
+    "created_at":    st.column_config.TextColumn("Date",          width=88),
+}
+
+# --- The Massive Pop-out Modal ---
+@st.dialog("📦 Full Screen Order Intelligence Log", width="large")
+def fullscreen_table():
+    st.dataframe(styled, use_container_width=True, height=700, column_config=table_config, hide_index=True)
+
+with col_t2:
+    st.write("") # Spacer to align the button
+    if st.button("⛶ Open Full Screen Table", use_container_width=True):
+        fullscreen_table()
+
+# Standard inline table
 st.dataframe(
     styled,
     use_container_width=True,
     height=440,
-    column_config={
-        "order_id":      st.column_config.TextColumn("Order ID",      width=160),
-        "name":          st.column_config.TextColumn("Customer",      width=120),
-        "phone":         st.column_config.TextColumn("Phone",         width=115),
-        "address":       st.column_config.TextColumn("Raw Address",   width=230),
-        "clean_address": st.column_config.TextColumn("Clean Address", width=230),
-        "city":          st.column_config.TextColumn("City",          width=95),
-        "status":        st.column_config.TextColumn("Status",        width=135),
-        "risk_score":    st.column_config.NumberColumn("Score",       width=72, format="%d"),
-        "risk_level":    st.column_config.TextColumn("Level",         width=80),
-        "risk_reason":   st.column_config.TextColumn("Reason",        width=290),
-        "map_status":    st.column_config.TextColumn("Maps",          width=115),
-        "created_at":    st.column_config.TextColumn("Date",          width=88),
-    }
+    hide_index=True,
+    column_config=table_config
 )
 
 # ════════════════════════════════════════════════════════
