@@ -27,9 +27,8 @@ html, body, [class*="css"], .stApp {
 }
 
 /* ══ APP BACKGROUND ══════════════════════════════════════════════ */
-.stApp {
-    background: #0D0F1A !important;
-}
+.stApp { background: #FDFCE9; }
+
 .block-container {
     padding: 1.5rem 2rem 3rem !important;
     max-width: 1500px !important;
