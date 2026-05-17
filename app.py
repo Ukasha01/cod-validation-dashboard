@@ -28,7 +28,7 @@ st.markdown("""
 }
 
 /* ══ MAIN APP BACKGROUND (LIGHT YELLOW) ══ */
-.stApp { background: #E2E8F0; }
+.stApp { background: #0F172A; }
 .block-container { padding: 2rem 2.4rem 3rem !important; max-width: 1480px !important; }
 
 /* ══ SIDEBAR (PREMIUM DARK) ══ */
