@@ -175,10 +175,10 @@ st.markdown("""
 
 .kcard-label {
     font-size: 9px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: #8890b8;
+    color: #475569;   /* darker slate */
     margin-bottom: 8px;
 }
 
@@ -192,9 +192,10 @@ st.markdown("""
 
 .kcard-sub {
     font-size: 11px;
-    color: #a0acc8;
-    font-weight: 500;
+    color: #64748B;   /* darker visible gray */
+    font-weight: 600;
     min-height: 24px;
+    line-height: 1.4;
 }
 .kc-blue  .kcard-bar { background: linear-gradient(90deg,#6366f1,#818cf8); }
 .kc-blue  .kcard-value { color: #4f46e5; }
