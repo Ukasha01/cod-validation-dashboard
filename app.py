@@ -210,7 +210,7 @@ html, body, [class*="css"], .stApp {
     font-weight: 800;
     letter-spacing: 1.6px;
     text-transform: uppercase;
-    color: #334155;
+    color: #64748B;
     margin: 24px 0 12px;
     display: flex;
     align-items: center;
@@ -220,7 +220,7 @@ html, body, [class*="css"], .stApp {
     content: '';
     flex: 1;
     height: 1px;
-    background: rgba(255,255,255,0.05);
+    background: rgba(255,255,255,0.08);
 }
 
 /* ══ KPI CARDS ═══════════════════════════════════════════════════ */
