@@ -712,7 +712,7 @@ col_t1, col_t2 = st.columns([8, 2])
 with col_t1:
     st.markdown('<div class="sec-title">Order Details</div>', unsafe_allow_html=True)
 
-show_cols = ["order_id","name","phone","address","clean_address","city","status",
+show_cols = ["name","phone","address","clean_address","city","status",
              "risk_score","risk_level","risk_reason","map_status","created_at"]
 show_cols = [c for c in show_cols if c in df_view.columns]
 
