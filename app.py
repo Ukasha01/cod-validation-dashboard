@@ -738,7 +738,6 @@ if "risk_score" in show_cols:
     styled = styled.background_gradient(subset=["risk_score"], cmap="RdYlGn_r", vmin=0, vmax=100)
 
 table_config = {
-    "order_id":      st.column_config.TextColumn("Order ID",      width=160),
     "name":          st.column_config.TextColumn("Customer",      width=120),
     "phone":         st.column_config.TextColumn("Phone",         width=115),
     "address":       st.column_config.TextColumn("Raw Address",   width=230),
