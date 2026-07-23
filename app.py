@@ -629,50 +629,52 @@ with c2:
             textposition="inside",
             textfont=dict(size=10, color="#F8FAFC", family='DM Mono')
         ))
-   fig2.update_layout(
-            barmode="stack",
-            title=dict(text="REGIONAL THREAT MAP", font=dict(size=12, color="#38BDF8", family=FONT)), # ⬅️ Removed letter_spacing
-            paper_bgcolor=PAPER, plot_bgcolor=PAPER, font_family=FONT,
-            xaxis=dict(showgrid=False, showticklabels=False, title=""),
-            yaxis=dict(gridcolor="rgba(51, 65, 85, 0.3)", tickfont=dict(size=11, color="#94A3B8")),
-            legend=dict(orientation="h", y=1.1, x=0.5, xanchor="center", font=dict(size=10, color="#94A3B8")),
-            margin=dict(t=40, b=10, l=10, r=10), height=280,
-            bargap=0.3
-        )
-        st.plotly_chart(fig2, use_container_width=True)
+ # Make sure all three actions share the exact same indentation level
+    fig2.update_layout(
+        barmode="stack",
+        title=dict(text="REGIONAL THREAT MAP", font=dict(size=12, color="#38BDF8", family=FONT)),
+        paper_bgcolor=PAPER, plot_bgcolor=PAPER, font_family=FONT,
+        xaxis=dict(showgrid=False, showticklabels=False, title=""),
+        yaxis=dict(gridcolor="rgba(51, 65, 85, 0.3)", tickfont=dict(size=11, color="#94A3B8")),
+        legend=dict(orientation="h", y=1.1, x=0.5, xanchor="center", font=dict(size=10, color="#94A3B8")),
+        margin=dict(t=40, b=10, l=10, r=10), height=280,
+        bargap=0.3
+    )
+    st.plotly_chart(fig2, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
-
 # ── Chart 3: Risk gauge ────────────────────────────────
 with c3:
     st.markdown('<div class="chart-wrap">', unsafe_allow_html=True)
     gc = "#10B981" if avg_risk < 30 else ("#F59E0B" if avg_risk < 60 else "#EF4444")
-fig3 = go.Figure(go.Indicator(
+# Ensure this matches the exact indentation of fig1 and fig2
+    fig3 = go.Figure(go.Indicator(
         mode="gauge+number+delta",
         value=avg_risk,
-        delta={"reference":30, "increasing":{"color":"#EF4444"}, "decreasing":{"color":"#10B981"}, "font":{"size":12}},
-        title={"text":"SYSTEM THREAT LEVEL", "font":{"size":12, "color":"#38BDF8", "family":FONT}}, # ⬅️ Removed letter_spacing
-        number={"font":{"size":40, "color":gc, "family":"DM Mono"}},
+        delta={"reference": 30, "increasing": {"color": "#EF4444"}, "decreasing": {"color": "#10B981"}, "font": {"size": 12}},
+        title={"text": "SYSTEM THREAT LEVEL", "font": {"size": 12, "color": "#38BDF8", "family": FONT}},
+        number={"font": {"size": 40, "color": gc, "family": "DM Mono"}},
         gauge={
-            "axis":{"range":[0,100], "tickcolor":"#475569", "tickfont":{"size":10,"color":"#64748B"}},
-            "bar":{"color":gc, "thickness":0.2},
-            "bgcolor":"rgba(15, 23, 42, 0.5)",
-            "bordercolor":"rgba(51, 65, 85, 0.5)",
-            "borderwidth":1,
-            "steps":[
-                {"range":[0,30],  "color":"rgba(16, 185, 129, 0.1)"},
-                {"range":[30,70], "color":"rgba(245, 158, 11, 0.1)"},
-                {"range":[70,100],"color":"rgba(239, 68, 68, 0.1)"},
+            "axis": {"range": [0, 100], "tickcolor": "#475569", "tickfont": {"size": 10, "color": "#64748B"}},
+            "bar": {"color": gc, "thickness": 0.2},
+            "bgcolor": "rgba(15, 23, 42, 0.5)",
+            "bordercolor": "rgba(51, 65, 85, 0.5)",
+            "borderwidth": 1,
+            "steps": [
+                {"range": [0, 30],  "color": "rgba(16, 185, 129, 0.1)"},
+                {"range": [30, 70], "color": "rgba(245, 158, 11, 0.1)"},
+                {"range": [70, 100], "color": "rgba(239, 68, 68, 0.1)"},
             ],
-            "threshold":{"line":{"color":"#EF4444","width":3},"value":70}
+            "threshold": {"line": {"color": "#EF4444", "width": 3}, "value": 70}
         }
     ))
+    
+    # Don't forget to indent your update_layout and chart rendering to match!
     fig3.update_layout(
-        paper_bgcolor=PAPER, font_family=FONT,
-        margin=dict(t=40, b=10, l=20, r=20), height=280
+        paper_bgcolor=PAPER, plot_bgcolor=PAPER, font_family=FONT,
+        margin=dict(t=40, b=20, l=10, r=10), height=280
     )
     st.plotly_chart(fig3, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
-
 # ════════════════════════════════════════════════════════
 # BUSINESS INSIGHTS (SYSTEM ALERTS)
 # ════════════════════════════════════════════════════════
