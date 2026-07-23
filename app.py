@@ -10,40 +10,41 @@ from zoneinfo import ZoneInfo
 # PAGE CONFIG
 # ════════════════════════════════════════════════════════
 st.set_page_config(
-    page_title="COD Intelligence",
+    page_title="COD Intelligence Command",
     layout="wide",
-    page_icon="📦",
+    page_icon="🛡️",
     initial_sidebar_state="expanded"
 )
 
 PAKISTAN_TZ = ZoneInfo("Asia/Karachi")
 
 # ════════════════════════════════════════════════════════
-# MASTER CSS (All styling unified here) — UNCHANGED FROM ORIGINAL
+# MASTER CSS — TACTICAL DARK / CYBERPUNK HUD
 # ════════════════════════════════════════════════════════
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500;600&display=swap');
 
 *, html, body, [class*="css"] {
     font-family: 'Sora', sans-serif !important;
     box-sizing: border-box;
 }
 
-/* ══ MAIN APP BACKGROUND & FULL SCREEN ══ */
-.stApp { background: #FDFCE9; }
+/* ══ MAIN APP BACKGROUND ══ */
+.stApp { 
+    background: radial-gradient(circle at top center, #111827 0%, #030712 100%) !important; 
+    color: #F8FAFC;
+}
 .block-container { padding: 2rem 2.4rem 3rem !important; max-width: 100% !important; }
 
-/* ══ SIDEBAR (PREMIUM DARK) ══ */
+/* ══ SIDEBAR (DEEP OBSIDIAN) ══ */
 [data-testid="stSidebar"],
 [data-testid="stSidebar"] > div:first-child {
     background-color: #0B0F19 !important;
-    border-right: 1px solid #1E293B !important;
-    min-width: 260px !important;
+    border-right: 1px solid rgba(30, 41, 59, 0.8) !important;
+    min-width: 270px !important;
 }
-[data-testid="stSidebar"] * {
-    color: #CBD5E1 !important;
-}
+[data-testid="stSidebar"] * { color: #94A3B8 !important; }
 [data-testid="stSidebar"] .stSelectbox > label,
 [data-testid="stSidebar"] .stNumberInput > label,
 [data-testid="stSidebar"] strong {
@@ -51,249 +52,265 @@ st.markdown("""
     font-weight: 800 !important;
     letter-spacing: 1.5px !important;
     text-transform: uppercase !important;
-    color: #64748B !important;
+    color: #38BDF8 !important; /* Neon Blue labels */
 }
 [data-testid="stSidebar"] [data-baseweb="select"] > div,
 [data-testid="stSidebar"] input {
-    background: #1E293B !important;
-    border: 1px solid #334155 !important;
-    color: #FFFFFF !important;
+    background: rgba(15, 23, 42, 0.6) !important;
+    border: 1px solid rgba(56, 189, 248, 0.3) !important;
+    color: #F8FAFC !important;
     border-radius: 8px !important;
     font-weight: 500 !important;
+    backdrop-filter: blur(10px);
 }
-[data-testid="stSidebar"] hr { border-color: #1E293B !important; }
+[data-testid="stSidebar"] input:focus {
+    border-color: #38BDF8 !important;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.2) !important;
+}
+[data-testid="stSidebar"] hr { border-color: rgba(30, 41, 59, 0.8) !important; }
 
 .sb-brand {
     padding: 20px 8px 16px;
-    border-bottom: 1px solid #1E293B;
+    border-bottom: 1px solid rgba(30, 41, 59, 0.8);
     margin-bottom: 8px;
 }
 .sb-logo {
-    width: 40px; height: 40px;
-    background: linear-gradient(135deg,#6366f1,#8b5cf6);
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, #0284C7, #38BDF8);
     border-radius: 12px;
     display: flex; align-items:center; justify-content:center;
-    font-size: 20px; margin-bottom: 10px;
-    box-shadow: 0 4px 14px rgba(99,102,241,0.35);
+    font-size: 22px; margin-bottom: 12px;
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
 }
 .sb-name { 
     font-size: 18px !important; 
     font-weight: 800 !important; 
-    color: #FFFFFF !important; 
+    color: #F8FAFC !important; 
     letter-spacing: -0.5px;
 }
 .sb-tag { 
     font-size: 10px !important; 
     font-weight: 700 !important; 
     letter-spacing: 1.5px !important; 
-    color: #38BDF8 !important;
+    color: #10B981 !important; /* Emerald Live Status */
     text-transform: uppercase; 
 }
 
-/* ══ TOPBAR (PREMIUM DARK & CENTERED) ══ */
+/* ══ TOPBAR (HUD STYLE) ══ */
 .topbar {
-    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
-    border: 1px solid #334155;
-    border-radius: 20px;
-    padding: 24px 36px;
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 20px 30px;
     margin-bottom: 30px;
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
+    gap: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
-.tb-left { justify-self: start; display: flex; align-items: center; gap: 20px; }
-.tb-center { justify-self: center; text-align: center; }
-.tb-right { justify-self: end; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
-
 .tb-icon {
-    width: 60px; height: 60px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    border-radius: 16px;
+    width: 56px; height: 56px;
+    background: rgba(2, 132, 199, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 28px;
-    box-shadow: 0 8px 24px rgba(99,102,241,0.4);
+    font-size: 26px;
+    box-shadow: inset 0 0 15px rgba(56, 189, 248, 0.2);
 }
 .tb-title {
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 800;
-    background: linear-gradient(to right, #38BDF8, #818CF8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #F8FAFC;
     letter-spacing: -0.5px;
-    line-height: 1.2;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
 }
-.tb-sub { font-size: 14px; color: #94A3B8; font-weight: 500; }
+.tb-sub { font-size: 13px; color: #94A3B8; font-weight: 500; font-family: 'DM Mono', monospace !important; }
+.tb-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+
 .live-pill {
     display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(16,185,129,0.15);
-    border: 1px solid rgba(16,185,129,0.4);
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.5);
     color: #34D399;
-    font-size: 12px; font-weight: 800;
-    padding: 6px 16px;
-    border-radius: 30px;
-    letter-spacing: 0.5px;
+    font-size: 11px; font-weight: 800;
+    padding: 4px 12px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    font-family: 'DM Mono', monospace !important;
 }
 .live-dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: #10b981;
-    animation: blink 2s infinite;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #10B981;
+    box-shadow: 0 0 8px #10B981;
+    animation: pulse 1.5s infinite;
 }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
-.tb-meta { font-size: 13px; color: #64748B; font-weight: 600; }
+@keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.2); } 100% { opacity: 1; transform: scale(1); } }
+.tb-meta { font-size: 12px; color: #64748B; font-weight: 600; font-family: 'DM Mono', monospace !important;}
 
-/* ══ SECTION TITLE ══ */
+/* ══ SECTION TITLE (NEON) ══ */
 .sec-title {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 800;
-    letter-spacing: 1.4px;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    color: #6b7494;
-    margin: 28px 0 14px;
+    color: #38BDF8;
+    margin: 30px 0 16px;
     display: flex;
     align-items: center;
     gap: 12px;
+}
+.sec-title::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: #38BDF8;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #38BDF8;
 }
 .sec-title::after {
     content: '';
     flex: 1;
     height: 1px;
-    background: linear-gradient(90deg, #d4d9ee, transparent);
+    background: linear-gradient(90deg, rgba(56, 189, 248, 0.3), transparent);
 }
 
-/* ══ KPI CARDS ══ */
+/* ══ KPI CARDS (GLASSMORPHISM) ══ */
 .kcard {
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 16px 16px 14px;
-    border: 1.5px solid #e8ecf8;
-    box-shadow: 0 1px 4px rgba(26,29,46,0.05), 0 4px 16px rgba(26,29,46,0.04);
+    background: rgba(15, 23, 42, 0.4);
+    border-radius: 12px;
+    padding: 18px;
+    border: 1px solid rgba(51, 65, 85, 0.6);
+    backdrop-filter: blur(10px);
     position: relative;
     overflow: hidden;
-    transition: all 0.22s ease;
-    height: 125px;
-    min-height: 125px;
+    transition: all 0.2s ease;
+    height: 130px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 .kcard:hover {
-    box-shadow: 0 4px 20px rgba(26,29,46,0.12);
-    transform: translateY(-2px);
-    border-color: #d0d5f0;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
 }
 .kcard-bar {
     position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    border-radius: 16px 16px 0 0;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
 }
 .kcard-bg-icon {
     position: absolute;
-    right: 12px;
-    top: 10px;
-    font-size: 28px;
-    opacity: 0.06;
-    line-height: 1;
+    right: 14px;
+    top: 14px;
+    font-size: 24px;
+    opacity: 0.15;
+    filter: grayscale(100%);
 }
 .kcard-label {
-    font-size: 9px;
-    font-weight: 800;
-    letter-spacing: 1px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
     text-transform: uppercase;
-    color: #475569;   
+    color: #94A3B8;    
     margin-bottom: 8px;
 }
 .kcard-value {
-    font-size: 26px;
-    font-weight: 800;
+    font-family: 'DM Mono', monospace !important;
+    font-size: 28px;
+    font-weight: 600;
     line-height: 1;
-    margin-bottom: 4px;
-    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+    letter-spacing: -1px;
 }
 .kcard-sub {
     font-size: 11px;
-    color: #64748B;   
-    font-weight: 600;
-    min-height: 24px;
-    line-height: 1.4;
+    color: #64748B;    
+    font-weight: 500;
+    line-height: 1.3;
 }
-.kc-blue  .kcard-bar { background: linear-gradient(90deg,#6366f1,#818cf8); }
-.kc-blue  .kcard-value { color: #4f46e5; }
-.kc-green .kcard-bar { background: linear-gradient(90deg,#10b981,#34d399); }
-.kc-green .kcard-value { color: #059669; }
-.kc-amber .kcard-bar { background: linear-gradient(90deg,#f59e0b,#fbbf24); }
-.kc-amber .kcard-value { color: #d97706; }
-.kc-red   .kcard-bar { background: linear-gradient(90deg,#ef4444,#f87171); }
-.kc-red   .kcard-value { color: #dc2626; }
-.kc-violet .kcard-bar { background: linear-gradient(90deg,#8b5cf6,#a78bfa); }
-.kc-violet .kcard-value { color: #7c3aed; }
-.kc-cyan  .kcard-bar { background: linear-gradient(90deg,#06b6d4,#22d3ee); }
-.kc-cyan  .kcard-value { color: #0891b2; }
-.kc-rose  .kcard-bar { background: linear-gradient(90deg,#f43f5e,#fb7185); }
-.kc-rose  .kcard-value { color: #e11d48; }
-.kc-slate .kcard-bar { background: linear-gradient(90deg,#64748b,#94a3b8); }
-.kc-slate .kcard-value { color: #475569; }
+/* Neon Accents for Cards */
+.kc-blue { border-left: 1px solid rgba(56,189,248,0.3); }
+.kc-blue .kcard-bar { background: #38BDF8; box-shadow: 0 0 10px #38BDF8; }
+.kc-blue .kcard-value { color: #F8FAFC; text-shadow: 0 0 15px rgba(56,189,248,0.4); }
 
-/* ══ INSIGHT CARDS ══ */
+.kc-green { border-left: 1px solid rgba(16,185,129,0.3); }
+.kc-green .kcard-bar { background: #10B981; box-shadow: 0 0 10px #10B981; }
+.kc-green .kcard-value { color: #F8FAFC; text-shadow: 0 0 15px rgba(16,185,129,0.4); }
+
+.kc-amber { border-left: 1px solid rgba(245,158,11,0.3); }
+.kc-amber .kcard-bar { background: #F59E0B; box-shadow: 0 0 10px #F59E0B; }
+.kc-amber .kcard-value { color: #F8FAFC; text-shadow: 0 0 15px rgba(245,158,11,0.4); }
+
+.kc-red { border-left: 1px solid rgba(239,68,68,0.3); }
+.kc-red .kcard-bar { background: #EF4444; box-shadow: 0 0 10px #EF4444; }
+.kc-red .kcard-value { color: #F8FAFC; text-shadow: 0 0 15px rgba(239,68,68,0.4); }
+
+.kc-slate { border-left: 1px solid rgba(100,116,139,0.3); }
+.kc-slate .kcard-bar { background: #64748B; }
+.kc-slate .kcard-value { color: #F8FAFC; }
+
+.kc-violet { border-left: 1px solid rgba(139,92,246,0.3); }
+.kc-violet .kcard-bar { background: #8B5CF6; box-shadow: 0 0 10px #8B5CF6; }
+.kc-violet .kcard-value { color: #F8FAFC; text-shadow: 0 0 15px rgba(139,92,246,0.4); }
+
+.kc-cyan { border-left: 1px solid rgba(6,182,212,0.3); }
+.kc-cyan .kcard-bar { background: #06B6D4; box-shadow: 0 0 10px #06B6D4; }
+.kc-cyan .kcard-value { color: #F8FAFC; text-shadow: 0 0 15px rgba(6,182,212,0.4); }
+
+.kc-rose { border-left: 1px solid rgba(244,63,94,0.3); }
+.kc-rose .kcard-bar { background: #F43F5E; box-shadow: 0 0 10px #F43F5E; }
+.kc-rose .kcard-value { color: #F8FAFC; text-shadow: 0 0 15px rgba(244,63,94,0.4); }
+
+/* ══ SYSTEM ALERTS (BUSINESS INSIGHTS) ══ */
 .icard {
-    border-radius: 14px;
+    background: rgba(15, 23, 42, 0.4);
+    border-radius: 8px;
     padding: 16px 20px;
-    margin-bottom: 13px;
-    border: 1.5px solid;
-    transition: transform 0.18s;
+    margin-bottom: 14px;
+    border: 1px solid;
+    backdrop-filter: blur(8px);
 }
-.icard:hover { transform: translateX(3px); }
-.icard-title { font-size: 14px; font-weight: 700; color: #1a1d2e; margin-bottom: 7px; }
-.icard-body  { font-size: 13px; color: #4a5278; line-height: 1.7; }
-.icard-body strong { color: #1a1d2e; }
-.ic-green  { background: #f0fdf8; border-color: #a7f3d0; }
-.ic-amber  { background: #fffbf0; border-color: #fde68a; }
-.ic-red    { background: #fff5f5; border-color: #fecaca; }
-.ic-blue   { background: #f0f5ff; border-color: #bfdbfe; }
-.ic-violet { background: #f8f5ff; border-color: #ddd6fe; }
-.ic-cyan   { background: #f0fbff; border-color: #a5f3fc; }
+.icard-title { font-size: 13px; font-weight: 700; color: #F8FAFC; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+.icard-body  { font-size: 12px; color: #94A3B8; line-height: 1.6; font-family: 'DM Mono', monospace !important; }
+.icard-body strong { color: #F8FAFC; font-weight: 600; }
+.ic-green  { border-color: rgba(16,185,129,0.4); border-left: 4px solid #10B981; }
+.ic-amber  { border-color: rgba(245,158,11,0.4); border-left: 4px solid #F59E0B; }
+.ic-red    { border-color: rgba(239,68,68,0.4);  border-left: 4px solid #EF4444; }
+.ic-blue   { border-color: rgba(56,189,248,0.4); border-left: 4px solid #38BDF8; }
+.ic-violet { border-color: rgba(139,92,246,0.4); border-left: 4px solid #8B5CF6; }
+.ic-cyan   { border-color: rgba(6,182,212,0.4);  border-left: 4px solid #06B6D4; }
 
 /* ══ CHART WRAPPER ══ */
 .chart-wrap {
-    background: #ffffff;
-    border-radius: 18px;
-    border: 1.5px solid #e8ecf8;
-    box-shadow: 0 1px 4px rgba(26,29,46,0.05);
-    padding: 8px 6px 4px;
+    background: rgba(15, 23, 42, 0.3);
+    border-radius: 12px;
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    padding: 12px 8px;
     height: 100%;
+    backdrop-filter: blur(10px);
 }
 
-/* ══ DATAFRAME ══ */
-[data-testid="stDataFrame"] { border-radius: 16px !important; overflow: hidden; }
-.stDataFrame { border: 1.5px solid #e8ecf8 !important; border-radius: 16px !important; }
+/* ══ DATAFRAME (HACKER TERMINAL VIBE) ══ */
+[data-testid="stDataFrame"] { border-radius: 8px !important; }
+.stDataFrame { border: 1px solid rgba(51, 65, 85, 0.8) !important; border-radius: 8px !important; }
 
-/* ══ LOGIN ══ */
+/* ══ LOGIN SCREEN (CYBERPUNK) ══ */
 .login-bg { min-height: 80vh; display: flex; align-items: center; justify-content: center; }
-.login-card { background: #fff; border-radius: 24px; border: 1.5px solid #e8ecf8; box-shadow: 0 12px 48px rgba(26,29,46,0.10); padding: 48px 44px; max-width: 420px; text-align: center; }
-.login-icon { width: 72px; height: 72px; background: linear-gradient(135deg,#6366f1,#8b5cf6); border-radius: 20px; display: flex; align-items:center; justify-content:center; font-size: 34px; margin: 0 auto 24px; box-shadow: 0 8px 24px rgba(99,102,241,0.35); }
-.login-title { font-size: 26px; font-weight: 800; color: #1a1d2e; letter-spacing: -0.5px; margin-bottom: 6px; }
-.login-sub   { font-size: 13.5px; color: #8890b8; font-weight: 400; margin-bottom: 32px; line-height: 1.5; }
+.login-card { background: rgba(15,23,42,0.8); backdrop-filter: blur(20px); border-radius: 16px; border: 1px solid rgba(56,189,248,0.3); box-shadow: 0 0 40px rgba(56,189,248,0.1); padding: 48px; max-width: 400px; text-align: center; }
+.login-icon { width: 64px; height: 64px; background: rgba(56,189,248,0.1); border: 1px solid #38BDF8; border-radius: 16px; display: flex; align-items:center; justify-content:center; font-size: 30px; margin: 0 auto 24px; box-shadow: inset 0 0 15px rgba(56,189,248,0.4); }
+.login-title { font-size: 24px; font-weight: 800; color: #F8FAFC; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase; }
+.login-sub   { font-size: 12px; color: #94A3B8; font-weight: 500; margin-bottom: 32px; font-family: 'DM Mono', monospace !important; letter-spacing: 0.5px; }
 </style>
 """, unsafe_allow_html=True)
 
 # ════════════════════════════════════════════════════════
-# CREDENTIALS  — FIX #3: pulled from st.secrets, never hardcoded
-# You MUST create .streamlit/secrets.toml (see instructions below
-# this file) before running. Nothing sensitive lives in this .py file.
+# CREDENTIALS
 # ════════════════════════════════════════════════════════
 SUPABASE_URL = st.secrets["SUPABASE_URL"]
 SUPABASE_KEY = st.secrets["SUPABASE_KEY"]
-
-# FIX #2: per-client login instead of one shared password.
-# Each pilot store gets its own password mapped to its own client_id.
-# Add more entries here as you onboard more pilot stores.
 CLIENT_CREDENTIALS = dict(st.secrets["CLIENT_CREDENTIALS"])
-# Expected shape in secrets.toml:
-# [CLIENT_CREDENTIALS]
-# store1pass = "client_001"
-# store2pass = "client_002"
 
 # ════════════════════════════════════════════════════════
 # LOGIN PAGE
@@ -307,53 +324,46 @@ if "client_label" not in st.session_state:
 
 if not st.session_state.auth:
     st.markdown("""
-    <div style="max-width:420px;margin:60px auto;text-align:center;">
-      <div class="login-icon">📦</div>
-      <div class="login-title">COD Intelligence</div>
-      <div class="login-sub">Pakistan's AI-powered eCommerce<br>order validation platform</div>
+    <div style="max-width:400px;margin:80px auto;text-align:center;" class="login-card">
+      <div class="login-icon">🛡️</div>
+      <div class="login-title">SYSTEM TERMINAL</div>
+      <div class="login-sub">COD ORDER INTELLIGENCE NODE</div>
     </div>
     """, unsafe_allow_html=True)
-    c1, c2, c3 = st.columns([1, 1.6, 1])
+    c1, c2, c3 = st.columns([1, 1.2, 1])
     with c2:
-        pw = st.text_input("", type="password", placeholder="🔐  Enter your password",
+        pw = st.text_input("", type="password", placeholder="Enter Access Key...",
                            label_visibility="collapsed")
-        if st.button("Sign In  →", use_container_width=True, type="primary"):
+        if st.button("INITIALIZE SYSTEM", use_container_width=True, type="primary"):
             if pw in CLIENT_CREDENTIALS:
                 st.session_state.auth = True
                 st.session_state.client_id = CLIENT_CREDENTIALS[pw]
                 st.session_state.client_label = st.session_state.client_id
                 st.rerun()
             else:
-                st.error("Incorrect password. Please try again.")
+                st.error("ACCESS DENIED: Invalid Authorization.")
     st.stop()
 
 CURRENT_CLIENT_ID = st.session_state.client_id
 
 # ════════════════════════════════════════════════════════
-# STATUS NORMALIZATION — FIX #5
-# Your n8n system actually produces these statuses:
-#   Auto-Confirmed, Risk Flagged, Rejected, Manual Review (Decision Engine)
-#   Confirmed        (Customer Reply Handler — different string than Auto-Confirmed!)
-#   Cancelled         (Cancel button feature)
-# "Confirmed" and "Auto-Confirmed" both count as a clean/confirmed order for
-# KPI purposes, but we keep them visually distinct in the table/filter so you
-# can still tell "auto-passed" apart from "customer confirmed after a flag."
+# STATUS NORMALIZATION
 # ════════════════════════════════════════════════════════
 CLEAN_STATUSES = ["Auto-Confirmed", "Confirmed"]
 ALL_KNOWN_STATUSES = ["Auto-Confirmed", "Confirmed", "Risk Flagged", "Rejected", "Cancelled", "Manual Review"]
 
 STATUS_COLOR_MAP = {
-    "Auto-Confirmed": "#10b981",
-    "Confirmed":       "#059669",
-    "Risk Flagged":    "#f59e0b",
-    "Rejected":        "#ef4444",
-    "Cancelled":       "#64748b",
-    "Manual Review":   "#8b5cf6",
-    "Pending":         "#8b5cf6",
+    "Auto-Confirmed": "#10B981", # Emerald
+    "Confirmed":      "#059669", # Darker Emerald
+    "Risk Flagged":   "#F59E0B", # Amber
+    "Rejected":       "#EF4444", # Crimson
+    "Cancelled":      "#64748B", # Slate
+    "Manual Review":  "#8B5CF6", # Violet
+    "Pending":        "#06B6D4", # Cyan
 }
 
 # ════════════════════════════════════════════════════════
-# DATA LOAD  (cached 60s)  — FIX #1: filtered by client_id
+# DATA LOAD
 # ════════════════════════════════════════════════════════
 @st.cache_data(ttl=60)
 def load_data(client_id: str):
@@ -362,7 +372,7 @@ def load_data(client_id: str):
         resp = (
             client.table("orders")
             .select("*")
-            .eq("store_id", client_id)          # <-- FIX #1: only this client's rows
+            .eq("store_id", client_id)
             .order("inserted_at", desc=True)
             .execute()
         )
@@ -377,13 +387,11 @@ def load_data(client_id: str):
         df["price"]      = pd.to_numeric(df.get("price", 0), errors="coerce").fillna(0)
         if "inserted_at" in df.columns:
             df["inserted_at"] = pd.to_datetime(df["inserted_at"], errors="coerce", utc=True)
-            # FIX #6: convert to Pakistan time before deriving "date", so
-            # "Today" lines up with real Pakistan-time orders, not UTC.
             df["inserted_at_pk"] = df["inserted_at"].dt.tz_convert(PAKISTAN_TZ)
             df["date"] = df["inserted_at_pk"].dt.date
         return df
     except Exception as e:
-        st.error(f"Supabase error: {e}")
+        st.error(f"Supabase connection disrupted: {e}")
         return pd.DataFrame()
 
 # ════════════════════════════════════════════════════════
@@ -392,42 +400,38 @@ def load_data(client_id: str):
 with st.sidebar:
     st.markdown(f"""
     <div class="sb-brand">
-      <div class="sb-logo">📦</div>
-      <div class="sb-name">COD Intelligence</div>
-      <div class="sb-tag">{CURRENT_CLIENT_ID}</div>
+      <div class="sb-logo">🛡️</div>
+      <div class="sb-name">SYS_COMMAND</div>
+      <div class="sb-tag">NODE: {CURRENT_CLIENT_ID}</div>
     </div>
     """, unsafe_allow_html=True)
 
-    st.markdown("**📅 DATE RANGE**")
+    st.markdown("**📅 TIME FRAME**")
     date_range = st.selectbox("dr", ["All time","Today","Last 7 days","Last 30 days"],
                               label_visibility="collapsed")
-    st.markdown("**📋 ORDER STATUS**")
-    # FIX #4: "Pending" removed from here since it's a separate bucket handled
-    # below (df_pending), not part of df_proc — selecting it used to always
-    # return zero rows. Added Confirmed/Cancelled/Manual Review so the filter
-    # actually covers every status your system produces.
+    st.markdown("**📋 STATUS OVERRIDE**")
     status_filter = st.selectbox(
         "sf",
         ["All"] + ALL_KNOWN_STATUSES,
         label_visibility="collapsed"
     )
-    st.markdown("**⚠️ RISK LEVEL**")
+    st.markdown("**⚠️ THREAT LEVEL**")
     risk_filter = st.selectbox("rf", ["All","CRITICAL","HIGH","MEDIUM","LOW"],
                                label_visibility="collapsed")
 
     st.markdown("---")
-    st.markdown("**💰 FINANCIAL SETTINGS**")
-    avg_order_val = st.number_input("Avg Order Value (Rs)", value=3000, step=500, min_value=0)
-    shipping_cost = st.number_input("Shipping Cost (Rs)",   value=250,  step=50,  min_value=0)
-    reverse_cost  = st.number_input("Reverse Cost (Rs)",    value=150,  step=50,  min_value=0)
+    st.markdown("**💰 LOGISTICS PARAMS**")
+    avg_order_val = st.number_input("Avg Order (PKR)", value=3000, step=500, min_value=0)
+    shipping_cost = st.number_input("Shipping (PKR)",   value=250,  step=50,  min_value=0)
+    reverse_cost  = st.number_input("RTO Penalty (PKR)",    value=150,  step=50,  min_value=0)
 
     st.markdown("---")
     col_r, col_l = st.columns(2)
     with col_r:
-        if st.button("🔄 Refresh", use_container_width=True):
+        if st.button("🔄 SYNC", use_container_width=True):
             st.cache_data.clear(); st.rerun()
     with col_l:
-        if st.button("🚪 Logout", use_container_width=True):
+        if st.button("🚪 DISCONNECT", use_container_width=True):
             st.session_state.auth = False
             st.session_state.client_id = None
             st.rerun()
@@ -437,15 +441,14 @@ with st.sidebar:
 # ════════════════════════════════════════════════════════
 df_raw = load_data(CURRENT_CLIENT_ID)
 if df_raw.empty:
-    st.warning("No data found for this client. Check your connection or client_id.")
+    st.warning("SYSTEM EMPTY: No transmission data received for this node.")
     st.stop()
 
 all_cities = sorted(df_raw["city"].dropna().unique().tolist())
 with st.sidebar:
-    st.markdown("**🏙️ CITY**")
+    st.markdown("**🏙️ ZONE FILTER**")
     city_filter = st.selectbox("cf", ["All"] + all_cities, label_visibility="collapsed")
 
-# Date filter — FIX #6: uses Pakistan-time "today", not server-local
 df = df_raw.copy()
 today = datetime.now(PAKISTAN_TZ).date()
 if "date" in df.columns:
@@ -456,9 +459,6 @@ if "date" in df.columns:
     elif date_range == "Last 30 days":
         df = df[df["date"] >= today - timedelta(days=30)]
 
-# FIX #4: Pending view built straight from df (not from df_proc, which
-# excludes Pending rows) — this is what makes the "Pending" status filter
-# option actually able to show something when selected.
 df_pending = df[df["status"].isin(["Pending", "", "Not Checked"])]
 df_proc    = df[~df["status"].isin(["Pending","","Not Checked"])]
 
@@ -471,7 +471,7 @@ if city_filter != "All": df_view = df_view[df_view["city"] == city_filter]
 if risk_filter != "All": df_view = df_view[df_view["risk_level"] == risk_filter]
 
 # ════════════════════════════════════════════════════════
-# METRICS — FIX #5: "Confirmed" now counted alongside "Auto-Confirmed"
+# METRICS
 # ════════════════════════════════════════════════════════
 total      = len(df_proc)
 confirmed  = len(df_proc[df_proc["status"].isin(CLEAN_STATUSES)])
@@ -500,39 +500,35 @@ border_cnt    = len(df_proc[(df_proc["risk_score"] >= 60) & (df_proc["risk_score
 # ════════════════════════════════════════════════════════
 # TOP BAR
 # ════════════════════════════════════════════════════════
-now_str = datetime.now(PAKISTAN_TZ).strftime("%d %b %Y · %I:%M %p PKT")
+now_str = datetime.now(PAKISTAN_TZ).strftime("%d %b %Y // %H:%M PKT")
 st.markdown(f"""
 <div class="topbar">
-  <div class="tb-left">
-    <div class="tb-icon">📦</div>
+  <div class="tb-icon">📡</div>
+  <div>
+    <div class="tb-title">INTELLIGENCE TERMINAL</div>
+    <div class="tb-sub">AI NEURAL NET: ACTIVE // REGION: PAKISTAN</div>
   </div>
-  
-  <div class="tb-center">
-    <div class="tb-title">eCommerce Intelligence Dashboard</div>
-    <div class="tb-sub">AI-powered COD Order Validation System · Pakistan</div>
-  </div>
-  
   <div class="tb-right">
-    <div class="live-pill"><span class="live-dot"></span> LIVE · auto-refresh 60s</div>
-    <div class="tb-meta">{now_str} &nbsp;·&nbsp; {total} processed &nbsp;·&nbsp; {pending} pending</div>
+    <div class="live-pill"><span class="live-dot"></span> UPLINK STABLE</div>
+    <div class="tb-meta">{now_str} // PKT<br>PACKETS: {total} PROC // {pending} PEND</div>
   </div>
 </div>
 """, unsafe_allow_html=True)
 
 # ════════════════════════════════════════════════════════
-# KPI ROW 1  — ORDER OVERVIEW  (added Cancelled card — FIX #5)
+# KPI ROW 1
 # ════════════════════════════════════════════════════════
-st.markdown('<div class="sec-title">Order Overview</div>', unsafe_allow_html=True)
+st.markdown('<div class="sec-title">Operational Telemetry</div>', unsafe_allow_html=True)
 
 k1, k2, k3, k4, k5, k6, k7 = st.columns(7)
 order_kpis = [
-    (k1, "Total Processed",  total,     "",                         "blue",   "📊"),
-    (k2, "Confirmed",        confirmed, f"{clean_pct}% clean rate", "green",  "✅"),
-    (k3, "Risk Flagged",     flagged,   "awaiting customer reply",  "amber",  "⚠️"),
-    (k4, "Rejected",         rejected,  "blocked before dispatch",  "red",    "❌"),
-    (k5, "Cancelled",        cancelled, "customer requested cancel","slate",  "🚫"),
-    (k6, "Pending / Stuck",  pending,   "AI not yet processed",     "violet", "⏳"),
-    (k7, "Avg Risk Score",   avg_risk,  "0 = clean · 100 = fake",  "cyan",   "🎯"),
+    (k1, "VOLUME",          total,      "TOTAL PARSED",             "blue",   "📊"),
+    (k2, "VERIFIED",        confirmed,  f"{clean_pct}% PURITY",     "green",  "✅"),
+    (k3, "ANOMALIES",       flagged,    "AWAITING INPUT",           "amber",  "⚠️"),
+    (k4, "THREATS BLOCKED", rejected,   "QUARANTINED",              "red",    "❌"),
+    (k5, "ABORTED",         cancelled,  "USER TERMINATED",          "slate",  "🚫"),
+    (k6, "IN QUEUE",        pending,    "PROCESSING...",            "violet", "⏳"),
+    (k7, "THREAT INDEX",    avg_risk,   "SYSTEM AVERAGE",           "cyan",   "🎯"),
 ]
 for col, label, val, sub, color, icon in order_kpis:
     with col:
@@ -546,17 +542,17 @@ for col, label, val, sub, color, icon in order_kpis:
         </div>""", unsafe_allow_html=True)
 
 # ════════════════════════════════════════════════════════
-# KPI ROW 2  — FINANCIAL
+# KPI ROW 2
 # ════════════════════════════════════════════════════════
-st.markdown('<div class="sec-title">Financial Impact</div>', unsafe_allow_html=True)
+st.markdown('<div class="sec-title">Financial Telemetry</div>', unsafe_allow_html=True)
 
 f1,f2,f3,f4,f5 = st.columns(5)
 fin_kpis = [
-    (f1, "Confirmed Revenue",   f"Rs {conf_revenue:,}",   "from clean orders",            "green",  "💰"),
-    (f2, "Money at Risk",       f"Rs {money_at_risk:,}",  "flagged, not dispatched",      "amber",  "⚠️"),
-    (f3, "RTO Loss Cost",       f"Rs {rto_loss:,}",       "shipping + reverse logistics", "red",    "📦"),
-    (f4, "Saved by AI",         f"Rs {saved:,}",          "bad orders blocked",           "green",  "🛡️"),
-    (f5, "Worst Case Exposure", f"Rs {worst_case:,}",     "if all flagged orders return", "rose",   "⛔"),
+    (f1, "SECURED REVENUE",   f"{conf_revenue:,}", "CLEARED FOR DISPATCH (PKR)", "green", "💰"),
+    (f2, "CAPITAL AT RISK",   f"{money_at_risk:,}", "FLAGGED ASSETS (PKR)",       "amber", "⚠️"),
+    (f3, "RTO PENALTY",       f"{rto_loss:,}",      "LOGISTICS BURN (PKR)",       "red",   "📦"),
+    (f4, "SYSTEM SAVINGS",    f"{saved:,}",         "LOSS PREVENTED (PKR)",       "cyan",  "🛡️"),
+    (f5, "MAX EXPOSURE",      f"{worst_case:,}",    "IF ALL FAIL (PKR)",          "rose",  "⛔"),
 ]
 for col, label, val, sub, color, icon in fin_kpis:
     with col:
@@ -565,43 +561,40 @@ for col, label, val, sub, color, icon in fin_kpis:
           <div class="kcard-bar"></div>
           <div class="kcard-bg-icon">{icon}</div>
           <div class="kcard-label">{label}</div>
-          <div class="kcard-value" style="font-size:24px;letter-spacing:-0.5px">{val}</div>
+          <div class="kcard-value" style="font-size:24px;">{val}</div>
           <div class="kcard-sub">{sub}</div>
         </div>""", unsafe_allow_html=True)
 
 # ════════════════════════════════════════════════════════
-# CHARTS  (3 columns)
+# CHARTS
 # ════════════════════════════════════════════════════════
-st.markdown('<div class="sec-title">Analytics</div>', unsafe_allow_html=True)
+st.markdown('<div class="sec-title">Data Visualization</div>', unsafe_allow_html=True)
 
 c1, c2, c3 = st.columns([1.05, 1.45, 0.95])
-
 PAPER = "rgba(0,0,0,0)"
 FONT  = "Sora"
 
-# ── Chart 1: Status donut — FIX #5: full status color map ─────
+# ── Chart 1: Status donut ─────
 with c1:
     st.markdown('<div class="chart-wrap">', unsafe_allow_html=True)
     sc = df_proc["status"].value_counts().reset_index()
     sc.columns = ["status","count"]
-    fig1 = px.pie(sc, values="count", names="status", hole=0.62,
+    fig1 = px.pie(sc, values="count", names="status", hole=0.7,
                   color="status", color_discrete_map=STATUS_COLOR_MAP,
-                  title="Order Status Split")
+                  title="NODE DISTRIBUTION")
     fig1.update_traces(
-        textposition="outside", textfont=dict(size=12, family=FONT),
-        marker=dict(line=dict(color="#f0f2f8", width=3))
+        textposition="outside", textfont=dict(size=12, family=FONT, color="#94A3B8"),
+        marker=dict(line=dict(color="#0F172A", width=2))
     )
     fig1.add_annotation(
-        text=f"<b style='font-size:20px'>{clean_pct}%</b><br>confirmed",
+        text=f"<b style='font-size:22px; font-family:\"DM Mono\", monospace; color:#F8FAFC;'>{clean_pct}%</b><br><span style='color:#10B981; font-size:10px; letter-spacing:1px;'>PURITY</span>",
         x=0.5, y=0.5, showarrow=False,
-        font=dict(size=14, color="#1a1d2e", family=FONT)
     )
     fig1.update_layout(
         paper_bgcolor=PAPER, plot_bgcolor=PAPER, font_family=FONT,
-        title_font=dict(size=14, color="#1a1d2e", family=FONT),
-        legend=dict(orientation="h", y=-0.14, x=0.5, xanchor="center",
-                    font=dict(size=11, color="#4a5278")),
-        margin=dict(t=44, b=28, l=10, r=10), height=300
+        title_font=dict(size=12, color="#38BDF8", family=FONT, letter_spacing=1.5),
+        legend=dict(orientation="h", y=-0.14, x=0.5, xanchor="center", font=dict(size=10, color="#94A3B8")),
+        margin=dict(t=40, b=20, l=10, r=10), height=280
     )
     st.plotly_chart(fig1, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
@@ -618,33 +611,32 @@ with c2:
         cs = cs.merge(ct, on="city")
         cs["clean"] = cs["total"] - cs["risky"]
         cs["risk_pct"] = (cs["risky"] / cs["total"] * 100).round(1)
-        cs = cs.sort_values("risk_pct", ascending=True).tail(9)
+        cs = cs.sort_values("risk_pct", ascending=True).tail(7)
 
         fig2 = go.Figure()
         fig2.add_trace(go.Bar(
-            y=cs["city"], x=cs["clean"], name="Confirmed",
-            orientation="h", marker_color="#10b981",
+            y=cs["city"], x=cs["clean"], name="VERIFIED",
+            orientation="h", marker_color="#10B981",
             text=[f"{v}" for v in cs["clean"]],
             textposition="inside",
-            textfont=dict(size=11, color="#fff", family=FONT)
+            textfont=dict(size=10, color="#0F172A", family='DM Mono')
         ))
         fig2.add_trace(go.Bar(
-            y=cs["city"], x=cs["risky"], name="Flagged/Rejected",
-            orientation="h", marker_color="#ef4444",
+            y=cs["city"], x=cs["risky"], name="THREAT",
+            orientation="h", marker_color="#EF4444",
             text=[f"{v}" if v > 0 else "" for v in cs["risky"]],
             textposition="inside",
-            textfont=dict(size=11, color="#fff", family=FONT)
+            textfont=dict(size=10, color="#F8FAFC", family='DM Mono')
         ))
         fig2.update_layout(
             barmode="stack",
-            title=dict(text="Order Quality by City", font=dict(size=14, color="#1a1d2e", family=FONT)),
+            title=dict(text="REGIONAL THREAT MAP", font=dict(size=12, color="#38BDF8", family=FONT, letter_spacing=1.5)),
             paper_bgcolor=PAPER, plot_bgcolor=PAPER, font_family=FONT,
             xaxis=dict(showgrid=False, showticklabels=False, title=""),
-            yaxis=dict(gridcolor="#f0f2f8", tickfont=dict(size=12.5, color="#1a1d2e")),
-            legend=dict(orientation="h", y=1.14, x=0.5, xanchor="center",
-                        font=dict(size=11, color="#4a5278")),
-            margin=dict(t=48, b=12, l=10, r=16), height=300,
-            bargap=0.28
+            yaxis=dict(gridcolor="rgba(51, 65, 85, 0.3)", tickfont=dict(size=11, color="#94A3B8")),
+            legend=dict(orientation="h", y=1.1, x=0.5, xanchor="center", font=dict(size=10, color="#94A3B8")),
+            margin=dict(t=40, b=10, l=10, r=10), height=280,
+            bargap=0.3
         )
         st.plotly_chart(fig2, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
@@ -652,93 +644,71 @@ with c2:
 # ── Chart 3: Risk gauge ────────────────────────────────
 with c3:
     st.markdown('<div class="chart-wrap">', unsafe_allow_html=True)
-    gc = "#10b981" if avg_risk < 30 else ("#f59e0b" if avg_risk < 60 else "#ef4444")
+    gc = "#10B981" if avg_risk < 30 else ("#F59E0B" if avg_risk < 60 else "#EF4444")
     fig3 = go.Figure(go.Indicator(
         mode="gauge+number+delta",
         value=avg_risk,
-        delta={"reference":30,
-               "increasing":{"color":"#ef4444"},
-               "decreasing":{"color":"#10b981"},
-               "font":{"size":14}},
-        title={"text":"Avg Risk Score<br><span style='font-size:11px;color:#8890b8'>lower = healthier</span>",
-               "font":{"size":14, "color":"#1a1d2e", "family":FONT}},
-        number={"font":{"size":46, "color":gc, "family":FONT}},
+        delta={"reference":30, "increasing":{"color":"#EF4444"}, "decreasing":{"color":"#10B981"}, "font":{"size":12}},
+        title={"text":"SYSTEM THREAT LEVEL", "font":{"size":12, "color":"#38BDF8", "family":FONT, "letter_spacing":1.5}},
+        number={"font":{"size":40, "color":gc, "family":"DM Mono"}},
         gauge={
-            "axis":{"range":[0,100],
-                    "tickcolor":"#cbd5e8",
-                    "tickfont":{"size":10,"color":"#8890b8"}},
-            "bar":{"color":gc, "thickness":0.25},
-            "bgcolor":"#f8fafd",
-            "bordercolor":"#e8ecf8",
-            "borderwidth":1.5,
+            "axis":{"range":[0,100], "tickcolor":"#475569", "tickfont":{"size":10,"color":"#64748B"}},
+            "bar":{"color":gc, "thickness":0.2},
+            "bgcolor":"rgba(15, 23, 42, 0.5)",
+            "bordercolor":"rgba(51, 65, 85, 0.5)",
+            "borderwidth":1,
             "steps":[
-                {"range":[0,30],  "color":"#f0fdf8"},
-                {"range":[30,70], "color":"#fffbf0"},
-                {"range":[70,100],"color":"#fff5f5"},
+                {"range":[0,30],  "color":"rgba(16, 185, 129, 0.1)"},
+                {"range":[30,70], "color":"rgba(245, 158, 11, 0.1)"},
+                {"range":[70,100],"color":"rgba(239, 68, 68, 0.1)"},
             ],
-            "threshold":{"line":{"color":"#ef4444","width":2.5},"value":70}
+            "threshold":{"line":{"color":"#EF4444","width":3},"value":70}
         }
     ))
     fig3.update_layout(
         paper_bgcolor=PAPER, font_family=FONT,
-        margin=dict(t=44, b=8, l=22, r=22), height=300
+        margin=dict(t=40, b=10, l=20, r=20), height=280
     )
     st.plotly_chart(fig3, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
 # ════════════════════════════════════════════════════════
-# BUSINESS INSIGHTS
+# BUSINESS INSIGHTS (SYSTEM ALERTS)
 # ════════════════════════════════════════════════════════
-st.markdown('<div class="sec-title">Business Insights</div>', unsafe_allow_html=True)
+st.markdown('<div class="sec-title">System Alerts & Diagnostics</div>', unsafe_allow_html=True)
 
 ins1, ins2 = st.columns(2)
 
 with ins1:
     if clean_pct >= 70:
-        cls,icon,title = "ic-green","✅","Order Quality is Healthy"
-        body = f"<strong>{clean_pct}%</strong> of orders are passing validation — a strong baseline. Keep monitoring for city-level spikes on a weekly basis."
+        cls,icon,title = "ic-green","[OK]","NETWORK PURITY OPTIMAL"
+        body = f"> <strong>{clean_pct}%</strong> of incoming traffic cleared validation protocols. Continue standard monitoring."
     elif clean_pct >= 50:
-        cls,icon,title = "ic-amber","⚠️","Order Quality Needs Attention"
-        body = f"Only <strong>{clean_pct}%</strong> are confirmed clean. Review top-risk cities and add address hints at checkout to improve this number."
+        cls,icon,title = "ic-amber","[WARN]","MODERATE ANOMALY DETECTED"
+        body = f"> Only <strong>{clean_pct}%</strong> verified. Suggest deploying mandatory address fields in checkout node."
     else:
-        cls,icon,title = "ic-red","🚨","Order Quality is Critical"
-        body = f"Only <strong>{clean_pct}%</strong> passing — over half your orders carry risk. Review your checkout flow and address requirements immediately."
+        cls,icon,title = "ic-red","[CRITICAL]","SEVERE RTO LEAK DETECTED"
+        body = f"> <strong>{clean_pct}%</strong> verification rate. System is bleeding capital. Immediate checkout audit required."
     st.markdown(f'<div class="icard {cls}"><div class="icard-title">{icon} {title}</div><div class="icard-body">{body}</div></div>', unsafe_allow_html=True)
 
     per1k = round(saved * 1000 / max(1, total))
     st.markdown(f'''<div class="icard ic-blue">
-    <div class="icard-title">🛡️ AI System Value Generated</div>
-    <div class="icard-body">Caught <strong>{rejected} bad orders</strong> before dispatch —
-    protecting <strong>Rs {saved:,}</strong> from RTO losses.<br>
-    At current rates: <strong>Rs {per1k:,} saved per 1,000 orders</strong> processed.</div>
+    <div class="icard-title">[SHIELD] AI VALUE GENERATION LOG</div>
+    <div class="icard-body">> Neutralized <strong>{rejected} hostile orders</strong>.<br>
+    > Capital protected: <strong>PKR {saved:,}</strong><br>
+    > Current efficiency: <strong>PKR {per1k:,} saved per 1K nodes</strong>.</div>
     </div>''', unsafe_allow_html=True)
 
     daily_est = max(1, round(total / 7))
     net       = (saved * 4) - (rto_loss * 4)
-    nc        = "#059669" if net >= 0 else "#dc2626"
+    nc        = "#10B981" if net >= 0 else "#EF4444"
     st.markdown(f'''<div class="icard ic-violet">
-    <div class="icard-title">📈 Monthly Financial Projection</div>
+    <div class="icard-title">[PROJ] 30-DAY FORECAST</div>
     <div class="icard-body">
-    ~{daily_est} orders/day estimate based on current data<br>
-    Projected RTO loss: <strong>Rs {rto_loss*4:,}</strong><br>
-    Projected AI savings: <strong>Rs {saved*4:,}</strong><br>
-    Net position: <strong style="color:{nc};font-size:15px">Rs {net:,}</strong>
+    > Traffic estimate: ~{daily_est} req/day<br>
+    > Projected burn: <strong>PKR {rto_loss*4:,}</strong> | AI Savings: <strong>PKR {saved*4:,}</strong><br>
+    > Net Position: <strong style="color:{nc}; font-size:14px;">PKR {net:,}</strong>
     </div></div>''', unsafe_allow_html=True)
-
-    if pending > 0:
-        st.markdown(f'''<div class="icard ic-amber">
-        <div class="icard-title">⏳ {pending} Orders Not Yet Processed</div>
-        <div class="icard-body">These orders are stuck in <strong>Pending</strong> status — the AI validation hasn't run yet.
-        Check your n8n workflow. They may be stuck at the Wait node or failed at the Gemini step.</div>
-        </div>''', unsafe_allow_html=True)
-
-    if cancelled > 0:
-        cancel_pct = round(cancelled / total * 100, 1) if total else 0
-        st.markdown(f'''<div class="icard ic-cyan">
-        <div class="icard-title">🚫 {cancelled} Orders Cancelled by Customer</div>
-        <div class="icard-body"><strong>{cancel_pct}%</strong> of processed orders were cancelled after the customer
-        was contacted — worth reviewing if this rate climbs, it may signal address-confirmation friction.</div>
-        </div>''', unsafe_allow_html=True)
 
 with ins2:
     if "city" in df_proc.columns and total > 0:
@@ -748,10 +718,10 @@ with ins2:
             tc = cr.index[0]; tn = cr.iloc[0]
             tt = ct.get(tc, 1); tp = round(tn/tt*100,1)
             st.markdown(f'''<div class="icard ic-red">
-            <div class="icard-title">🗺️ Highest Risk City: {tc}</div>
-            <div class="icard-body"><strong>{tn} flagged or rejected</strong> out of {tt} orders from {tc}
-            — that's a <strong>{tp}% risk rate</strong>.<br>
-            Consider adding stricter address validation at checkout specifically for {tc} orders.</div>
+            <div class="icard-title">[ALERT] HIGH-THREAT VECTOR: {tc.upper()}</div>
+            <div class="icard-body">> <strong>{tn} flagged/rejected</strong> out of {tt} targets.<br>
+            > Threat probability: <strong>{tp}%</strong>.<br>
+            > Action: Deploy stricter geofence for {tc}.</div>
             </div>''', unsafe_allow_html=True)
 
         crate = {}
@@ -763,26 +733,17 @@ with ins2:
             sc2 = min(crate, key=crate.get)
             sp  = round(crate[sc2]*100,1)
             st.markdown(f'''<div class="icard ic-green">
-            <div class="icard-title">🟢 Most Reliable City: {sc2}</div>
-            <div class="icard-body">Only <strong>{sp}% risk rate</strong> on orders from {sc2}.<br>
-            Consider auto-confirming low-value orders from this city to speed up dispatch.</div>
+            <div class="icard-title">[SAFE] SECURE VECTOR: {sc2.upper()}</div>
+            <div class="icard-body">> Threat probability: <strong>{sp}%</strong>.<br>
+            > Action: Authorized for rapid-dispatch protocols.</div>
             </div>''', unsafe_allow_html=True)
 
     st.markdown(f'''<div class="icard ic-amber">
-    <div class="icard-title">📊 Risk Score Breakdown</div>
+    <div class="icard-title">[DIAG] THREAT LEVEL BREAKDOWN</div>
     <div class="icard-body">
-    <strong>{critical_cnt} orders</strong> scored 85+ — high confidence fake or bad address<br>
-    <strong>{border_cnt} orders</strong> scored 60–84 — borderline, manual review strongly advised<br>
-    Overall average: <strong>{avg_risk}</strong> &nbsp;·&nbsp; Flagged orders average: <strong>{avg_fl_risk}</strong>
-    </div></div>''', unsafe_allow_html=True)
-
-    wce = money_at_risk + rto_loss
-    st.markdown(f'''<div class="icard ic-red">
-    <div class="icard-title">⛔ Total Current Exposure</div>
-    <div class="icard-body">
-    <strong>Rs {wce:,}</strong> currently exposed to delivery risk<br>
-    Rs {money_at_risk:,} — flagged orders not dispatched (still recoverable)<br>
-    Rs {rto_loss:,} — already lost to shipping + reverse logistics
+    > Level 85+ (CRITICAL): <strong>{critical_cnt} targets</strong><br>
+    > Level 60-84 (ELEVATED): <strong>{border_cnt} targets</strong><br>
+    > Mean Target Score: <strong>{avg_risk}</strong>
     </div></div>''', unsafe_allow_html=True)
 
 # ════════════════════════════════════════════════════════
@@ -790,29 +751,29 @@ with ins2:
 # ════════════════════════════════════════════════════════
 col_t1, col_t2 = st.columns([8, 2])
 with col_t1:
-    st.markdown('<div class="sec-title">Order Details</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sec-title">Raw Data Stream</div>', unsafe_allow_html=True)
 
 show_cols = ["name","phone","address","clean_address","city","status",
              "risk_score","risk_level","risk_reason","map_status","created_at"]
 show_cols = [c for c in show_cols if c in df_view.columns]
 
 def style_status(val):
-    m = {"Rejected":       "background:#fff5f5;color:#dc2626;font-weight:700",
-         "Risk Flagged":   "background:#fffbf0;color:#d97706;font-weight:700",
-         "Auto-Confirmed": "background:#f0fdf8;color:#059669;font-weight:700",
-         "Confirmed":      "background:#f0fdf8;color:#059669;font-weight:700",
-         "Cancelled":      "background:#f1f5f9;color:#475569;font-weight:700",
-         "Manual Review":  "background:#f5f3ff;color:#7c3aed;font-weight:700"}
-    return m.get(val, "")
+    m = {"Rejected":       "background:rgba(239, 68, 68, 0.1);color:#EF4444;font-family:'DM Mono'",
+         "Risk Flagged":   "background:rgba(245, 158, 11, 0.1);color:#F59E0B;font-family:'DM Mono'",
+         "Auto-Confirmed": "background:rgba(16, 185, 129, 0.1);color:#10B981;font-family:'DM Mono'",
+         "Confirmed":      "background:rgba(16, 185, 129, 0.1);color:#10B981;font-family:'DM Mono'",
+         "Cancelled":      "background:rgba(100, 116, 139, 0.1);color:#94A3B8;font-family:'DM Mono'",
+         "Manual Review":  "background:rgba(139, 92, 246, 0.1);color:#8B5CF6;font-family:'DM Mono'"}
+    return m.get(val, "color:#94A3B8;")
 
 def style_risk(val):
-    m = {"CRITICAL": "background:#fff5f5;color:#dc2626;font-weight:700",
-         "HIGH":     "background:#fff5f5;color:#dc2626",
-         "MEDIUM":   "background:#fffbf0;color:#d97706",
-         "LOW":      "background:#f0fdf8;color:#059669"}
-    return m.get(val, "")
+    m = {"CRITICAL": "background:rgba(239, 68, 68, 0.1);color:#EF4444",
+         "HIGH":     "color:#EF4444",
+         "MEDIUM":   "color:#F59E0B",
+         "LOW":      "color:#10B981"}
+    return m.get(val, "color:#94A3B8;")
 
-st.caption(f"Showing **{len(df_view)}** of **{total}** processed orders · **{pending}** pending excluded")
+st.caption(f"Displaying **{len(df_view)}** records // **{pending}** pending omitted from stream")
 
 styled = df_view[show_cols].style
 if "status"     in show_cols: styled = styled.map(style_status, subset=["status"])
@@ -823,24 +784,24 @@ if "risk_score" in show_cols:
 table_config = {
     "name":          st.column_config.TextColumn("Customer",      width=120),
     "phone":         st.column_config.TextColumn("Phone",         width=115),
-    "address":       st.column_config.TextColumn("Raw Address",   width=230),
-    "clean_address": st.column_config.TextColumn("Clean Address", width=230),
-    "city":          st.column_config.TextColumn("City",          width=95),
+    "address":       st.column_config.TextColumn("Raw Target",    width=230),
+    "clean_address": st.column_config.TextColumn("Parsed Vector", width=230),
+    "city":          st.column_config.TextColumn("Zone",          width=95),
     "status":        st.column_config.TextColumn("Status",        width=135),
     "risk_score":    st.column_config.NumberColumn("Score",       width=72, format="%d"),
     "risk_level":    st.column_config.TextColumn("Level",         width=80),
-    "risk_reason":   st.column_config.TextColumn("Reason",        width=290),
-    "map_status":    st.column_config.TextColumn("Maps",          width=115),
-    "created_at":    st.column_config.TextColumn("Date",          width=88),
+    "risk_reason":   st.column_config.TextColumn("Diagnostics",   width=290),
+    "map_status":    st.column_config.TextColumn("Geo-Verify",    width=115),
+    "created_at":    st.column_config.TextColumn("Timestamp",     width=88),
 }
 
-@st.dialog("📦 Full Screen Order Intelligence Log", width="large")
+@st.dialog("📡 FULL SPECTRUM DATA STREAM", width="large")
 def fullscreen_table():
     st.dataframe(styled, use_container_width=True, height=700, column_config=table_config, hide_index=True)
 
 with col_t2:
     st.write("")
-    if st.button("⛶ Open Full Screen Table", use_container_width=True):
+    if st.button("⛶ EXPAND STREAM", use_container_width=True):
         fullscreen_table()
 
 st.dataframe(
@@ -855,8 +816,7 @@ st.dataframe(
 # FOOTER
 # ════════════════════════════════════════════════════════
 st.markdown("""
-<div style="text-align:center;padding:32px 0 8px;color:#b0bcd4;font-size:12px;font-weight:500;letter-spacing:0.4px">
-  COD Intelligence &nbsp;·&nbsp; Pakistan eCommerce &nbsp;·&nbsp;
-  Powered by Supabase · Gemini AI · Google Maps
+<div style="text-align:center;padding:32px 0 8px;color:#475569;font-size:11px;font-family:'DM Mono',monospace;letter-spacing:1px">
+  // COD_INTEL CORE v1.4 // SECURE ENCLAVE ACTIVE // PAKISTAN NODE //
 </div>
 """, unsafe_allow_html=True)
