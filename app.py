@@ -590,9 +590,9 @@ with c1:
         text=f"<b style='font-size:22px; font-family:\"DM Mono\", monospace; color:#F8FAFC;'>{clean_pct}%</b><br><span style='color:#10B981; font-size:10px; letter-spacing:1px;'>PURITY</span>",
         x=0.5, y=0.5, showarrow=False,
     )
-    fig1.update_layout(
+ fig1.update_layout(
         paper_bgcolor=PAPER, plot_bgcolor=PAPER, font_family=FONT,
-        title_font=dict(size=12, color="#38BDF8", family=FONT, letter_spacing=1.5),
+        title_font=dict(size=12, color="#38BDF8", family=FONT), # ⬅️ Removed letter_spacing
         legend=dict(orientation="h", y=-0.14, x=0.5, xanchor="center", font=dict(size=10, color="#94A3B8")),
         margin=dict(t=40, b=20, l=10, r=10), height=280
     )
@@ -628,9 +628,9 @@ with c2:
             textposition="inside",
             textfont=dict(size=10, color="#F8FAFC", family='DM Mono')
         ))
-        fig2.update_layout(
+   fig2.update_layout(
             barmode="stack",
-            title=dict(text="REGIONAL THREAT MAP", font=dict(size=12, color="#38BDF8", family=FONT, letter_spacing=1.5)),
+            title=dict(text="REGIONAL THREAT MAP", font=dict(size=12, color="#38BDF8", family=FONT)), # ⬅️ Removed letter_spacing
             paper_bgcolor=PAPER, plot_bgcolor=PAPER, font_family=FONT,
             xaxis=dict(showgrid=False, showticklabels=False, title=""),
             yaxis=dict(gridcolor="rgba(51, 65, 85, 0.3)", tickfont=dict(size=11, color="#94A3B8")),
@@ -645,11 +645,11 @@ with c2:
 with c3:
     st.markdown('<div class="chart-wrap">', unsafe_allow_html=True)
     gc = "#10B981" if avg_risk < 30 else ("#F59E0B" if avg_risk < 60 else "#EF4444")
-    fig3 = go.Figure(go.Indicator(
+fig3 = go.Figure(go.Indicator(
         mode="gauge+number+delta",
         value=avg_risk,
         delta={"reference":30, "increasing":{"color":"#EF4444"}, "decreasing":{"color":"#10B981"}, "font":{"size":12}},
-        title={"text":"SYSTEM THREAT LEVEL", "font":{"size":12, "color":"#38BDF8", "family":FONT, "letter_spacing":1.5}},
+        title={"text":"SYSTEM THREAT LEVEL", "font":{"size":12, "color":"#38BDF8", "family":FONT}}, # ⬅️ Removed letter_spacing
         number={"font":{"size":40, "color":gc, "family":"DM Mono"}},
         gauge={
             "axis":{"range":[0,100], "tickcolor":"#475569", "tickfont":{"size":10,"color":"#64748B"}},
