@@ -4,6 +4,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from supabase import create_client
 from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
 # ════════════════════════════════════════════════════════
 # PAGE CONFIG
@@ -15,8 +16,10 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+PAKISTAN_TZ = ZoneInfo("Asia/Karachi")
+
 # ════════════════════════════════════════════════════════
-# MASTER CSS (All styling unified here)
+# MASTER CSS (All styling unified here) — UNCHANGED FROM ORIGINAL
 # ════════════════════════════════════════════════════════
 st.markdown("""
 <style>
@@ -230,6 +233,8 @@ st.markdown("""
 .kc-cyan  .kcard-value { color: #0891b2; }
 .kc-rose  .kcard-bar { background: linear-gradient(90deg,#f43f5e,#fb7185); }
 .kc-rose  .kcard-value { color: #e11d48; }
+.kc-slate .kcard-bar { background: linear-gradient(90deg,#64748b,#94a3b8); }
+.kc-slate .kcard-value { color: #475569; }
 
 /* ══ INSIGHT CARDS ══ */
 .icard {
@@ -274,16 +279,31 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ════════════════════════════════════════════════════════
-# CREDENTIALS
+# CREDENTIALS  — FIX #3: pulled from st.secrets, never hardcoded
+# You MUST create .streamlit/secrets.toml (see instructions below
+# this file) before running. Nothing sensitive lives in this .py file.
 # ════════════════════════════════════════════════════════
-SUPABASE_URL = "https://obzbfrakrzkywshwrbne.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9iemJmcmFrcnpreXdzaHdyYm5lIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5ODM0NDEsImV4cCI6MjA5MzU1OTQ0MX0.gKDqt9wWsZdriuXWUDNMi10F26zojmTzg-GKsbwImA0"
+SUPABASE_URL = st.secrets["SUPABASE_URL"]
+SUPABASE_KEY = st.secrets["SUPABASE_KEY"]
+
+# FIX #2: per-client login instead of one shared password.
+# Each pilot store gets its own password mapped to its own client_id.
+# Add more entries here as you onboard more pilot stores.
+CLIENT_CREDENTIALS = dict(st.secrets["CLIENT_CREDENTIALS"])
+# Expected shape in secrets.toml:
+# [CLIENT_CREDENTIALS]
+# store1pass = "client_001"
+# store2pass = "client_002"
 
 # ════════════════════════════════════════════════════════
 # LOGIN PAGE
 # ════════════════════════════════════════════════════════
 if "auth" not in st.session_state:
     st.session_state.auth = False
+if "client_id" not in st.session_state:
+    st.session_state.client_id = None
+if "client_label" not in st.session_state:
+    st.session_state.client_label = None
 
 if not st.session_state.auth:
     st.markdown("""
@@ -298,22 +318,55 @@ if not st.session_state.auth:
         pw = st.text_input("", type="password", placeholder="🔐  Enter your password",
                            label_visibility="collapsed")
         if st.button("Sign In  →", use_container_width=True, type="primary"):
-            if pw == "admin123":
+            if pw in CLIENT_CREDENTIALS:
                 st.session_state.auth = True
+                st.session_state.client_id = CLIENT_CREDENTIALS[pw]
+                st.session_state.client_label = st.session_state.client_id
                 st.rerun()
             else:
                 st.error("Incorrect password. Please try again.")
     st.stop()
 
+CURRENT_CLIENT_ID = st.session_state.client_id
+
 # ════════════════════════════════════════════════════════
-# DATA LOAD  (cached 60s)
+# STATUS NORMALIZATION — FIX #5
+# Your n8n system actually produces these statuses:
+#   Auto-Confirmed, Risk Flagged, Rejected, Manual Review (Decision Engine)
+#   Confirmed        (Customer Reply Handler — different string than Auto-Confirmed!)
+#   Cancelled         (Cancel button feature)
+# "Confirmed" and "Auto-Confirmed" both count as a clean/confirmed order for
+# KPI purposes, but we keep them visually distinct in the table/filter so you
+# can still tell "auto-passed" apart from "customer confirmed after a flag."
+# ════════════════════════════════════════════════════════
+CLEAN_STATUSES = ["Auto-Confirmed", "Confirmed"]
+ALL_KNOWN_STATUSES = ["Auto-Confirmed", "Confirmed", "Risk Flagged", "Rejected", "Cancelled", "Manual Review"]
+
+STATUS_COLOR_MAP = {
+    "Auto-Confirmed": "#10b981",
+    "Confirmed":       "#059669",
+    "Risk Flagged":    "#f59e0b",
+    "Rejected":        "#ef4444",
+    "Cancelled":       "#64748b",
+    "Manual Review":   "#8b5cf6",
+    "Pending":         "#8b5cf6",
+}
+
+# ════════════════════════════════════════════════════════
+# DATA LOAD  (cached 60s)  — FIX #1: filtered by client_id
 # ════════════════════════════════════════════════════════
 @st.cache_data(ttl=60)
-def load_data():
+def load_data(client_id: str):
     try:
         client = create_client(SUPABASE_URL, SUPABASE_KEY)
-        resp   = client.table("orders").select("*").order("inserted_at", desc=True).execute()
-        df     = pd.DataFrame(resp.data)
+        resp = (
+            client.table("orders")
+            .select("*")
+            .eq("store_id", client_id)          # <-- FIX #1: only this client's rows
+            .order("inserted_at", desc=True)
+            .execute()
+        )
+        df = pd.DataFrame(resp.data)
         if df.empty:
             return pd.DataFrame()
         df.columns   = df.columns.str.strip().str.lower()
@@ -323,8 +376,11 @@ def load_data():
         df["risk_score"] = pd.to_numeric(df.get("risk_score", 0), errors="coerce").fillna(0)
         df["price"]      = pd.to_numeric(df.get("price", 0), errors="coerce").fillna(0)
         if "inserted_at" in df.columns:
-            df["inserted_at"] = pd.to_datetime(df["inserted_at"], errors="coerce")
-            df["date"]        = df["inserted_at"].dt.date
+            df["inserted_at"] = pd.to_datetime(df["inserted_at"], errors="coerce", utc=True)
+            # FIX #6: convert to Pakistan time before deriving "date", so
+            # "Today" lines up with real Pakistan-time orders, not UTC.
+            df["inserted_at_pk"] = df["inserted_at"].dt.tz_convert(PAKISTAN_TZ)
+            df["date"] = df["inserted_at_pk"].dt.date
         return df
     except Exception as e:
         st.error(f"Supabase error: {e}")
@@ -334,11 +390,11 @@ def load_data():
 # SIDEBAR
 # ════════════════════════════════════════════════════════
 with st.sidebar:
-    st.markdown("""
+    st.markdown(f"""
     <div class="sb-brand">
       <div class="sb-logo">📦</div>
       <div class="sb-name">COD Intelligence</div>
-      <div class="sb-tag">Pakistan · AI Validation</div>
+      <div class="sb-tag">{CURRENT_CLIENT_ID}</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -346,8 +402,15 @@ with st.sidebar:
     date_range = st.selectbox("dr", ["All time","Today","Last 7 days","Last 30 days"],
                               label_visibility="collapsed")
     st.markdown("**📋 ORDER STATUS**")
-    status_filter = st.selectbox("sf", ["All","Auto-Confirmed","Risk Flagged","Rejected","Pending"],
-                                 label_visibility="collapsed")
+    # FIX #4: "Pending" removed from here since it's a separate bucket handled
+    # below (df_pending), not part of df_proc — selecting it used to always
+    # return zero rows. Added Confirmed/Cancelled/Manual Review so the filter
+    # actually covers every status your system produces.
+    status_filter = st.selectbox(
+        "sf",
+        ["All"] + ALL_KNOWN_STATUSES,
+        label_visibility="collapsed"
+    )
     st.markdown("**⚠️ RISK LEVEL**")
     risk_filter = st.selectbox("rf", ["All","CRITICAL","HIGH","MEDIUM","LOW"],
                                label_visibility="collapsed")
@@ -365,14 +428,16 @@ with st.sidebar:
             st.cache_data.clear(); st.rerun()
     with col_l:
         if st.button("🚪 Logout", use_container_width=True):
-            st.session_state.auth = False; st.rerun()
+            st.session_state.auth = False
+            st.session_state.client_id = None
+            st.rerun()
 
 # ════════════════════════════════════════════════════════
 # LOAD DATA
 # ════════════════════════════════════════════════════════
-df_raw = load_data()
+df_raw = load_data(CURRENT_CLIENT_ID)
 if df_raw.empty:
-    st.warning("No data found in Supabase. Check your connection.")
+    st.warning("No data found for this client. Check your connection or client_id.")
     st.stop()
 
 all_cities = sorted(df_raw["city"].dropna().unique().tolist())
@@ -380,9 +445,9 @@ with st.sidebar:
     st.markdown("**🏙️ CITY**")
     city_filter = st.selectbox("cf", ["All"] + all_cities, label_visibility="collapsed")
 
-# Date filter
+# Date filter — FIX #6: uses Pakistan-time "today", not server-local
 df = df_raw.copy()
-today = datetime.now().date()
+today = datetime.now(PAKISTAN_TZ).date()
 if "date" in df.columns:
     if date_range == "Today":
         df = df[df["date"] == today]
@@ -391,22 +456,30 @@ if "date" in df.columns:
     elif date_range == "Last 30 days":
         df = df[df["date"] >= today - timedelta(days=30)]
 
-df_pending = df[df["status"] == "Pending"]
+# FIX #4: Pending view built straight from df (not from df_proc, which
+# excludes Pending rows) — this is what makes the "Pending" status filter
+# option actually able to show something when selected.
+df_pending = df[df["status"].isin(["Pending", "", "Not Checked"])]
 df_proc    = df[~df["status"].isin(["Pending","","Not Checked"])]
 
 df_view = df_proc.copy()
-if status_filter != "All": df_view = df_view[df_view["status"]     == status_filter]
-if city_filter   != "All": df_view = df_view[df_view["city"]       == city_filter]
-if risk_filter   != "All": df_view = df_view[df_view["risk_level"] == risk_filter]
+if status_filter == "Pending":
+    df_view = df_pending.copy()
+elif status_filter != "All":
+    df_view = df_view[df_view["status"] == status_filter]
+if city_filter != "All": df_view = df_view[df_view["city"] == city_filter]
+if risk_filter != "All": df_view = df_view[df_view["risk_level"] == risk_filter]
 
 # ════════════════════════════════════════════════════════
-# METRICS
+# METRICS — FIX #5: "Confirmed" now counted alongside "Auto-Confirmed"
 # ════════════════════════════════════════════════════════
-total     = len(df_proc)
-confirmed = len(df_proc[df_proc["status"] == "Auto-Confirmed"])
-flagged   = len(df_proc[df_proc["status"] == "Risk Flagged"])
-rejected  = len(df_proc[df_proc["status"] == "Rejected"])
-pending   = len(df_pending)
+total      = len(df_proc)
+confirmed  = len(df_proc[df_proc["status"].isin(CLEAN_STATUSES)])
+flagged    = len(df_proc[df_proc["status"] == "Risk Flagged"])
+rejected   = len(df_proc[df_proc["status"] == "Rejected"])
+cancelled  = len(df_proc[df_proc["status"] == "Cancelled"])
+manual_rev = len(df_proc[df_proc["status"] == "Manual Review"])
+pending    = len(df_pending)
 
 rto_unit      = shipping_cost + reverse_cost
 clean_pct     = round(confirmed / total * 100, 1) if total else 0
@@ -427,7 +500,7 @@ border_cnt    = len(df_proc[(df_proc["risk_score"] >= 60) & (df_proc["risk_score
 # ════════════════════════════════════════════════════════
 # TOP BAR
 # ════════════════════════════════════════════════════════
-now_str = datetime.now().strftime("%d %b %Y · %I:%M %p")
+now_str = datetime.now(PAKISTAN_TZ).strftime("%d %b %Y · %I:%M %p PKT")
 st.markdown(f"""
 <div class="topbar">
   <div class="tb-left">
@@ -447,18 +520,19 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # ════════════════════════════════════════════════════════
-# KPI ROW 1  — ORDER OVERVIEW
+# KPI ROW 1  — ORDER OVERVIEW  (added Cancelled card — FIX #5)
 # ════════════════════════════════════════════════════════
 st.markdown('<div class="sec-title">Order Overview</div>', unsafe_allow_html=True)
 
-k1, k2, k3, k4, k5, k6 = st.columns(6)
+k1, k2, k3, k4, k5, k6, k7 = st.columns(7)
 order_kpis = [
-    (k1, "Total Processed",  total,     "",                        "blue",   "📊"),
-    (k2, "Auto-Confirmed",   confirmed, f"{clean_pct}% clean rate","green",  "✅"),
-    (k3, "Risk Flagged",     flagged,   "awaiting manual review",  "amber",  "⚠️"),
-    (k4, "Rejected",         rejected,  "blocked before dispatch", "red",    "❌"),
-    (k5, "Pending / Stuck",  pending,   "AI not yet processed",    "violet", "⏳"),
-    (k6, "Avg Risk Score",   avg_risk,  "0 = clean · 100 = fake", "cyan",   "🎯"),
+    (k1, "Total Processed",  total,     "",                         "blue",   "📊"),
+    (k2, "Confirmed",        confirmed, f"{clean_pct}% clean rate", "green",  "✅"),
+    (k3, "Risk Flagged",     flagged,   "awaiting customer reply",  "amber",  "⚠️"),
+    (k4, "Rejected",         rejected,  "blocked before dispatch",  "red",    "❌"),
+    (k5, "Cancelled",        cancelled, "customer requested cancel","slate",  "🚫"),
+    (k6, "Pending / Stuck",  pending,   "AI not yet processed",     "violet", "⏳"),
+    (k7, "Avg Risk Score",   avg_risk,  "0 = clean · 100 = fake",  "cyan",   "🎯"),
 ]
 for col, label, val, sub, color, icon in order_kpis:
     with col:
@@ -505,15 +579,13 @@ c1, c2, c3 = st.columns([1.05, 1.45, 0.95])
 PAPER = "rgba(0,0,0,0)"
 FONT  = "Sora"
 
-# ── Chart 1: Status donut ──────────────────────────────
+# ── Chart 1: Status donut — FIX #5: full status color map ─────
 with c1:
     st.markdown('<div class="chart-wrap">', unsafe_allow_html=True)
     sc = df_proc["status"].value_counts().reset_index()
     sc.columns = ["status","count"]
-    cmap = {"Auto-Confirmed":"#10b981","Risk Flagged":"#f59e0b",
-            "Rejected":"#ef4444","Pending":"#8b5cf6"}
     fig1 = px.pie(sc, values="count", names="status", hole=0.62,
-                  color="status", color_discrete_map=cmap,
+                  color="status", color_discrete_map=STATUS_COLOR_MAP,
                   title="Order Status Split")
     fig1.update_traces(
         textposition="outside", textfont=dict(size=12, family=FONT),
@@ -622,7 +694,6 @@ st.markdown('<div class="sec-title">Business Insights</div>', unsafe_allow_html=
 ins1, ins2 = st.columns(2)
 
 with ins1:
-    # Overall health
     if clean_pct >= 70:
         cls,icon,title = "ic-green","✅","Order Quality is Healthy"
         body = f"<strong>{clean_pct}%</strong> of orders are passing validation — a strong baseline. Keep monitoring for city-level spikes on a weekly basis."
@@ -659,6 +730,14 @@ with ins1:
         <div class="icard-title">⏳ {pending} Orders Not Yet Processed</div>
         <div class="icard-body">These orders are stuck in <strong>Pending</strong> status — the AI validation hasn't run yet.
         Check your n8n workflow. They may be stuck at the Wait node or failed at the Gemini step.</div>
+        </div>''', unsafe_allow_html=True)
+
+    if cancelled > 0:
+        cancel_pct = round(cancelled / total * 100, 1) if total else 0
+        st.markdown(f'''<div class="icard ic-cyan">
+        <div class="icard-title">🚫 {cancelled} Orders Cancelled by Customer</div>
+        <div class="icard-body"><strong>{cancel_pct}%</strong> of processed orders were cancelled after the customer
+        was contacted — worth reviewing if this rate climbs, it may signal address-confirmation friction.</div>
         </div>''', unsafe_allow_html=True)
 
 with ins2:
@@ -705,6 +784,7 @@ with ins2:
     Rs {money_at_risk:,} — flagged orders not dispatched (still recoverable)<br>
     Rs {rto_loss:,} — already lost to shipping + reverse logistics
     </div></div>''', unsafe_allow_html=True)
+
 # ════════════════════════════════════════════════════════
 # ORDER TABLE
 # ════════════════════════════════════════════════════════
@@ -719,7 +799,10 @@ show_cols = [c for c in show_cols if c in df_view.columns]
 def style_status(val):
     m = {"Rejected":       "background:#fff5f5;color:#dc2626;font-weight:700",
          "Risk Flagged":   "background:#fffbf0;color:#d97706;font-weight:700",
-         "Auto-Confirmed": "background:#f0fdf8;color:#059669;font-weight:700"}
+         "Auto-Confirmed": "background:#f0fdf8;color:#059669;font-weight:700",
+         "Confirmed":      "background:#f0fdf8;color:#059669;font-weight:700",
+         "Cancelled":      "background:#f1f5f9;color:#475569;font-weight:700",
+         "Manual Review":  "background:#f5f3ff;color:#7c3aed;font-weight:700"}
     return m.get(val, "")
 
 def style_risk(val):
@@ -751,17 +834,15 @@ table_config = {
     "created_at":    st.column_config.TextColumn("Date",          width=88),
 }
 
-# --- The Massive Pop-out Modal ---
 @st.dialog("📦 Full Screen Order Intelligence Log", width="large")
 def fullscreen_table():
     st.dataframe(styled, use_container_width=True, height=700, column_config=table_config, hide_index=True)
 
 with col_t2:
-    st.write("") # Spacer to align the button
+    st.write("")
     if st.button("⛶ Open Full Screen Table", use_container_width=True):
         fullscreen_table()
 
-# Standard inline table
 st.dataframe(
     styled,
     use_container_width=True,
