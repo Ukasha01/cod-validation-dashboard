@@ -590,14 +590,15 @@ with c1:
         text=f"<b style='font-size:22px; font-family:\"DM Mono\", monospace; color:#F8FAFC;'>{clean_pct}%</b><br><span style='color:#10B981; font-size:10px; letter-spacing:1px;'>PURITY</span>",
         x=0.5, y=0.5, showarrow=False,
     )
- fig1.update_layout(
-        paper_bgcolor=PAPER, plot_bgcolor=PAPER, font_family=FONT,
-        title_font=dict(size=12, color="#38BDF8", family=FONT), # ⬅️ Removed letter_spacing
-        legend=dict(orientation="h", y=-0.14, x=0.5, xanchor="center", font=dict(size=10, color="#94A3B8")),
-        margin=dict(t=40, b=20, l=10, r=10), height=280
-    )
-    st.plotly_chart(fig1, use_container_width=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+# Completely flush to the left margin
+fig1.update_layout(
+    paper_bgcolor=PAPER, plot_bgcolor=PAPER, font_family=FONT,
+    title_font=dict(size=12, color="#38BDF8", family=FONT),
+    legend=dict(orientation="h", y=-0.14, x=0.5, xanchor="center", font=dict(size=10, color="#94A3B8")),
+    margin=dict(t=40, b=20, l=10, r=10), height=280
+)
+st.plotly_chart(fig1, use_container_width=True)
+st.markdown('</div>', unsafe_allow_html=True)
 
 # ── Chart 2: Stacked city bar ──────────────────────────
 with c2:
