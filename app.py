@@ -275,6 +275,69 @@ st.markdown("""
 .login-icon { width: 72px; height: 72px; background: linear-gradient(135deg,#6366f1,#8b5cf6); border-radius: 20px; display: flex; align-items:center; justify-content:center; font-size: 34px; margin: 0 auto 24px; box-shadow: 0 8px 24px rgba(99,102,241,0.35); }
 .login-title { font-size: 26px; font-weight: 800; color: #1a1d2e; letter-spacing: -0.5px; margin-bottom: 6px; }
 .login-sub   { font-size: 13.5px; color: #8890b8; font-weight: 400; margin-bottom: 32px; line-height: 1.5; }
+
+/* ══ RESPONSIVE KPI GRID — replaces fixed st.columns for KPI cards so
+   they reflow naturally on any screen width instead of squeezing 7
+   columns into a phone screen. auto-fit + minmax does the work. ══ */
+.kgrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px;
+    margin-bottom: 8px;
+}
+.kgrid .kcard { height: auto; min-height: 118px; }
+
+/* ══ HERO — "Today at a Glance" quick-read row, designed to be the
+   first thing a store owner sees on their phone without scrolling ══ */
+.hero-wrap {
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+    border: 1px solid #334155;
+    border-radius: 20px;
+    padding: 22px 28px;
+    margin-bottom: 22px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 18px;
+}
+.hero-stat { text-align: center; }
+.hero-num  { font-size: 32px; font-weight: 800; line-height: 1; margin-bottom: 6px; }
+.hero-lbl  { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #94A3B8; }
+.hero-divider { width: 1px; background: #334155; align-self: stretch; }
+.action-banner {
+    border-radius: 16px;
+    padding: 16px 22px;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 14px;
+    font-weight: 600;
+}
+.action-banner .ab-icon { font-size: 26px; flex-shrink: 0; }
+
+/* ══ MOBILE BREAKPOINTS ══ */
+@media (max-width: 768px) {
+    .block-container { padding: 1rem 0.8rem 2rem !important; }
+    .topbar {
+        grid-template-columns: 1fr !important;
+        text-align: center;
+        padding: 18px 16px !important;
+        gap: 12px;
+    }
+    .tb-left { justify-self: center !important; }
+    .tb-right { justify-self: center !important; align-items: center !important; }
+    .tb-title { font-size: 20px !important; }
+    .tb-sub { font-size: 12px !important; }
+    .hero-wrap { grid-template-columns: repeat(2, 1fr); padding: 16px; }
+    .hero-num { font-size: 24px; }
+    .kgrid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .kcard-value { font-size: 20px !important; }
+    .chart-wrap { padding: 4px 2px 2px; }
+}
+@media (max-width: 420px) {
+    .hero-wrap { grid-template-columns: repeat(2, 1fr); }
+    .kgrid { grid-template-columns: 1fr 1fr; }
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -362,7 +425,7 @@ def load_data(client_id: str):
         resp = (
             client.table("orders")
             .select("*")
-            .eq("store_id", client_id)          # <-- FIX #1: only this client's rows
+            .eq("client_id", client_id)          # <-- FIX #1: only this client's rows
             .order("inserted_at", desc=True)
             .execute()
         )
