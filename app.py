@@ -651,7 +651,7 @@ with c1:
     fig1 = px.pie(sc, values="count", names="status", hole=0.62,
                   color="status", color_discrete_map=STATUS_COLOR_MAP,
                   title="Order Status Split")
-fig1.update_traces(
+    fig1.update_traces(
         textposition="inside", 
         textinfo="percent",
         insidetextorientation="radial",
