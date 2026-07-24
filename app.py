@@ -418,6 +418,9 @@ STATUS_COLOR_MAP = {
 # ════════════════════════════════════════════════════════
 # DATA LOAD  (cached 60s)  — FIX #1: filtered by client_id
 # ════════════════════════════════════════════════════════
+# ════════════════════════════════════════════════════════
+# DATA LOAD  (cached 60s)  — FIX #1: filtered by store_id
+# ════════════════════════════════════════════════════════
 @st.cache_data(ttl=60)
 def load_data(client_id: str):
     try:
@@ -425,7 +428,7 @@ def load_data(client_id: str):
         resp = (
             client.table("orders")
             .select("*")
-            .eq("client_id", client_id)          # <-- FIX #1: only this client's rows
+            .eq("store_id", client_id)          # Ensures it queries the correct column 'store_id'
             .order("inserted_at", desc=True)
             .execute()
         )
@@ -440,15 +443,13 @@ def load_data(client_id: str):
         df["price"]      = pd.to_numeric(df.get("price", 0), errors="coerce").fillna(0)
         if "inserted_at" in df.columns:
             df["inserted_at"] = pd.to_datetime(df["inserted_at"], errors="coerce", utc=True)
-            # FIX #6: convert to Pakistan time before deriving "date", so
-            # "Today" lines up with real Pakistan-time orders, not UTC.
+            # FIX #6: convert to Pakistan time before deriving "date"
             df["inserted_at_pk"] = df["inserted_at"].dt.tz_convert(PAKISTAN_TZ)
             df["date"] = df["inserted_at_pk"].dt.date
         return df
     except Exception as e:
         st.error(f"Supabase error: {e}")
         return pd.DataFrame()
-
 # ════════════════════════════════════════════════════════
 # SIDEBAR
 # ════════════════════════════════════════════════════════
