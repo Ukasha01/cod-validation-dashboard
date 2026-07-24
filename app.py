@@ -500,6 +500,8 @@ with st.sidebar:
 # LOAD DATA
 # ════════════════════════════════════════════════════════
 df_raw = load_data(CURRENT_CLIENT_ID)
+df_raw['clean_address'] = df_raw['clean_address'].fillna('Not Generated (Early Reject)')
+df_raw['city'] = df_raw['city'].fillna('Unknown')
 if df_raw.empty:
     st.warning("No data found for this client. Check your connection or client_id.")
     st.stop()
