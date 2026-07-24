@@ -658,7 +658,7 @@ fig1.update_traces(
         textfont=dict(size=12, color="#ffffff", family=FONT),
         marker=dict(line=dict(color="#ffffff", width=2))
     )
-     fig1.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
+    fig1.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')
     fig1.add_annotation(
         text=f"<b style='font-size:20px'>{clean_pct}%</b><br>confirmed",
         x=0.5, y=0.5, showarrow=False,
