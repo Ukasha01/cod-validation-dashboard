@@ -5,21 +5,47 @@ import plotly.graph_objects as go
 from supabase import create_client
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
+import base64
 
 # ════════════════════════════════════════════════════════
 # PAGE CONFIG
 # ════════════════════════════════════════════════════════
 st.set_page_config(
-    page_title="COD Intelligence",
+    page_title="Wapsi — AI Operational Intelligence",
     layout="wide",
-    page_icon="📦",
+    page_icon="assets/wapsi_icon_transparent.png",
     initial_sidebar_state="expanded"
 )
 
 PAKISTAN_TZ = ZoneInfo("Asia/Karachi")
 
 # ════════════════════════════════════════════════════════
-# MASTER CSS (All styling unified here) — UNCHANGED FROM ORIGINAL
+# BRAND ASSETS — logo images, base64-encoded so they can be
+# dropped straight into HTML/CSS via st.markdown.
+# Falls back to a styled emoji box if the files aren't found yet,
+# so the app never breaks — it just looks slightly generic until
+# you add the real files to /assets.
+# ════════════════════════════════════════════════════════
+def img_b64(path):
+    try:
+        with open(path, "rb") as f:
+            return base64.b64encode(f.read()).decode()
+    except FileNotFoundError:
+        return None
+
+ICON_DARK  = img_b64("assets/wapsi_icon_dark.png")         # for near-black surfaces (sidebar, topbar)
+ICON_LIGHT = img_b64("assets/wapsi_icon_transparent.png")  # for light surfaces (login card)
+
+def brand_icon_tag(b64, size):
+    if b64:
+        return f'<img src="data:image/png;base64,{b64}" style="width:{size}px;height:{size}px;border-radius:{max(8,size//4)}px;display:block;" />'
+    return f'<div class="sb-logo" style="width:{size}px;height:{size}px;font-size:{int(size*0.45)}px;">📦</div>'
+
+# ════════════════════════════════════════════════════════
+# MASTER CSS (All styling unified here)
+# Brand chrome recolored from indigo/purple → Wapsi orange/green.
+# Functional status colors (green=confirmed, amber=flagged,
+# red=rejected) are left untouched — those are semantic, not brand.
 # ════════════════════════════════════════════════════════
 st.markdown("""
 <style>
@@ -70,24 +96,25 @@ st.markdown("""
 }
 .sb-logo {
     width: 40px; height: 40px;
-    background: linear-gradient(135deg,#6366f1,#8b5cf6);
+    background: linear-gradient(135deg, #f59e0b, #65a30d);
     border-radius: 12px;
     display: flex; align-items:center; justify-content:center;
     font-size: 20px; margin-bottom: 10px;
-    box-shadow: 0 4px 14px rgba(99,102,241,0.35);
+    box-shadow: 0 4px 14px rgba(245,158,11,0.35);
 }
-.sb-name { 
-    font-size: 18px !important; 
-    font-weight: 800 !important; 
-    color: #FFFFFF !important; 
+.sb-name {
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    color: #FFFFFF !important;
     letter-spacing: -0.5px;
+    margin-top: 10px;
 }
-.sb-tag { 
-    font-size: 10px !important; 
-    font-weight: 700 !important; 
-    letter-spacing: 1.5px !important; 
-    color: #38BDF8 !important;
-    text-transform: uppercase; 
+.sb-tag {
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1.5px !important;
+    color: #f59e0b !important;
+    text-transform: uppercase;
 }
 
 /* ══ TOPBAR (PREMIUM DARK & CENTERED) ══ */
@@ -108,16 +135,16 @@ st.markdown("""
 
 .tb-icon {
     width: 60px; height: 60px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    background: linear-gradient(135deg, #f59e0b, #65a30d);
     border-radius: 16px;
     display: flex; align-items: center; justify-content: center;
     font-size: 28px;
-    box-shadow: 0 8px 24px rgba(99,102,241,0.4);
+    box-shadow: 0 8px 24px rgba(245,158,11,0.4);
 }
 .tb-title {
-    font-size: 28px;
+    font-size: 30px;
     font-weight: 800;
-    background: linear-gradient(to right, #38BDF8, #818CF8);
+    background: linear-gradient(to right, #f59e0b, #65a30d);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -0.5px;
@@ -202,7 +229,7 @@ st.markdown("""
     font-weight: 800;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: #475569;   
+    color: #475569;
     margin-bottom: 8px;
 }
 .kcard-value {
@@ -214,7 +241,7 @@ st.markdown("""
 }
 .kcard-sub {
     font-size: 11px;
-    color: #64748B;   
+    color: #64748B;
     font-weight: 600;
     min-height: 24px;
     line-height: 1.4;
@@ -272,8 +299,11 @@ st.markdown("""
 /* ══ LOGIN ══ */
 .login-bg { min-height: 80vh; display: flex; align-items: center; justify-content: center; }
 .login-card { background: #fff; border-radius: 24px; border: 1.5px solid #e8ecf8; box-shadow: 0 12px 48px rgba(26,29,46,0.10); padding: 48px 44px; max-width: 420px; text-align: center; }
-.login-icon { width: 72px; height: 72px; background: linear-gradient(135deg,#6366f1,#8b5cf6); border-radius: 20px; display: flex; align-items:center; justify-content:center; font-size: 34px; margin: 0 auto 24px; box-shadow: 0 8px 24px rgba(99,102,241,0.35); }
-.login-title { font-size: 26px; font-weight: 800; color: #1a1d2e; letter-spacing: -0.5px; margin-bottom: 6px; }
+.login-icon { width: 72px; height: 72px; background: linear-gradient(135deg,#f59e0b,#65a30d); border-radius: 20px; display: flex; align-items:center; justify-content:center; font-size: 34px; margin: 0 auto 24px; box-shadow: 0 8px 24px rgba(245,158,11,0.35); }
+.login-title { font-size: 30px; font-weight: 800; color: #1a1d2e; letter-spacing: -0.5px; margin-bottom: 6px; }
+.login-tagline { font-size: 12px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 14px; }
+.login-tagline .lt-orange { color: #f59e0b; }
+.login-tagline .lt-green  { color: #65a30d; }
 .login-sub   { font-size: 13.5px; color: #8890b8; font-weight: 400; margin-bottom: 32px; line-height: 1.5; }
 
 /* ══ RESPONSIVE KPI GRID — replaces fixed st.columns for KPI cards so
@@ -315,6 +345,22 @@ st.markdown("""
 }
 .action-banner .ab-icon { font-size: 26px; flex-shrink: 0; }
 
+/* ══ FOOTER ══ */
+.wapsi-footer {
+    text-align:center;
+    padding:32px 0 8px;
+    color:#b0bcd4;
+    font-size:12px;
+    font-weight:500;
+    letter-spacing:0.4px;
+}
+.wapsi-footer .wf-brand {
+    font-weight: 800;
+    background: linear-gradient(to right, #f59e0b, #65a30d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 /* ══ MOBILE BREAKPOINTS ══ */
 @media (max-width: 768px) {
     .block-container { padding: 1rem 0.8rem 2rem !important; }
@@ -342,14 +388,14 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ════════════════════════════════════════════════════════
-# CREDENTIALS  — FIX #3: pulled from st.secrets, never hardcoded
+# CREDENTIALS  — pulled from st.secrets, never hardcoded
 # You MUST create .streamlit/secrets.toml (see instructions below
 # this file) before running. Nothing sensitive lives in this .py file.
 # ════════════════════════════════════════════════════════
 SUPABASE_URL = st.secrets["SUPABASE_URL"]
 SUPABASE_KEY = st.secrets["SUPABASE_KEY"]
 
-# FIX #2: per-client login instead of one shared password.
+# Per-client login instead of one shared password.
 # Each pilot store gets its own password mapped to its own client_id.
 # Add more entries here as you onboard more pilot stores.
 CLIENT_CREDENTIALS = dict(st.secrets["CLIENT_CREDENTIALS"])
@@ -369,11 +415,13 @@ if "client_label" not in st.session_state:
     st.session_state.client_label = None
 
 if not st.session_state.auth:
-    st.markdown("""
+    login_icon_tag = brand_icon_tag(ICON_LIGHT, 72)
+    st.markdown(f"""
     <div style="max-width:420px;margin:60px auto;text-align:center;">
-      <div class="login-icon">📦</div>
-      <div class="login-title">COD Intelligence</div>
-      <div class="login-sub">Pakistan's AI-powered eCommerce<br>order validation platform</div>
+      <div style="display:flex;justify-content:center;margin-bottom:24px;">{login_icon_tag}</div>
+      <div class="login-title">Wapsi</div>
+      <div class="login-tagline"><span class="lt-orange">AI</span> Operational Intelligence System <span class="lt-green">for Ecommerce</span></div>
+      <div class="login-sub">Pakistan's AI-powered eCommerce<br>COD order validation platform</div>
     </div>
     """, unsafe_allow_html=True)
     c1, c2, c3 = st.columns([1, 1.6, 1])
@@ -393,7 +441,7 @@ if not st.session_state.auth:
 CURRENT_CLIENT_ID = st.session_state.client_id
 
 # ════════════════════════════════════════════════════════
-# STATUS NORMALIZATION — FIX #5
+# STATUS NORMALIZATION
 # Your n8n system actually produces these statuses:
 #   Auto-Confirmed, Risk Flagged, Rejected, Manual Review (Decision Engine)
 #   Confirmed        (Customer Reply Handler — different string than Auto-Confirmed!)
@@ -416,10 +464,7 @@ STATUS_COLOR_MAP = {
 }
 
 # ════════════════════════════════════════════════════════
-# DATA LOAD  (cached 60s)  — FIX #1: filtered by client_id
-# ════════════════════════════════════════════════════════
-# ════════════════════════════════════════════════════════
-# DATA LOAD  (cached 60s)  — FIX #1: filtered by store_id
+# DATA LOAD  (cached 60s) — filtered by store_id
 # ════════════════════════════════════════════════════════
 @st.cache_data(ttl=60)
 def load_data(client_id: str):
@@ -443,21 +488,23 @@ def load_data(client_id: str):
         df["price"]      = pd.to_numeric(df.get("price", 0), errors="coerce").fillna(0)
         if "inserted_at" in df.columns:
             df["inserted_at"] = pd.to_datetime(df["inserted_at"], errors="coerce", utc=True)
-            # FIX #6: convert to Pakistan time before deriving "date"
+            # convert to Pakistan time before deriving "date"
             df["inserted_at_pk"] = df["inserted_at"].dt.tz_convert(PAKISTAN_TZ)
             df["date"] = df["inserted_at_pk"].dt.date
         return df
     except Exception as e:
         st.error(f"Supabase error: {e}")
         return pd.DataFrame()
+
 # ════════════════════════════════════════════════════════
 # SIDEBAR
 # ════════════════════════════════════════════════════════
 with st.sidebar:
+    sb_icon_tag = brand_icon_tag(ICON_DARK, 40)
     st.markdown(f"""
     <div class="sb-brand">
-      <div class="sb-logo">📦</div>
-      <div class="sb-name">COD Intelligence</div>
+      {sb_icon_tag}
+      <div class="sb-name">Wapsi</div>
       <div class="sb-tag">{CURRENT_CLIENT_ID}</div>
     </div>
     """, unsafe_allow_html=True)
@@ -466,7 +513,7 @@ with st.sidebar:
     date_range = st.selectbox("dr", ["All time","Today","Last 7 days","Last 30 days"],
                               label_visibility="collapsed")
     st.markdown("**📋 ORDER STATUS**")
-    # FIX #4: "Pending" removed from here since it's a separate bucket handled
+    # "Pending" removed from here since it's a separate bucket handled
     # below (df_pending), not part of df_proc — selecting it used to always
     # return zero rows. Added Confirmed/Cancelled/Manual Review so the filter
     # actually covers every status your system produces.
@@ -511,7 +558,7 @@ with st.sidebar:
     st.markdown("**🏙️ CITY**")
     city_filter = st.selectbox("cf", ["All"] + all_cities, label_visibility="collapsed")
 
-# Date filter — FIX #6: uses Pakistan-time "today", not server-local
+# Date filter — uses Pakistan-time "today", not server-local
 df = df_raw.copy()
 today = datetime.now(PAKISTAN_TZ).date()
 if "date" in df.columns:
@@ -522,7 +569,7 @@ if "date" in df.columns:
     elif date_range == "Last 30 days":
         df = df[df["date"] >= today - timedelta(days=30)]
 
-# FIX #4: Pending view built straight from df (not from df_proc, which
+# Pending view built straight from df (not from df_proc, which
 # excludes Pending rows) — this is what makes the "Pending" status filter
 # option actually able to show something when selected.
 df_pending = df[df["status"].isin(["Pending", "", "Not Checked"])]
@@ -537,7 +584,7 @@ if city_filter != "All": df_view = df_view[df_view["city"] == city_filter]
 if risk_filter != "All": df_view = df_view[df_view["risk_level"] == risk_filter]
 
 # ════════════════════════════════════════════════════════
-# METRICS — FIX #5: "Confirmed" now counted alongside "Auto-Confirmed"
+# METRICS — "Confirmed" counted alongside "Auto-Confirmed"
 # ════════════════════════════════════════════════════════
 total      = len(df_proc)
 confirmed  = len(df_proc[df_proc["status"].isin(CLEAN_STATUSES)])
@@ -567,17 +614,18 @@ border_cnt    = len(df_proc[(df_proc["risk_score"] >= 60) & (df_proc["risk_score
 # TOP BAR
 # ════════════════════════════════════════════════════════
 now_str = datetime.now(PAKISTAN_TZ).strftime("%d %b %Y · %I:%M %p PKT")
+tb_icon_tag = brand_icon_tag(ICON_DARK, 60)
 st.markdown(f"""
 <div class="topbar">
   <div class="tb-left">
-    <div class="tb-icon">📦</div>
+    {tb_icon_tag}
   </div>
-  
+
   <div class="tb-center">
-    <div class="tb-title">eCommerce Intelligence Dashboard</div>
-    <div class="tb-sub">AI-powered COD Order Validation System · Pakistan</div>
+    <div class="tb-title">Wapsi</div>
+    <div class="tb-sub">AI Operational Intelligence System for Ecommerce · Pakistan</div>
   </div>
-  
+
   <div class="tb-right">
     <div class="live-pill"><span class="live-dot"></span> LIVE · auto-refresh 60s</div>
     <div class="tb-meta">{now_str} &nbsp;·&nbsp; {total} processed &nbsp;·&nbsp; {pending} pending</div>
@@ -586,7 +634,7 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # ════════════════════════════════════════════════════════
-# KPI ROW 1  — ORDER OVERVIEW  (added Cancelled card — FIX #5)
+# KPI ROW 1  — ORDER OVERVIEW  (includes Cancelled card)
 # ════════════════════════════════════════════════════════
 st.markdown('<div class="sec-title">Order Overview</div>', unsafe_allow_html=True)
 
@@ -645,7 +693,7 @@ c1, c2, c3 = st.columns([1.05, 1.45, 0.95])
 PAPER = "rgba(0,0,0,0)"
 FONT  = "Sora"
 
-# ── Chart 1: Status donut — FIX #5: full status color map ─────
+# ── Chart 1: Status donut — full status color map ─────
 with c1:
     st.markdown('<div class="chart-wrap">', unsafe_allow_html=True)
     sc = df_proc["status"].value_counts().reset_index()
@@ -654,7 +702,7 @@ with c1:
                   color="status", color_discrete_map=STATUS_COLOR_MAP,
                   title="Order Status Split")
     fig1.update_traces(
-        textposition="inside", 
+        textposition="inside",
         textinfo="percent",
         insidetextorientation="radial",
         textfont=dict(size=12, color="#ffffff", family=FONT),
@@ -925,8 +973,8 @@ st.dataframe(
 # FOOTER
 # ════════════════════════════════════════════════════════
 st.markdown("""
-<div style="text-align:center;padding:32px 0 8px;color:#b0bcd4;font-size:12px;font-weight:500;letter-spacing:0.4px">
-  COD Intelligence &nbsp;·&nbsp; Pakistan eCommerce &nbsp;·&nbsp;
+<div class="wapsi-footer">
+  <span class="wf-brand">Wapsi</span> &nbsp;·&nbsp; AI Operational Intelligence System for Ecommerce &nbsp;·&nbsp;
   Powered by Supabase · Gemini AI · Google Maps
 </div>
 """, unsafe_allow_html=True)
