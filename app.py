@@ -213,17 +213,14 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
 .topbar {
     background: linear-gradient(135deg, #1B160D 0%, #241F14 100%);
     border: 1px solid #3A3220;
-    border-radius: var(--radius-lg);
-    padding: 22px 32px;
-    margin-bottom: 30px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    padding: 24px 32px 20px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    gap: 24px;
+    gap: 8px;
     box-shadow: var(--shadow-lift);
 }
-.tb-left { flex-shrink: 0; }
-.tb-center { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
 .tb-title {
     font-family: var(--font-display);
     font-size: 26px;
@@ -234,36 +231,50 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     line-height: 1;
+    margin-top: 8px;
 }
 .tb-hero-line {
-    font-size: 12px;
+    font-size: 12.5px;
     color: #A79E7E;
     font-weight: 600;
     display: flex;
     align-items: center;
     gap: 10px;
 }
-.tb-hero-line .hl-seg { display: flex; align-items: center; gap: 8px; }
-.tb-hero-line .hl-bar { width: 22px; height: 1px; }
+.tb-hero-line .hl-bar { width: 20px; height: 1px; }
 .tb-hero-line .hl-bar.green  { background: linear-gradient(to right, transparent, var(--brand-green)); }
 .tb-hero-line .hl-bar.orange { background: linear-gradient(to left, transparent, var(--brand)); }
 .tb-hero-line .h-green  { color: #3FD69C; font-weight: 700; }
 .tb-hero-line .h-orange { color: var(--brand); font-weight: 700; }
-.tb-hero-line .hl-dot { width: 4px; height: 4px; border-radius: 50%; background: #5A5238; margin: 0 2px; }
-.tb-sub-line {
+.tb-hero-line .hl-dot { width: 4px; height: 4px; border-radius: 50%; background: #5A5238; }
+.tb-sub-line { font-size: 11.5px; color: #9C9575; font-weight: 500; }
+.tb-sub-line .h-orange { color: var(--brand); font-weight: 700; }
+.tb-sub-line .h-green  { color: #3FD69C; font-weight: 700; }
+
+/* Slim status strip, separate from the brand block — no more
+   competing right-aligned box pulling focus away from the logo */
+.status-strip {
+    background: #1B160D;
+    border: 1px solid #3A3220;
+    border-top: none;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    padding: 8px 32px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
     font-size: 11px;
     color: #7A7358;
     font-weight: 500;
-    letter-spacing: 0.2px;
 }
-.tb-sub-line .h-orange { color: var(--brand); font-weight: 700; }
-.tb-sub-line .h-green  { color: #3FD69C; font-weight: 700; }
-.tb-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
-.tb-meta { font-size: 12px; color: #7A7358; font-weight: 500; text-align: right; white-space: nowrap; }
+.status-strip .live-dot { width: 6px; height: 6px; border-radius: 50%; background: #0F9D6B; animation: blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
+.status-strip b { color: #3FD69C; font-weight: 700; }
 
 @media (max-width: 900px) {
-    .topbar { flex-direction: column; text-align: center; padding: 18px 16px; }
-    .tb-right { align-items: center !important; }
+    .topbar { padding: 20px 16px 16px; }
+    .status-strip { flex-wrap: wrap; padding: 8px 16px; }
 }
 /* ══ SECTION TITLE ══ */
 .sec-title {
@@ -641,23 +652,22 @@ risk_color = risk_tone(avg_risk)
 # TOP BAR
 # ════════════════════════════════════════════════════════
 now_str = datetime.now(PAKISTAN_TZ).strftime("%d %b %Y · %I:%M %p PKT")
-tb_icon_tag = brand_icon_tag(ICON_DARK_B64, 52)
+tb_icon_tag = brand_icon_tag(ICON_DARK_B64, 56)
 st.markdown(f"""
 <div class="topbar">
-  <div class="tb-left">{tb_icon_tag}</div>
-  <div class="tb-center">
-    <div class="tb-title">WAPSI</div>
-    <div class="tb-hero-line">
-      <span class="hl-seg"><span class="hl-bar green"></span>Parcel ki <span class="h-green">Wapsi</span></span>
-      <span class="hl-dot"></span>
-      <span class="hl-seg">Profit ki <span class="h-orange">Wapsi</span><span class="hl-bar orange"></span></span>
-    </div>
-    <div class="tb-sub-line"><span class="h-orange">AI</span> Operational Intelligence System <span class="h-green">for Ecommerce</span></div>
+  {tb_icon_tag}
+  <div class="tb-title">WAPSI</div>
+  <div class="tb-hero-line">
+    <span class="hl-bar green"></span>
+    Parcel ki <span class="h-green">Wapsi</span> Khatam
+    <span class="hl-dot"></span>
+    Profit ki <span class="h-orange">Wapsi</span> Shuru
+    <span class="hl-bar orange"></span>
   </div>
-  <div class="tb-right">
-    <div class="live-pill"><span class="live-dot"></span> LIVE · auto-refresh 60s</div>
-    <div class="tb-meta">{now_str}<br>{total} processed · {pending} pending</div>
-  </div>
+  <div class="tb-sub-line"><span class="h-orange">AI</span> Operational Intelligence System <span class="h-green">for Ecommerce</span></div>
+</div>
+<div class="status-strip">
+  <span class="live-dot"></span> <b>LIVE</b> · auto-refresh 60s &nbsp;·&nbsp; {now_str} &nbsp;·&nbsp; {total} processed · {pending} pending
 </div>
 """, unsafe_allow_html=True)
 
