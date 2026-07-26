@@ -215,30 +215,30 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
     background: linear-gradient(135deg, #1B160D 0%, #241F14 100%);
     border: 1px solid #3A3220;
     border-radius: var(--radius-lg);
-    padding: 18px 28px 14px;
-    margin-bottom: 22px;
+    padding: 12px 24px 10px;
+    margin-bottom: 20px;
     box-shadow: var(--shadow-lift);
 }
-.tb-icon { position: absolute; top: 16px; left: 24px; }
+.tb-icon { position: absolute; top: 12px; left: 20px; }
 
 .tb-wordmark {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 14px;
+    gap: 12px;
 }
 .tb-wm-left, .tb-wm-right {
-    display: flex; flex-direction: column; gap: 3px;
-    font-size: 12px; font-weight: 600; font-style: italic; color: #A79E7E;
+    display: flex; flex-direction: column; gap: 2px;
+    font-size: 10.5px; font-weight: 600; font-style: italic; color: #A79E7E;
 }
 .tb-wm-left  { align-items: flex-end; text-align: right; }
 .tb-wm-right { align-items: flex-start; text-align: left; }
-.tb-wm-left span, .tb-wm-right span { display: flex; align-items: center; gap: 6px; }
-.tb-wm-left .bar { width: 22px; height: 1px; background: linear-gradient(to right, transparent, var(--brand-green)); }
-.tb-wm-right .bar { width: 22px; height: 1px; background: linear-gradient(to left, transparent, var(--brand)); }
+.tb-wm-left span, .tb-wm-right span { display: flex; align-items: center; gap: 5px; }
+.tb-wm-left .bar { width: 18px; height: 1px; background: linear-gradient(to right, transparent, var(--brand-green)); }
+.tb-wm-right .bar { width: 18px; height: 1px; background: linear-gradient(to left, transparent, var(--brand)); }
 .tb-wm-center {
     font-family: var(--font-display);
-    font-size: 30px;
+    font-size: 22px;
     font-weight: 800;
     font-style: italic;
     background: linear-gradient(to right, var(--brand), var(--brand-green));
@@ -248,21 +248,16 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
     padding: 0 2px;
 }
 
-.tb-divider { display: flex; align-items: center; gap: 10px; margin: 10px 40px 6px; }
+.tb-divider { display: flex; align-items: center; gap: 8px; margin: 6px 60px 4px; }
 .tb-divider .dl, .tb-divider .dr { flex: 1; height: 1px; background: #3A3220; }
-.tb-divider .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--brand-green); flex-shrink: 0; }
+.tb-divider .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--brand-green); flex-shrink: 0; }
 
-.tb-tagline { text-align: center; font-size: 12px; font-weight: 600; color: #C9C2A3; line-height: 1.6; }
+.tb-tagline { text-align: center; font-size: 10.5px; font-weight: 600; color: #C9C2A3; line-height: 1.4; }
 .tb-tagline .h-orange { color: var(--brand); font-weight: 700; }
 .tb-tagline .h-green  { color: #3FD69C; font-weight: 700; }
 
-.tb-meta-row { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 8px; font-size: 10.5px; color: #7A7358; font-weight: 500; }
-.tb-meta-row .live-dot { width: 6px; height: 6px; border-radius: 50%; background: #0F9D6B; animation: blink 2s infinite; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
-.tb-meta-row b { color: #3FD69C; }
-
 @media (max-width: 900px) {
-    .tb-icon { position: static; margin-bottom: 8px; display: flex; justify-content: center; }
+    .tb-icon { position: static; margin-bottom: 6px; display: flex; justify-content: center; }
     .tb-wm-left, .tb-wm-right { align-items: center; text-align: center; }
 }
 
@@ -642,7 +637,7 @@ risk_color = risk_tone(avg_risk)
 # TOP BAR
 # ════════════════════════════════════════════════════════
 now_str = datetime.now(PAKISTAN_TZ).strftime("%d %b %Y · %I:%M %p PKT")
-tb_icon_tag = brand_icon_tag(ICON_DARK_B64, 42)
+tb_icon_tag = brand_icon_tag(ICON_DARK_B64, 34)
 st.markdown(f"""
 <div class="topbar">
   <div class="tb-icon">{tb_icon_tag}</div>
@@ -658,8 +653,7 @@ st.markdown(f"""
     </div>
   </div>
   <div class="tb-divider"><span class="dl"></span><span class="dot"></span><span class="dr"></span></div>
-  <div class="tb-tagline"><span class="h-orange">AI</span> Operational Intelligence System<br><span class="h-green">for Ecommerce</span></div>
-  <div class="tb-meta-row"><span class="live-dot"></span> <b>LIVE</b> · auto-refresh 60s · {now_str} · {total} processed · {pending} pending</div>
+  <div class="tb-tagline"><span class="h-orange">AI</span> Operational Intelligence System <span class="h-green">for Ecommerce</span></div>
 </div>
 """, unsafe_allow_html=True)
 
