@@ -214,7 +214,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
     background: linear-gradient(135deg, #1B160D 0%, #241F14 100%);
     border: 1px solid #3A3220;
     border-radius: var(--radius-lg);
-    padding: 20px 32px;
+    padding: 22px 32px;
     margin-bottom: 30px;
     display: flex;
     align-items: center;
@@ -222,33 +222,48 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
     gap: 24px;
     box-shadow: var(--shadow-lift);
 }
-.tb-left { display: flex; align-items: center; gap: 16px; }
-.tb-id { display: flex; flex-direction: column; gap: 3px; }
+.tb-left { flex-shrink: 0; }
+.tb-center { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
 .tb-title {
     font-family: var(--font-display);
-    font-size: 25px;
+    font-size: 26px;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 1.8px;
+    letter-spacing: 2px;
     background: linear-gradient(to right, var(--brand), var(--brand-green));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     line-height: 1;
 }
-.tb-hero {
-    font-size: 12.5px;
-    color: #C9C2A3;
+.tb-hero-line {
+    font-size: 12px;
+    color: #A79E7E;
     font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
-.tb-hero .h-green  { color: #3FD69C; font-weight: 700; }
-.tb-hero .h-orange { color: var(--brand); font-weight: 700; }
+.tb-hero-line .hl-seg { display: flex; align-items: center; gap: 8px; }
+.tb-hero-line .hl-bar { width: 22px; height: 1px; }
+.tb-hero-line .hl-bar.green  { background: linear-gradient(to right, transparent, var(--brand-green)); }
+.tb-hero-line .hl-bar.orange { background: linear-gradient(to left, transparent, var(--brand)); }
+.tb-hero-line .h-green  { color: #3FD69C; font-weight: 700; }
+.tb-hero-line .h-orange { color: var(--brand); font-weight: 700; }
+.tb-hero-line .hl-dot { width: 4px; height: 4px; border-radius: 50%; background: #5A5238; margin: 0 2px; }
+.tb-sub-line {
+    font-size: 11px;
+    color: #7A7358;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+}
+.tb-sub-line .h-orange { color: var(--brand); font-weight: 700; }
+.tb-sub-line .h-green  { color: #3FD69C; font-weight: 700; }
 .tb-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
 .tb-meta { font-size: 12px; color: #7A7358; font-weight: 500; text-align: right; white-space: nowrap; }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .topbar { flex-direction: column; text-align: center; padding: 18px 16px; }
-    .tb-left { flex-direction: column; }
-    .tb-right { align-items: center; }
+    .tb-right { align-items: center !important; }
 }
 /* ══ SECTION TITLE ══ */
 .sec-title {
@@ -345,8 +360,22 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
     text-transform: uppercase; letter-spacing: 1.8px;
     margin: 0 0 14px;
 }
-.login-motto { font-size: 13px; font-weight: 600; color: var(--ink-soft); margin-bottom: 10px; }
-.login-tagline { font-size: 12.5px; font-weight: 600; color: var(--ink-soft); }
+.login-motto {
+    font-size: 13px; font-weight: 600; color: var(--ink-soft);
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    margin-bottom: 10px;
+}
+.login-motto .lm-bar { width: 24px; height: 1px; }
+.login-motto .lm-bar.green  { background: linear-gradient(to right, transparent, var(--brand-green)); }
+.login-motto .lm-bar.orange { background: linear-gradient(to left, transparent, var(--brand)); }
+.login-motto .lm-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--border); }
+.login-motto .m-green  { color: var(--success-text); font-weight: 700; }
+.login-motto .m-orange { color: var(--warning-text); font-weight: 700; }
+.login-tagline {
+    font-size: 12.5px; font-weight: 600; color: var(--ink-soft);
+}
+.login-tagline .t-orange { color: var(--warning-text); font-weight: 700; }
+.login-tagline .t-green  { color: var(--success-text); font-weight: 700; }
 
 /* Sign-in button: was Streamlit's default red "primary" color, which
    signals error/danger — now brand orange, matches identity. */
@@ -409,18 +438,21 @@ if "client_label" not in st.session_state:
     st.session_state.client_label = None
 
 if not st.session_state.auth:
-    login_icon_tag = brand_icon_tag(ICON_LIGHT_B64, 56)   # swap in the _hq base64 you generated earlier for a sharper mark
-    st.markdown(f"""
-    <div class="login-shell">
-      <div class="login-card">
-        <div class="login-logo-ring">{login_icon_tag}</div>
-        <div class="login-title">WAPSI</div>
-        <div class="login-motto">Parcel ki <span class="m-green">Wapsi</span> Khatam &nbsp;·&nbsp; Profit ki <span class="m-orange">Wapsi</span> Shuru</div>
-        <div class="login-tagline"><span class="t-orange">AI</span> Operational Intelligence <span class="t-green">for Ecommerce</span></div>
-      </div>
+    login_icon_tag = brand_icon_tag(ICON_LIGHT_B64, 56)
+st.markdown(f"""
+<div class="login-shell">
+  <div class="login-card">
+    <div class="login-logo-ring">{login_icon_tag}</div>
+    <div class="login-title">WAPSI</div>
+    <div class="login-motto">
+      <span class="lm-bar green"></span>Parcel ki <span class="m-green">Wapsi</span>
+      <span class="lm-dot"></span>
+      Profit ki <span class="m-orange">Wapsi</span><span class="lm-bar orange"></span>
     </div>
-    """, unsafe_allow_html=True)
-
+    <div class="login-tagline"><span class="t-orange">AI</span> Operational Intelligence System <span class="t-green">for Ecommerce</span></div>
+  </div>
+</div>
+""", unsafe_allow_html=True)
     # Indented to stay inside the if block
     c1, c2, c3 = st.columns([1, 1.3, 1])
     with c2:
@@ -608,16 +640,19 @@ risk_color = risk_tone(avg_risk)
 # ════════════════════════════════════════════════════════
 # TOP BAR
 # ════════════════════════════════════════════════════════
-now_str = datetime.now(PAKISTAN_TZ).strftime("%d %b %Y · %I:%M %p PKT")   # <-- add this line back
+now_str = datetime.now(PAKISTAN_TZ).strftime("%d %b %Y · %I:%M %p PKT")
 tb_icon_tag = brand_icon_tag(ICON_DARK_B64, 52)
 st.markdown(f"""
 <div class="topbar">
-  <div class="tb-left">
-    {tb_icon_tag}
-    <div class="tb-id">
-      <div class="tb-title">WAPSI</div>
-      <div class="tb-hero">Parcel ki <span class="h-green">Wapsi</span> Khatam &nbsp;·&nbsp; Profit ki <span class="h-orange">Wapsi</span> Shuru</div>
+  <div class="tb-left">{tb_icon_tag}</div>
+  <div class="tb-center">
+    <div class="tb-title">WAPSI</div>
+    <div class="tb-hero-line">
+      <span class="hl-seg"><span class="hl-bar green"></span>Parcel ki <span class="h-green">Wapsi</span></span>
+      <span class="hl-dot"></span>
+      <span class="hl-seg">Profit ki <span class="h-orange">Wapsi</span><span class="hl-bar orange"></span></span>
     </div>
+    <div class="tb-sub-line"><span class="h-orange">AI</span> Operational Intelligence System <span class="h-green">for Ecommerce</span></div>
   </div>
   <div class="tb-right">
     <div class="live-pill"><span class="live-dot"></span> LIVE · auto-refresh 60s</div>
@@ -625,6 +660,7 @@ st.markdown(f"""
   </div>
 </div>
 """, unsafe_allow_html=True)
+
 
 # ════════════════════════════════════════════════════════
 # KPI ROW 1 — ORDER OVERVIEW
