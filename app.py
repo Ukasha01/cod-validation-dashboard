@@ -608,6 +608,7 @@ risk_color = risk_tone(avg_risk)
 # ════════════════════════════════════════════════════════
 # TOP BAR
 # ════════════════════════════════════════════════════════
+now_str = datetime.now(PAKISTAN_TZ).strftime("%d %b %Y · %I:%M %p PKT")   # <-- add this line back
 tb_icon_tag = brand_icon_tag(ICON_DARK_B64, 52)
 st.markdown(f"""
 <div class="topbar">
