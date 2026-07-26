@@ -453,28 +453,28 @@ if "client_label" not in st.session_state:
     st.session_state.client_label = None
 
 if not st.session_state.auth:
-login_icon_tag = brand_icon_tag(ICON_LIGHT_B64, 56)
-st.markdown(f"""
-<div class="login-shell">
-  <div class="login-card">
-    <div class="login-logo-ring">{login_icon_tag}</div>
-    <div class="login-title">WAPSI</div>
-    <div class="login-wordmark">
-      <div class="lw-left">
-        <span>Parcel ki<span class="bar"></span></span>
-        <span>Profit ki<span class="bar"></span></span>
-      </div>
-      <div class="lw-center">Wapsi</div>
-      <div class="lw-right">
-        <span><span class="bar"></span>Khatam</span>
-        <span><span class="bar"></span>Shuru</span>
+    login_icon_tag = brand_icon_tag(ICON_LIGHT_B64, 56)
+    st.markdown(f"""
+    <div class="login-shell">
+      <div class="login-card">
+        <div class="login-logo-ring">{login_icon_tag}</div>
+        <div class="login-title">WAPSI</div>
+        <div class="login-wordmark">
+          <div class="lw-left">
+            <span>Parcel ki<span class="bar"></span></span>
+            <span>Profit ki<span class="bar"></span></span>
+          </div>
+          <div class="lw-center">Wapsi</div>
+          <div class="lw-right">
+            <span><span class="bar"></span>Khatam</span>
+            <span><span class="bar"></span>Shuru</span>
+          </div>
+        </div>
+        <div class="login-divider"><span class="dl"></span><span class="dot"></span><span class="dr"></span></div>
+        <div class="login-tagline"><span class="t-orange">AI</span> Operational Intelligence System <span class="t-green">for Ecommerce</span></div>
       </div>
     </div>
-    <div class="login-divider"><span class="dl"></span><span class="dot"></span><span class="dr"></span></div>
-    <div class="login-tagline"><span class="t-orange">AI</span> Operational Intelligence System <span class="t-green">for Ecommerce</span></div>
-  </div>
-</div>
-""", unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
 
     c1, c2, c3 = st.columns([1, 1.3, 1])
     with c2:
