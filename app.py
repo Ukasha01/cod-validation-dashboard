@@ -439,22 +439,25 @@ if "client_label" not in st.session_state:
 
 if not st.session_state.auth:
     login_icon_tag = brand_icon_tag(ICON_LIGHT_B64, 56)
-st.markdown(f"""
-<div class="login-shell">
-  <div class="login-card">
-    <div class="login-logo-ring">{login_icon_tag}</div>
-    <div class="login-title">WAPSI</div>
-    <div class="login-motto">
-      <span class="lm-bar green"></span>Parcel ki <span class="m-green">Wapsi</span>
-      <span class="lm-dot"></span>
-      Profit ki <span class="m-orange">Wapsi</span><span class="lm-bar orange"></span>
+    
+    st.markdown(f"""
+    <div class="login-shell">
+      <div class="login-card">
+        <div class="login-logo-ring">{login_icon_tag}</div>
+        <div class="login-title">WAPSI</div>
+        <div class="login-motto">
+          <span class="lm-bar green"></span>Parcel ki <span class="m-green">Wapsi</span>
+          <span class="lm-dot"></span>
+          Profit ki <span class="m-orange">Wapsi</span><span class="lm-bar orange"></span>
+        </div>
+        <div class="login-tagline"><span class="t-orange">AI</span> Operational Intelligence System <span class="t-green">for Ecommerce</span></div>
+      </div>
     </div>
-    <div class="login-tagline"><span class="t-orange">AI</span> Operational Intelligence System <span class="t-green">for Ecommerce</span></div>
-  </div>
-</div>
-""", unsafe_allow_html=True)
-    # Indented to stay inside the if block
+    """, unsafe_allow_html=True)
+    
+    # You need to define the columns inside the if block before using 'with c2'
     c1, c2, c3 = st.columns([1, 1.3, 1])
+    
     with c2:
         pw = st.text_input("", type="password", placeholder="Enter your password",
                            label_visibility="collapsed")
@@ -468,7 +471,8 @@ st.markdown(f"""
                 st.error("Incorrect password. Please try again.")
     st.stop()
 
-CURRENT_CLIENT_ID = st.session_state.client_id
+# Fixed the missing comment hashtag (#) on this line
+CURRENT_CLIENT_ID = st.session_state.client_id  # make it correct
 # ════════════════════════════════════════════════════════
 # STATUS NORMALIZATION
 # Your n8n system actually produces these statuses:
