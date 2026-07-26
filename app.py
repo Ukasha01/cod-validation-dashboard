@@ -356,20 +356,39 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
     text-transform: uppercase; letter-spacing: 1.8px;
     margin: 0 0 14px;
 }
-.login-motto {
-    font-size: 13px; font-weight: 600; color: var(--ink-soft);
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-    margin-bottom: 10px;
+.login-wordmark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 8px;
 }
-.login-motto .lm-bar { width: 24px; height: 1px; }
-.login-motto .lm-bar.green  { background: linear-gradient(to right, transparent, var(--brand-green)); }
-.login-motto .lm-bar.orange { background: linear-gradient(to left, transparent, var(--brand)); }
-.login-motto .lm-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--border); }
-.login-motto .m-green  { color: var(--success-text); font-weight: 700; }
-.login-motto .m-orange { color: var(--warning-text); font-weight: 700; }
-.login-tagline {
-    font-size: 12.5px; font-weight: 600; color: var(--ink-soft);
+.lw-left, .lw-right {
+    display: flex; flex-direction: column; gap: 2px;
+    font-size: 10.5px; font-weight: 600; font-style: italic; color: var(--ink-soft);
 }
+.lw-left  { align-items: flex-end; text-align: right; }
+.lw-right { align-items: flex-start; text-align: left; }
+.lw-left span, .lw-right span { display: flex; align-items: center; gap: 5px; }
+.lw-left .bar  { width: 18px; height: 1px; background: linear-gradient(to right, transparent, var(--success)); }
+.lw-right .bar { width: 18px; height: 1px; background: linear-gradient(to left, transparent, var(--brand)); }
+.lw-center {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 800;
+    font-style: italic;
+    background: linear-gradient(to right, var(--brand), var(--brand-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+    padding: 0 2px;
+}
+
+.login-divider { display: flex; align-items: center; gap: 8px; margin: 6px 30px 8px; }
+.login-divider .dl, .login-divider .dr { flex: 1; height: 1px; background: var(--border); }
+.login-divider .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--success); flex-shrink: 0; }
+
+.login-tagline { font-size: 11px; font-weight: 600; color: var(--ink-soft); text-align: center; }
 .login-tagline .t-orange { color: var(--warning-text); font-weight: 700; }
 .login-tagline .t-green  { color: var(--success-text); font-weight: 700; }
 
@@ -434,21 +453,28 @@ if "client_label" not in st.session_state:
     st.session_state.client_label = None
 
 if not st.session_state.auth:
-    login_icon_tag = brand_icon_tag(ICON_LIGHT_B64, 56)
-    st.markdown(f"""
-    <div class="login-shell">
-      <div class="login-card">
-        <div class="login-logo-ring">{login_icon_tag}</div>
-        <div class="login-title">WAPSI</div>
-        <div class="login-motto">
-          <span class="lm-bar green"></span>Parcel ki <span class="m-green">Wapsi</span>
-          <span class="lm-dot"></span>
-          Profit ki <span class="m-orange">Wapsi</span><span class="lm-bar orange"></span>
-        </div>
-        <div class="login-tagline"><span class="t-orange">AI</span> Operational Intelligence System <span class="t-green">for Ecommerce</span></div>
+login_icon_tag = brand_icon_tag(ICON_LIGHT_B64, 56)
+st.markdown(f"""
+<div class="login-shell">
+  <div class="login-card">
+    <div class="login-logo-ring">{login_icon_tag}</div>
+    <div class="login-title">WAPSI</div>
+    <div class="login-wordmark">
+      <div class="lw-left">
+        <span>Parcel ki<span class="bar"></span></span>
+        <span>Profit ki<span class="bar"></span></span>
+      </div>
+      <div class="lw-center">Wapsi</div>
+      <div class="lw-right">
+        <span><span class="bar"></span>Khatam</span>
+        <span><span class="bar"></span>Shuru</span>
       </div>
     </div>
-    """, unsafe_allow_html=True)
+    <div class="login-divider"><span class="dl"></span><span class="dot"></span><span class="dr"></span></div>
+    <div class="login-tagline"><span class="t-orange">AI</span> Operational Intelligence System <span class="t-green">for Ecommerce</span></div>
+  </div>
+</div>
+""", unsafe_allow_html=True)
 
     c1, c2, c3 = st.columns([1, 1.3, 1])
     with c2:
