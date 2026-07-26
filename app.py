@@ -211,36 +211,32 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
 
 /* ══ TOPBAR ══ */
 .topbar {
+    position: relative;
     background: linear-gradient(135deg, #1B160D 0%, #241F14 100%);
     border: 1px solid #3A3220;
     border-radius: var(--radius-lg);
-    padding: 18px 28px 16px;
+    padding: 18px 28px 14px;
     margin-bottom: 22px;
     box-shadow: var(--shadow-lift);
 }
-.tb-row1 { display: flex; align-items: center; gap: 20px; }
-.tb-icon { flex-shrink: 0; }
+.tb-icon { position: absolute; top: 16px; left: 24px; }
 
 .tb-wordmark {
-    flex: 1;
-    display: grid;
-    grid-template-columns: auto auto auto;
+    display: flex;
     align-items: center;
     justify-content: center;
-    column-gap: 12px;
-    row-gap: 2px;
+    gap: 14px;
 }
 .tb-wm-left, .tb-wm-right {
     display: flex; flex-direction: column; gap: 3px;
-    font-size: 11.5px; font-weight: 600; color: #A79E7E; font-style: italic;
+    font-size: 12px; font-weight: 600; font-style: italic; color: #A79E7E;
 }
-.tb-wm-left { text-align: right; }
-.tb-wm-right { text-align: left; }
+.tb-wm-left  { align-items: flex-end; text-align: right; }
+.tb-wm-right { align-items: flex-start; text-align: left; }
 .tb-wm-left span, .tb-wm-right span { display: flex; align-items: center; gap: 6px; }
-.tb-wm-left .bar { width: 24px; height: 1px; background: linear-gradient(to right, transparent, var(--brand-green)); }
-.tb-wm-right .bar { width: 24px; height: 1px; background: linear-gradient(to left, transparent, var(--brand)); }
+.tb-wm-left .bar { width: 22px; height: 1px; background: linear-gradient(to right, transparent, var(--brand-green)); }
+.tb-wm-right .bar { width: 22px; height: 1px; background: linear-gradient(to left, transparent, var(--brand)); }
 .tb-wm-center {
-    grid-row: 1 / 3;
     font-family: var(--font-display);
     font-size: 30px;
     font-weight: 800;
@@ -249,26 +245,25 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     line-height: 1;
-    padding: 0 4px;
+    padding: 0 2px;
 }
 
-.tb-divider { display: flex; align-items: center; gap: 10px; margin: 10px 0 6px; }
-.tb-divider .dl { flex: 1; height: 1px; background: linear-gradient(to right, transparent, #3A3220); }
-.tb-divider .dr { flex: 1; height: 1px; background: linear-gradient(to left, transparent, #3A3220); }
+.tb-divider { display: flex; align-items: center; gap: 10px; margin: 10px 40px 6px; }
+.tb-divider .dl, .tb-divider .dr { flex: 1; height: 1px; background: #3A3220; }
 .tb-divider .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--brand-green); flex-shrink: 0; }
 
-.tb-tagline { text-align: center; font-size: 12px; font-weight: 600; color: #C9C2A3; }
+.tb-tagline { text-align: center; font-size: 12px; font-weight: 600; color: #C9C2A3; line-height: 1.6; }
 .tb-tagline .h-orange { color: var(--brand); font-weight: 700; }
 .tb-tagline .h-green  { color: #3FD69C; font-weight: 700; }
 
-.tb-meta-row { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; font-size: 10.5px; color: #7A7358; font-weight: 500; }
+.tb-meta-row { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 8px; font-size: 10.5px; color: #7A7358; font-weight: 500; }
 .tb-meta-row .live-dot { width: 6px; height: 6px; border-radius: 50%; background: #0F9D6B; animation: blink 2s infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
 .tb-meta-row b { color: #3FD69C; }
 
 @media (max-width: 900px) {
-    .tb-row1 { flex-direction: column; }
-    .tb-wm-left { text-align: center; } .tb-wm-right { text-align: center; }
+    .tb-icon { position: static; margin-bottom: 8px; display: flex; justify-content: center; }
+    .tb-wm-left, .tb-wm-right { align-items: center; text-align: center; }
 }
 
 /* ══ SECTION TITLE ══ */
@@ -647,21 +642,19 @@ risk_color = risk_tone(avg_risk)
 # TOP BAR
 # ════════════════════════════════════════════════════════
 now_str = datetime.now(PAKISTAN_TZ).strftime("%d %b %Y · %I:%M %p PKT")
-tb_icon_tag = brand_icon_tag(ICON_DARK_B64, 46)
+tb_icon_tag = brand_icon_tag(ICON_DARK_B64, 42)
 st.markdown(f"""
 <div class="topbar">
-  <div class="tb-row1">
-    <div class="tb-icon">{tb_icon_tag}</div>
-    <div class="tb-wordmark">
-      <div class="tb-wm-left">
-        <span>Parcel ki<span class="bar"></span></span>
-        <span>Profit ki<span class="bar"></span></span>
-      </div>
-      <div class="tb-wm-center">Wapsi</div>
-      <div class="tb-wm-right">
-        <span><span class="bar"></span>Khatam</span>
-        <span><span class="bar"></span>Shuru</span>
-      </div>
+  <div class="tb-icon">{tb_icon_tag}</div>
+  <div class="tb-wordmark">
+    <div class="tb-wm-left">
+      <span>Parcel ki<span class="bar"></span></span>
+      <span>Profit ki<span class="bar"></span></span>
+    </div>
+    <div class="tb-wm-center">Wapsi</div>
+    <div class="tb-wm-right">
+      <span><span class="bar"></span>Khatam</span>
+      <span><span class="bar"></span>Shuru</span>
     </div>
   </div>
   <div class="tb-divider"><span class="dl"></span><span class="dot"></span><span class="dr"></span></div>
