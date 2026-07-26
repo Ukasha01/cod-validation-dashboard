@@ -439,7 +439,6 @@ if "client_label" not in st.session_state:
 
 if not st.session_state.auth:
     login_icon_tag = brand_icon_tag(ICON_LIGHT_B64, 56)
-    
     st.markdown(f"""
     <div class="login-shell">
       <div class="login-card">
@@ -454,10 +453,8 @@ if not st.session_state.auth:
       </div>
     </div>
     """, unsafe_allow_html=True)
-    
-    # You need to define the columns inside the if block before using 'with c2'
+
     c1, c2, c3 = st.columns([1, 1.3, 1])
-    
     with c2:
         pw = st.text_input("", type="password", placeholder="Enter your password",
                            label_visibility="collapsed")
@@ -471,8 +468,7 @@ if not st.session_state.auth:
                 st.error("Incorrect password. Please try again.")
     st.stop()
 
-# Fixed the missing comment hashtag (#) on this line
-CURRENT_CLIENT_ID = st.session_state.client_id  # make it correct
+CURRENT_CLIENT_ID = st.session_state.client_id
 # ════════════════════════════════════════════════════════
 # STATUS NORMALIZATION
 # Your n8n system actually produces these statuses:
