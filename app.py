@@ -410,17 +410,18 @@ if "client_label" not in st.session_state:
 
 if not st.session_state.auth:
     login_icon_tag = brand_icon_tag(ICON_LIGHT_B64, 56)   # swap in the _hq base64 you generated earlier for a sharper mark
-st.markdown(f"""
-<div class="login-shell">
-  <div class="login-card">
-    <div class="login-logo-ring">{login_icon_tag}</div>
-    <div class="login-title">WAPSI</div>
-    <div class="login-motto">Parcel ki <span class="m-green">Wapsi</span> Khatam &nbsp;·&nbsp; Profit ki <span class="m-orange">Wapsi</span> Shuru</div>
-    <div class="login-tagline"><span class="t-orange">AI</span> Operational Intelligence <span class="t-green">for Ecommerce</span></div>
-  </div>
-</div>
-""", unsafe_allow_html=True)
+    st.markdown(f"""
+    <div class="login-shell">
+      <div class="login-card">
+        <div class="login-logo-ring">{login_icon_tag}</div>
+        <div class="login-title">WAPSI</div>
+        <div class="login-motto">Parcel ki <span class="m-green">Wapsi</span> Khatam &nbsp;·&nbsp; Profit ki <span class="m-orange">Wapsi</span> Shuru</div>
+        <div class="login-tagline"><span class="t-orange">AI</span> Operational Intelligence <span class="t-green">for Ecommerce</span></div>
+      </div>
+    </div>
+    """, unsafe_allow_html=True)
 
+    # Indented to stay inside the if block
     c1, c2, c3 = st.columns([1, 1.3, 1])
     with c2:
         pw = st.text_input("", type="password", placeholder="Enter your password",
@@ -436,7 +437,6 @@ st.markdown(f"""
     st.stop()
 
 CURRENT_CLIENT_ID = st.session_state.client_id
-
 # ════════════════════════════════════════════════════════
 # STATUS NORMALIZATION
 # Your n8n system actually produces these statuses:
