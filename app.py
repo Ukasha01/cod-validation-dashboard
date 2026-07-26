@@ -213,68 +213,70 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
 .topbar {
     background: linear-gradient(135deg, #1B160D 0%, #241F14 100%);
     border: 1px solid #3A3220;
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-    padding: 24px 32px 20px;
+    border-radius: var(--radius-lg);
+    padding: 14px 24px;
+    margin-bottom: 22px;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 20px;
     box-shadow: var(--shadow-lift);
 }
-.tb-title {
+.tb-icon { flex-shrink: 0; }
+
+/* 2x2 grid replicating the logo: labels flank a centered WAPSI */
+.tb-wordmark {
+    flex: 1;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    align-items: center;
+    justify-content: center;
+    column-gap: 14px;
+    row-gap: 2px;
+}
+.tb-wm-left, .tb-wm-right {
+    display: flex; flex-direction: column; gap: 3px;
+    font-size: 11.5px; font-weight: 600; color: #A79E7E;
+}
+.tb-wm-right { text-align: left; }
+.tb-wm-left { text-align: right; }
+.tb-wm-left .bar, .tb-wm-right .bar {
+    display: inline-block; width: 26px; height: 1px; margin: 0 6px; vertical-align: middle;
+}
+.tb-wm-left .bar { background: linear-gradient(to right, transparent, var(--brand-green)); }
+.tb-wm-right .bar { background: linear-gradient(to left, transparent, var(--brand)); }
+.tb-wm-center {
+    grid-row: 1 / 3;
     font-family: var(--font-display);
-    font-size: 26px;
+    font-size: 30px;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1.5px;
     background: linear-gradient(to right, var(--brand), var(--brand-green));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     line-height: 1;
-    margin-top: 8px;
+    padding: 0 4px;
 }
-.tb-hero-line {
-    font-size: 12.5px;
-    color: #A79E7E;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.tb-hero-line .hl-bar { width: 20px; height: 1px; }
-.tb-hero-line .hl-bar.green  { background: linear-gradient(to right, transparent, var(--brand-green)); }
-.tb-hero-line .hl-bar.orange { background: linear-gradient(to left, transparent, var(--brand)); }
-.tb-hero-line .h-green  { color: #3FD69C; font-weight: 700; }
-.tb-hero-line .h-orange { color: var(--brand); font-weight: 700; }
-.tb-hero-line .hl-dot { width: 4px; height: 4px; border-radius: 50%; background: #5A5238; }
-.tb-sub-line { font-size: 11.5px; color: #9C9575; font-weight: 500; }
-.tb-sub-line .h-orange { color: var(--brand); font-weight: 700; }
-.tb-sub-line .h-green  { color: #3FD69C; font-weight: 700; }
+.tb-h-green  { color: #3FD69C; font-weight: 700; }
+.tb-h-orange { color: var(--brand); font-weight: 700; }
 
-/* Slim status strip, separate from the brand block — no more
-   competing right-aligned box pulling focus away from the logo */
-.status-strip {
-    background: #1B160D;
-    border: 1px solid #3A3220;
-    border-top: none;
-    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-    padding: 8px 32px;
-    margin-bottom: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-    font-size: 11px;
-    color: #7A7358;
-    font-weight: 500;
+.tb-right {
+    flex-shrink: 0;
+    display: flex; flex-direction: column; align-items: flex-end; gap: 3px;
 }
-.status-strip .live-dot { width: 6px; height: 6px; border-radius: 50%; background: #0F9D6B; animation: blink 2s infinite; }
+.tb-right .live-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 10.5px; font-weight: 700; color: #3FD69C;
+}
+.tb-right .live-dot { width: 6px; height: 6px; border-radius: 50%; background: #0F9D6B; animation: blink 2s infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
-.status-strip b { color: #3FD69C; font-weight: 700; }
+.tb-right .tb-meta { font-size: 10.5px; color: #7A7358; font-weight: 500; white-space: nowrap; }
 
 @media (max-width: 900px) {
-    .topbar { padding: 20px 16px 16px; }
-    .status-strip { flex-wrap: wrap; padding: 8px 16px; }
+    .topbar { flex-direction: column; padding: 16px; }
+    .tb-wm-left { text-align: center; }
+    .tb-wm-right { text-align: center; }
+    .tb-right { align-items: center; }
 }
 /* ══ SECTION TITLE ══ */
 .sec-title {
@@ -651,26 +653,28 @@ risk_color = risk_tone(avg_risk)
 # ════════════════════════════════════════════════════════
 # TOP BAR
 # ════════════════════════════════════════════════════════
-now_str = datetime.now(PAKISTAN_TZ).strftime("%d %b %Y · %I:%M %p PKT")
-tb_icon_tag = brand_icon_tag(ICON_DARK_B64, 56)
+now_str = datetime.now(PAKISTAN_TZ).strftime("%d %b · %I:%M %p")
+tb_icon_tag = brand_icon_tag(ICON_DARK_B64, 44)
 st.markdown(f"""
 <div class="topbar">
-  {tb_icon_tag}
-  <div class="tb-title">WAPSI</div>
-  <div class="tb-hero-line">
-    <span class="hl-bar green"></span>
-    Parcel ki <span class="h-green">Wapsi</span> Khatam
-    <span class="hl-dot"></span>
-    Profit ki <span class="h-orange">Wapsi</span> Shuru
-    <span class="hl-bar orange"></span>
+  <div class="tb-icon">{tb_icon_tag}</div>
+  <div class="tb-wordmark">
+    <div class="tb-wm-left">
+      <span>Parcel ki<span class="bar"></span></span>
+      <span>Profit ki<span class="bar"></span></span>
+    </div>
+    <div class="tb-wm-center">WAPSI</div>
+    <div class="tb-wm-right">
+      <span><span class="bar"></span>Khatam</span>
+      <span><span class="bar"></span>Shuru</span>
+    </div>
   </div>
-  <div class="tb-sub-line"><span class="h-orange">AI</span> Operational Intelligence System <span class="h-green">for Ecommerce</span></div>
-</div>
-<div class="status-strip">
-  <span class="live-dot"></span> <b>LIVE</b> · auto-refresh 60s &nbsp;·&nbsp; {now_str} &nbsp;·&nbsp; {total} processed · {pending} pending
+  <div class="tb-right">
+    <div class="live-pill"><span class="live-dot"></span> LIVE</div>
+    <div class="tb-meta">{now_str} · {total} processed · {pending} pending</div>
+  </div>
 </div>
 """, unsafe_allow_html=True)
-
 
 # ════════════════════════════════════════════════════════
 # KPI ROW 1 — ORDER OVERVIEW
