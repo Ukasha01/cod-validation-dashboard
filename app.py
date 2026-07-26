@@ -214,40 +214,42 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
     background: linear-gradient(135deg, #1B160D 0%, #241F14 100%);
     border: 1px solid #3A3220;
     border-radius: var(--radius-lg);
-    padding: 24px 36px;
+    padding: 20px 32px;
     margin-bottom: 30px;
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: 24px;
     box-shadow: var(--shadow-lift);
 }
-.tb-left { justify-self: start; display: flex; align-items: center; gap: 20px; }
-.tb-center { justify-self: center; text-align: center; }
-.tb-right { justify-self: end; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.tb-left { display: flex; align-items: center; gap: 16px; }
+.tb-id { display: flex; flex-direction: column; gap: 3px; }
 .tb-title {
     font-family: var(--font-display);
-    font-size: 28px;
+    font-size: 25px;
     font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
     background: linear-gradient(to right, var(--brand), var(--brand-green));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    letter-spacing: -0.3px;
-    line-height: 1.2;
-    margin-bottom: 5px;
+    line-height: 1;
 }
-.tb-sub { font-size: 13.5px; color: #A79E7E; font-weight: 500; }
-.live-pill {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(15,157,107,0.15);
-    border: 1px solid rgba(15,157,107,0.35);
-    color: #3FD69C;
-    font-size: 11.5px; font-weight: 700;
-    padding: 6px 14px; border-radius: 30px; letter-spacing: 0.3px;
+.tb-hero {
+    font-size: 12.5px;
+    color: #C9C2A3;
+    font-weight: 600;
 }
-.live-dot { width: 7px; height: 7px; border-radius: 50%; background: #0F9D6B; animation: blink 2s infinite; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
-.tb-meta { font-size: 12.5px; color: #7A7358; font-weight: 500; }
+.tb-hero .h-green  { color: #3FD69C; font-weight: 700; }
+.tb-hero .h-orange { color: var(--brand); font-weight: 700; }
+.tb-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
+.tb-meta { font-size: 12px; color: #7A7358; font-weight: 500; text-align: right; white-space: nowrap; }
 
+@media (max-width: 768px) {
+    .topbar { flex-direction: column; text-align: center; padding: 18px 16px; }
+    .tb-left { flex-direction: column; }
+    .tb-right { align-items: center; }
+}
 /* ══ SECTION TITLE ══ */
 .sec-title {
     font-family: var(--font-display);
@@ -314,23 +316,37 @@ h1, h2, h3, h4 { font-family: var(--font-display); }
 /* ══ LOGIN ══ */
 .login-shell { min-height: 78vh; display: flex; align-items: center; justify-content: center; padding: 24px 16px; }
 .login-card {
-    background: var(--surface);
-    border-radius: 22px;
+    background: linear-gradient(180deg, #FFFFFF 0%, #FFFDF3 100%);
+    border-radius: 24px;
     border: 1px solid var(--border-soft);
     box-shadow: var(--shadow-lift);
-    padding: 44px 40px 34px;
-    max-width: 420px;
+    padding: 40px 40px 32px;
+    max-width: 400px;
     width: 100%;
     text-align: center;
+    position: relative;
+    overflow: hidden;
 }
-.login-title { font-family: var(--font-display); font-size: 28px; font-weight: 800; color: var(--ink); letter-spacing: -0.3px; margin: 18px 0 10px; }
-.login-motto { font-size: 12.5px; font-weight: 600; color: var(--ink-soft); margin-bottom: 14px; }
-.login-motto .m-green  { color: var(--success-text); font-weight: 700; }
-.login-motto .m-orange { color: var(--warning-text); font-weight: 700; }
-.login-tagline { font-size: 12.5px; font-weight: 600; color: var(--ink-soft); margin-bottom: 22px; padding-bottom: 20px; border-bottom: 1px solid var(--border-soft); }
-.login-tagline .t-orange { color: var(--warning-text); font-weight: 700; }
-.login-tagline .t-green  { color: var(--success-text); font-weight: 700; }
-.login-sub { font-size: 13px; color: var(--muted); font-weight: 400; margin-bottom: 6px; line-height: 1.55; }
+.login-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--brand), var(--brand-green));
+}
+.login-logo-ring {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 92px; height: 92px; border-radius: 22px;
+    background: radial-gradient(circle at 30% 25%, #2A2418, #16130C);
+    box-shadow: 0 10px 26px rgba(33,27,16,0.18), inset 0 0 0 1px #3A3220;
+    margin-bottom: 18px;
+}
+.login-title {
+    font-family: var(--font-display);
+    font-size: 30px; font-weight: 800; color: var(--ink);
+    text-transform: uppercase; letter-spacing: 1.8px;
+    margin: 0 0 14px;
+}
+.login-motto { font-size: 13px; font-weight: 600; color: var(--ink-soft); margin-bottom: 10px; }
+.login-tagline { font-size: 12.5px; font-weight: 600; color: var(--ink-soft); }
 
 /* Sign-in button: was Streamlit's default red "primary" color, which
    signals error/danger — now brand orange, matches identity. */
@@ -393,18 +409,17 @@ if "client_label" not in st.session_state:
     st.session_state.client_label = None
 
 if not st.session_state.auth:
-    login_icon_tag = brand_icon_tag(ICON_LIGHT_B64, 68)
-    st.markdown(f"""
-    <div class="login-shell">
-      <div class="login-card">
-        <div style="display:flex;justify-content:center;">{login_icon_tag}</div>
-        <div class="login-title">Wapsi</div>
-        <div class="login-motto">Parcel ki <span class="m-green">Wapsi</span> Khatam &nbsp;·&nbsp; Profit ki <span class="m-orange">Wapsi</span> Shuru</div>
-        <div class="login-tagline"><span class="t-orange">AI</span> Operational Intelligence System <span class="t-green">for Ecommerce</span></div>
-        <div class="login-sub">Pakistan's AI-powered eCommerce<br>COD order validation platform</div>
-      </div>
-    </div>
-    """, unsafe_allow_html=True)
+    login_icon_tag = brand_icon_tag(ICON_LIGHT_B64, 56)   # swap in the _hq base64 you generated earlier for a sharper mark
+st.markdown(f"""
+<div class="login-shell">
+  <div class="login-card">
+    <div class="login-logo-ring">{login_icon_tag}</div>
+    <div class="login-title">WAPSI</div>
+    <div class="login-motto">Parcel ki <span class="m-green">Wapsi</span> Khatam &nbsp;·&nbsp; Profit ki <span class="m-orange">Wapsi</span> Shuru</div>
+    <div class="login-tagline"><span class="t-orange">AI</span> Operational Intelligence <span class="t-green">for Ecommerce</span></div>
+  </div>
+</div>
+""", unsafe_allow_html=True)
 
     c1, c2, c3 = st.columns([1, 1.3, 1])
     with c2:
@@ -593,20 +608,19 @@ risk_color = risk_tone(avg_risk)
 # ════════════════════════════════════════════════════════
 # TOP BAR
 # ════════════════════════════════════════════════════════
-now_str = datetime.now(PAKISTAN_TZ).strftime("%d %b %Y · %I:%M %p PKT")
-tb_icon_tag = brand_icon_tag(ICON_DARK_B64, 60)
+tb_icon_tag = brand_icon_tag(ICON_DARK_B64, 52)
 st.markdown(f"""
 <div class="topbar">
   <div class="tb-left">
     {tb_icon_tag}
-  </div>
-  <div class="tb-center">
-    <div class="tb-title">Wapsi</div>
-    <div class="tb-sub">AI Operational Intelligence System for Ecommerce · Pakistan</div>
+    <div class="tb-id">
+      <div class="tb-title">WAPSI</div>
+      <div class="tb-hero">Parcel ki <span class="h-green">Wapsi</span> Khatam &nbsp;·&nbsp; Profit ki <span class="h-orange">Wapsi</span> Shuru</div>
+    </div>
   </div>
   <div class="tb-right">
     <div class="live-pill"><span class="live-dot"></span> LIVE · auto-refresh 60s</div>
-    <div class="tb-meta">{now_str} &nbsp;·&nbsp; {total} processed &nbsp;·&nbsp; {pending} pending</div>
+    <div class="tb-meta">{now_str}<br>{total} processed · {pending} pending</div>
   </div>
 </div>
 """, unsafe_allow_html=True)
