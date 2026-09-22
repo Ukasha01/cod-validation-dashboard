@@ -1,4 +1,4 @@
-show_cols = ["name","phone","address","clean_address","city","status",
+6808c215d18205a0a36dfb40b523fcd4403c613eshow_cols = ["name","phone","address","clean_address","city","status",
              "risk_score","risk_level","risk_reason","map_status","created_at"]
 show_cols = [c for c in show_cols if c in df_view.columns]
 
