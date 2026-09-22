@@ -522,16 +522,28 @@ STATUS_COLOR_MAP = {
 def load_data(client_id: str):
     try:
         client = create_client(SUPABASE_URL, SUPABASE_KEY)
-        resp = (
-            client.table("orders")
-            .select("*")
-            .eq("store_id", client_id)
-            .order("inserted_at", desc=True)
-            .execute()
-        )
-        df = pd.DataFrame(resp.data)
+        all_rows = []
+        page_size = 1000
+        start = 0
+        while True:
+            resp = (
+                client.table("orders")
+                .select("*")
+                .eq("store_id", client_id)
+                .order("inserted_at", desc=True)
+                .range(start, start + page_size - 1)
+                .execute()
+            )
+            batch = resp.data
+            if not batch:
+                break
+            all_rows.extend(batch)
+            start += len(batch)   # advance by what was ACTUALLY returned, not the requested page_size
+
+        df = pd.DataFrame(all_rows)
         if df.empty:
             return pd.DataFrame()
+        # ...rest of the function unchanged from here...
         df.columns   = df.columns.str.strip().str.lower()
         df["status"]     = df["status"].astype(str).str.strip()
         df["city"]       = df["city"].astype(str).str.strip().str.title()
@@ -1005,20 +1017,27 @@ table_config = {
 
 @st.dialog("Full Screen Order Intelligence Log", width="large")
 def fullscreen_table():
-    st.dataframe(styled, use_container_width=True, height=700, column_config=table_config, hide_index=True)
-
-with col_t2:
-    st.write("")
-    if st.button("⛶ Open Full Screen Table", use_container_width=True):
-        fullscreen_table()
-
-st.dataframe(
-    styled,
-    use_container_width=True,
-    height=440,
-    hide_index=True,
-    column_config=table_config
-)
+    st.markdown("""
+    <style>
+    div[data-testid="stDialog"] > div {
+        width: 96vw !important;
+        max-width: 96vw !important;
+    }
+    div[data-testid="stDialog"] div[role="dialog"] {
+        width: 96vw !important;
+        max-width: 96vw !important;
+        height: 92vh !important;
+        max-height: 92vh !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    st.dataframe(
+        styled,
+        use_container_width=True,
+        height=int(min(1000, 42 * len(df_view) + 60)),  # scales with row count, capped at 1000px
+        column_config=table_config,
+        hide_index=True
+    )
 
 # ════════════════════════════════════════════════════════
 # FOOTER
