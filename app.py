@@ -967,84 +967,203 @@ with ins2:
         f"Rs {rto_loss:,} — already lost to shipping + reverse logistics")
 
 # ════════════════════════════════════════════════════════
-# ORDER TABLE
+# ORDER INTELLIGENCE TABLE
 # ════════════════════════════════════════════════════════
-col_t1, col_t2 = st.columns([8, 2])
-with col_t1:
-    st.markdown('<div class="sec-title">Order Details</div>', unsafe_allow_html=True)
 
-show_cols = ["name","phone","address","clean_address","city","status",
-             "risk_score","risk_level","risk_reason","map_status","created_at"]
+show_cols = [
+    "name",
+    "phone",
+    "address",
+    "clean_address",
+    "city",
+    "status",
+    "risk_score",
+    "risk_level",
+    "risk_reason",
+    "map_status",
+    "created_at",
+]
+
+# Only keep columns that actually exist
 show_cols = [c for c in show_cols if c in df_view.columns]
 
+
+# ────────────────────────────────────────────────────────
+# STATUS STYLING
+# ────────────────────────────────────────────────────────
+
 def style_status(val):
-    m = {"Rejected":       "background:#FDF0EE;color:#C23A29;font-weight:700",
-         "Risk Flagged":   "background:#FFF7EB;color:#B4650A;font-weight:700",
-         "Auto-Confirmed": "background:#EEFBF5;color:#0B7A54;font-weight:700",
-         "Confirmed":      "background:#EEFBF5;color:#0B7A54;font-weight:700",
-         "Cancelled":      "background:#F5F3EA;color:#6B6449;font-weight:700",
-         "Manual Review":  "background:#F5EEDD;color:#8A6D3B;font-weight:700"}
-    return m.get(val, "")
+    status_styles = {
+        "Rejected":
+            "background:#FDF0EE;color:#C23A29;font-weight:700",
+
+        "Risk Flagged":
+            "background:#FFF7EB;color:#B4650A;font-weight:700",
+
+        "Auto-Confirmed":
+            "background:#EEFBF5;color:#0B7A54;font-weight:700",
+
+        "Confirmed":
+            "background:#EEFBF5;color:#0B7A54;font-weight:700",
+
+        "Cancelled":
+            "background:#F5F3EA;color:#6B6449;font-weight:700",
+
+        "Manual Review":
+            "background:#F5EEDD;color:#8A6D3B;font-weight:700",
+    }
+
+    return status_styles.get(val, "")
+
+
+# ────────────────────────────────────────────────────────
+# RISK LEVEL STYLING
+# ────────────────────────────────────────────────────────
 
 def style_risk(val):
-    m = {"CRITICAL": "background:#FDF0EE;color:#C23A29;font-weight:700",
-         "HIGH":     "background:#FDF0EE;color:#C23A29",
-         "MEDIUM":   "background:#FFF7EB;color:#B4650A",
-         "LOW":      "background:#EEFBF5;color:#0B7A54"}
-    return m.get(val, "")
+    risk_styles = {
+        "CRITICAL":
+            "background:#FDF0EE;color:#C23A29;font-weight:700",
 
-st.caption(f"Showing **{len(df_view)}** of **{total}** processed orders · **{pending}** pending excluded")
+        "HIGH":
+            "background:#FDF0EE;color:#C23A29",
+
+        "MEDIUM":
+            "background:#FFF7EB;color:#B4650A",
+
+        "LOW":
+            "background:#EEFBF5;color:#0B7A54",
+    }
+
+    return risk_styles.get(val, "")
+
+
+# ────────────────────────────────────────────────────────
+# TABLE SUMMARY
+# ────────────────────────────────────────────────────────
+
+st.caption(
+    f"Showing **{len(df_view)}** of **{total}** processed orders · "
+    f"**{pending}** pending excluded"
+)
+
+
+# ────────────────────────────────────────────────────────
+# BUILD STYLED DATAFRAME
+# ────────────────────────────────────────────────────────
 
 styled = df_view[show_cols].style
-if "status"     in show_cols: styled = styled.map(style_status, subset=["status"])
-if "risk_level" in show_cols: styled = styled.map(style_risk,   subset=["risk_level"])
+
+if "status" in show_cols:
+    styled = styled.map(
+        style_status,
+        subset=["status"]
+    )
+
+if "risk_level" in show_cols:
+    styled = styled.map(
+        style_risk,
+        subset=["risk_level"]
+    )
+
 if "risk_score" in show_cols:
-    styled = styled.background_gradient(subset=["risk_score"], cmap="RdYlGn_r", vmin=0, vmax=100)
+    styled = styled.background_gradient(
+        subset=["risk_score"],
+        cmap="RdYlGn_r",
+        vmin=0,
+        vmax=100
+    )
+
+
+# ────────────────────────────────────────────────────────
+# COLUMN CONFIGURATION
+# ────────────────────────────────────────────────────────
 
 table_config = {
-    "name":          st.column_config.TextColumn("Customer",      width=120),
-    "phone":         st.column_config.TextColumn("Phone",         width=115),
-    "address":       st.column_config.TextColumn("Raw Address",   width=230),
-    "clean_address": st.column_config.TextColumn("Clean Address", width=230),
-    "city":          st.column_config.TextColumn("City",          width=95),
-    "status":        st.column_config.TextColumn("Status",        width=135),
-    "risk_score":    st.column_config.NumberColumn("Score",       width=72, format="%d"),
-    "risk_level":    st.column_config.TextColumn("Level",         width=80),
-    "risk_reason":   st.column_config.TextColumn("Reason",        width=290),
-    "map_status":    st.column_config.TextColumn("Maps",          width=115),
-    "created_at":    st.column_config.TextColumn("Date",          width=88),
+    "name": st.column_config.TextColumn(
+        "Customer",
+        width=120
+    ),
+
+    "phone": st.column_config.TextColumn(
+        "Phone",
+        width=115
+    ),
+
+    "address": st.column_config.TextColumn(
+        "Raw Address",
+        width=230
+    ),
+
+    "clean_address": st.column_config.TextColumn(
+        "Clean Address",
+        width=230
+    ),
+
+    "city": st.column_config.TextColumn(
+        "City",
+        width=95
+    ),
+
+    "status": st.column_config.TextColumn(
+        "Status",
+        width=135
+    ),
+
+    "risk_score": st.column_config.NumberColumn(
+        "Score",
+        width=72,
+        format="%d"
+    ),
+
+    "risk_level": st.column_config.TextColumn(
+        "Level",
+        width=80
+    ),
+
+    "risk_reason": st.column_config.TextColumn(
+        "Reason",
+        width=290
+    ),
+
+    "map_status": st.column_config.TextColumn(
+        "Maps",
+        width=115
+    ),
+
+    "created_at": st.column_config.TextColumn(
+        "Date",
+        width=88
+    ),
 }
 
-@st.dialog("Full Screen Order Intelligence Log", width="large")
-def fullscreen_table():
-    st.markdown("""
-    <style>
-    div[data-testid="stDialog"] > div {
-        width: 96vw !important;
-        max-width: 96vw !important;
-    }
-    div[data-testid="stDialog"] div[role="dialog"] {
-        width: 96vw !important;
-        max-width: 96vw !important;
-        height: 92vh !important;
-        max-height: 92vh !important;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-    st.dataframe(
-        styled,
-        use_container_width=True,
-        height=int(min(1000, 42 * len(df_view) + 60)),  # scales with row count, capped at 1000px
-        column_config=table_config,
-        hide_index=True
-    )
+
+# ────────────────────────────────────────────────────────
+# MAIN ORDER INTELLIGENCE TABLE
+# ────────────────────────────────────────────────────────
+
+st.dataframe(
+    styled,
+    use_container_width=True,
+    height=750,
+    column_config=table_config,
+    hide_index=True,
+)
+
 
 # ════════════════════════════════════════════════════════
 # FOOTER
 # ════════════════════════════════════════════════════════
-st.markdown("""
-<div class="wapsi-footer">
-  <span class="wf-brand">Wapsi</span> &nbsp;·&nbsp; AI Operational Intelligence System for Ecommerce &nbsp;·&nbsp;
-  Powered by Supabase · Gemini AI · Google Maps
-</div>
-""", unsafe_allow_html=True)
+
+st.markdown(
+    """
+    <div class="wapsi-footer">
+      <span class="wf-brand">Wapsi</span>
+      &nbsp;·&nbsp;
+      AI Operational Intelligence System for Ecommerce
+      &nbsp;·&nbsp;
+      Powered by Supabase · Gemini AI · Google Maps
+    </div>
+    """,
+    unsafe_allow_html=True
+)
